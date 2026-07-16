@@ -47,7 +47,8 @@ cache = Cache(config={"CACHE_TYPE": "simple"})
 # ── Constants ──────────────────────────────────────────────────────────────────
 
 HF_BASE_URL   = os.getenv("HF_SPACE_URL")
-HF_HEADERS    = {"Authorization": "Bearer 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"}
+HF_TOKEN      = os.getenv("HF_TOKEN")
+HF_HEADERS    = {"Authorization": f"Bearer {HF_TOKEN}"}
 GNEWS_API_KEY = os.getenv("GNEWS_API_KEY")
 NEWSAPI_KEY   = os.getenv("NEWSAPI_KEY")
 

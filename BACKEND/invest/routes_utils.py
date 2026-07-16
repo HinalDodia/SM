@@ -10,7 +10,8 @@ import os
 # ── HuggingFace ────────────────────────────────────────────────────────────────
 
 HF_BASE_URL = os.getenv("HF_SPACE_URL")
-HF_HEADERS  = {"Authorization": "Bearer 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"}
+HF_TOKEN      = os.getenv("HF_TOKEN")
+HF_HEADERS    = {"Authorization": f"Bearer {HF_TOKEN}"}
 
 # ── News API keys ──────────────────────────────────────────────────────────────
 

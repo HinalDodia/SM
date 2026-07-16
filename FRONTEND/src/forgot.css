@@ -1,0 +1,113 @@
+.forgot-page-body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.forgot-container {
+  background-color: #fff;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  width: 380px;
+  max-width: 90%;
+  text-align: center;
+  font-family: inherit;
+}
+
+.forgot-container h2 {
+  margin-bottom: 24px;
+  color: #1a1a1a;
+  font-weight: 600;
+}
+
+.forgot-container .form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.forgot-container label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Consistent styling for all input types */
+.forgot-container input[type="text"],
+.forgot-container input[type="password"],
+.forgot-container input[type="email"],
+.forgot-container input[type="tel"] {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  transition: border-color 0.3s ease;
+  background: #f8f9fa;
+  color: #1a1a1a;
+}
+
+/* Placeholder styling */
+.forgot-container input[type="text"]::placeholder,
+.forgot-container input[type="password"]::placeholder,
+.forgot-container input[type="email"]::placeholder,
+.forgot-container input[type="tel"]::placeholder {
+  color: #b0b0b0;
+  opacity: 1;
+  font-style: italic;
+}
+
+.forgot-container input:focus {
+  outline: none;
+  border-color: #1a1a1a;
+  background: #fff;
+}
+
+.reset-btn {
+  background-color: #000;
+  color: #fff;
+  margin: 15px;
+  padding: 10px 3px;               /* Increased height */
+  font-size: 18px;               /* Slightly larger text */
+  border: none;
+  border-radius: 8px;            /* Slightly rounder corners */
+  cursor: pointer;
+  width: 40%;
+  transition: background 0.3s, transform 0.3s, opacity 0.7s;
+  font-family: inherit;
+  font-weight: 600;
+  opacity: 0;
+  animation: fadeInBtn 1s ease-in forwards;
+  animation-delay: 0.7s;         /* Optional: delay for a staggered effect */
+}
+
+@keyframes fadeInBtn {
+  from { opacity: 0; transform: translateY(20px);}
+  to   { opacity: 1; transform: translateY(0);}
+}
+
+.reset-btn:hover {
+  background-color: #222;
+  transform: scale(1.04);
+}
+
+
+.reset-btn:hover {
+  background-color: #333;
+}
+
+@media (max-width: 480px) {
+  .forgot-container {
+    padding: 30px 20px;
+    width: 90%;
+  }
+
+  .reset-btn {
+    font-size: 14px;
+  }
+}

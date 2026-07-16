@@ -1,0 +1,96 @@
+:root{
+  --nav-bg: linear-gradient(90deg,#0b0f12,#0d1113);
+  --accent: #7c8cff; /* matches home title glow */
+  --muted: #9fb0bf;
+  --cta-bg: linear-gradient(90deg,#1d87ff,#06b6d4);
+  --nav-height: 72px;
+}
+
+/* base */
+.app-navbar {
+  height: var(--nav-height);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding: 12px 28px;
+  background: var(--nav-bg);
+  color: #e6eef6;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+/* left */
+.nav-left { display:flex; align-items:center; gap:12px; }
+.brand {
+  font-family: 'Orbitron', system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  font-weight:800;
+  font-size:22px;
+  color: var(--accent);
+  text-decoration:none;
+  letter-spacing:1px;
+}
+
+/* center links (kept and renamed if you later introduce a center section) */
+.nav-center { flex:1 1 auto; display:flex; justify-content:center; }
+.nav-links { list-style:none; display:flex; gap:22px; margin:0; padding:0; align-items:center; }
+.nav-links li { font-weight:600; font-size:15px; }
+.nav-links li a,
+.nav-link { /* .nav-link used on individual Link elements in JSX */
+  color: #e6eef6;
+  text-decoration:none;
+  padding:8px 10px;
+  border-radius:8px;
+  transition: all 160ms ease;
+  display:inline-block;
+}
+.nav-links li a:hover,
+.nav-link:hover {
+  color: var(--accent);
+  background: rgba(124,140,255,0.04);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(124,140,255,0.06);
+}
+
+/* right actions */
+.nav-right { display:flex; align-items:center; gap:12px; }
+
+/* CTA button */
+.nav-cta {
+  padding:8px 14px;
+  border-radius:10px;
+  background: var(--cta-bg);
+  color:#051923;
+  font-weight:700;
+  text-decoration:none;
+  box-shadow: 0 8px 24px rgba(13,110,253,0.08);
+}
+
+/* account button */
+.nav-account {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.04);
+  padding:8px 12px;
+  border-radius:8px;
+  color: #e6eef6;
+  cursor:pointer;
+  font-weight:600;
+}
+
+/* small screens */
+@media (max-width:880px){
+  .app-navbar { padding:10px 16px; }
+  .nav-center { justify-content:flex-start; }
+  .nav-links { gap:12px; }
+}
+
+/* mobile stack */
+@media (max-width:520px){
+  .app-navbar { flex-wrap:wrap; height:auto; gap:8px; }
+  .nav-left { order:1; }
+  .nav-right { order:2; margin-left:auto; }
+  .nav-center { order:3; width:100%; justify-content:center; margin-top:6px; }
+  .nav-links { gap:8px; flex-wrap:wrap; justify-content:center; }
+}

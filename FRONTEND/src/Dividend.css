@@ -1,0 +1,320 @@
+/* ═══════════════════════════════════════════════
+   Dividend.css  —  layout classes for DividendPage
+   ═══════════════════════════════════════════════ */
+
+/* ── CONTENT COLUMN ── */
+.div-content {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0 0 48px 0;
+}
+
+/* ── CARD BASE ── */
+.div-card {
+  background: var(--card, #111827);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 14px;
+  padding: 28px 32px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.div-card-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin: 0 0 20px 0;
+}
+
+/* ── KPI GRID  3 × 2 ── */
+.div-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.div-kpi-card {
+  background: var(--card, #111827);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 14px;
+  padding: 22px 26px;
+  display: flex;
+  flex-direction: column;
+}
+
+.div-kpi-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #64748b;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.div-kpi-value {
+  font-size: 28px;
+  font-weight: 800;
+  color: #f8fafc;
+  line-height: 1;
+}
+
+.div-kpi-sub {
+  margin-top: 8px;
+  font-size: 11px;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ── DESCRIPTION ── */
+.div-desc-text {
+  color: #94a3b8;
+  line-height: 1.75;
+  font-size: 14px;
+  margin: 0;
+}
+
+/* ── CHARTS ROW ── */
+.div-charts-row {
+  display: flex;
+  gap: 0;
+  align-items: stretch;
+  padding: 28px 0 28px 0;
+}
+
+.div-chart-half {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 0 32px;
+}
+
+.div-chart-divider {
+  width: 1px;
+  background: rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+}
+
+.div-chart-box {
+  height: 360px;
+  margin-top: 16px;
+}
+
+/* ── TABLES ── */
+.div-table-wrap {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.div-table-scroll {
+  overflow-x: auto;
+  max-height: 520px;
+  overflow-y: auto;
+  margin-top: 16px;
+  width: 100%;
+}
+
+.div-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  color: #cbd5e1;
+  white-space: nowrap;
+}
+
+.div-table thead th {
+  padding: 12px 18px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #64748b;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  background: var(--card, #111827);
+}
+
+.div-table tbody tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  transition: background 0.15s;
+}
+
+.div-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.div-table tbody td {
+  padding: 14px 18px;
+  vertical-align: middle;
+}
+
+/* sticky thead for history table */
+.sticky-header thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--card, #111827);
+}
+
+/* ── HISTORY CONTROLS ── */
+.div-history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 4px;
+}
+
+.div-history-controls {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.div-ctrl-group {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.div-ctrl-label {
+  font-size: 12px;
+  color: #64748b;
+  white-space: nowrap;
+}
+
+.div-select,
+.div-date-input {
+  padding: 7px 12px;
+  border-radius: 8px;
+  background: #1e293b;
+  color: #f1f5f9;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 13px;
+  outline: none;
+  color-scheme: dark;
+}
+
+.div-select option {
+  background: #1e293b;
+  color: #f1f5f9;
+}
+
+.div-select:focus,
+.div-date-input:focus {
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.div-export-btn {
+  padding: 8px 18px;
+  border-radius: 8px;
+  background: #26E07F;
+  color: #000;
+  font-weight: 700;
+  font-size: 13px;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+}
+
+.div-export-btn:hover {
+  opacity: 0.88;
+}
+
+/* ── FAQ ── */
+.div-faq-item {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 16px 0;
+}
+
+.div-faq-item:last-child {
+  border-bottom: none;
+}
+
+.div-faq-q {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14.5px;
+  color: #f1f5f9;
+  gap: 16px;
+  transition: color 0.2s;
+}
+
+.div-faq-q:hover {
+  color: #54C5FF;
+}
+
+.div-faq-icon {
+  font-size: 22px;
+  color: #64748b;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.div-faq-a {
+  margin-top: 10px;
+  color: #94a3b8;
+  font-size: 14px;
+  line-height: 1.65;
+  animation: divFadeIn 0.2s ease;
+}
+
+/* ── POSITIVE / NEGATIVE ── */
+.pos {
+  color: #26E07F !important;
+}
+
+.neg {
+  color: #FF6B6B !important;
+}
+
+/* ── FADE IN ── */
+@keyframes divFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1100px) {
+  .div-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .div-charts-row {
+    flex-direction: column;
+  }
+
+  .div-chart-divider {
+    width: 100%;
+    height: 1px;
+  }
+
+  .div-chart-half {
+    padding: 20px 0;
+  }
+}
+
+@media (max-width: 700px) {
+  .div-kpi-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .div-card {
+    padding: 20px 16px;
+  }
+}

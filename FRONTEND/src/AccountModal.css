@@ -1,0 +1,15 @@
+/* src/accountModal.css */
+.am-backdrop{
+  position:fixed; inset:0; background:rgba(0,0,0,0.35); display:flex; align-items:flex-start; justify-content:flex-end; padding:80px 24px 24px 24px; z-index:2000;
+}
+.am-panel{
+  width:260px; background: linear-gradient(180deg, rgba(18,24,26,0.96), rgba(12,18,20,0.98)); border-radius:10px; padding:12px; border:1px solid rgba(255,255,255,0.04);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+}
+.am-header { padding:8px 6px; border-bottom:1px solid rgba(255,255,255,0.02); margin-bottom:8px; }
+.am-name { font-weight:700; color:#fff; }
+.am-email { font-size:12px; color:#9aa; margin-top:4px; }
+.am-actions { display:flex; flex-direction:column; gap:8px; padding-top:8px; }
+.am-btn { background:transparent; border:1px solid rgba(255,255,255,0.04); padding:8px 10px; border-radius:8px; color:#e6eef6; cursor:pointer; text-align:left; }
+.am-btn:hover { transform:translateY(-1px); box-shadow:0 8px 20px rgba(0,0,0,0.4); }
+.am-logout { background: linear-gradient(90deg,#ef4444,#f97316); color: #051923; border:none; font-weight:700; }

@@ -1,0 +1,839 @@
+/* ══════════════════════════════════════════════════════════════════
+   StockChart.css  —  Fixed: hover legend, candlestick toggle, scroll
+   ══════════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+
+/* ── Reset / base ──────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Page layout ────────────────────────────────────────────────── */
+.sc-page {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+  width: 100%;
+  background: #0d1117;
+  color: #e2e8f0;
+  font-family: 'DM Sans', 'Segoe UI', system-ui, sans-serif;
+  /* Prevent any inherited padding from the app shell from creating dead space */
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* ── Sidenav ────────────────────────────────────────────────────── */
+.sc-sidenav {
+  width: 210px;
+  min-width: 170px;
+  padding: 24px 0;
+  background: #0d1117;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.sc-sidenav .nav-item {
+  display: block;
+  padding: 12px 24px;
+  font-size: 13px;
+  color: #94a3b8;
+  text-decoration: none;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.2s ease;
+  border-left: 3px solid transparent;
+}
+
+.sc-sidenav .nav-item:hover {
+  background: rgba(255, 255, 255, 0.03);
+  color: #f8fafc;
+  padding-left: 28px;
+}
+
+.sc-sidenav .nav-item.active {
+  color: #60a5fa;
+  border-left: 3px solid #3b82f6;
+  background: linear-gradient(90deg, rgba(59, 130, 246, 0.1), transparent);
+}
+
+.buy-item {
+  margin-top: 20px;
+  background: rgba(16, 185, 129, 0.1);
+  color: #34d399;
+  border-radius: 8px;
+  margin-left: 15px;
+  margin-right: 15px;
+  text-align: center;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.buy-item:hover {
+  background: rgba(16, 185, 129, 0.2);
+  color: #6ee7b7;
+  padding-left: 24px !important;
+}
+
+/* ── Main area ──────────────────────────────────────────────────── */
+.sc-main {
+  flex: 1 1 0%;
+  /* flex-grow:1, flex-shrink:1, flex-basis:0 — fills all remaining space */
+  min-width: 0;
+  /* CRITICAL: allows flex child to shrink below content size */
+  width: 0;
+  /* Pair with flex:1 to prevent content overflow pushing sidenav */
+  padding-bottom: 48px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  /* prevent horizontal scroll from leaking into chart area */
+}
+
+/* ── Header band ──────────────────────────────────────────────── */
+.sc-header-band {
+  background: #111827;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 14px 20px;
+}
+
+.sc-price-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.sc-price-header__left {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.sc-price-header__right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.sc-price-header__symbol {
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  letter-spacing: 0.01em;
+}
+
+.sc-price-header__name {
+  font-size: 0.88rem;
+  color: #64748b;
+}
+
+.sc-price-header__price {
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.02em;
+}
+
+.sc-price-header__change {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.83rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.sc-price-header__change.up {
+  color: #4ade80;
+  background: rgba(74, 222, 128, 0.1);
+}
+
+.sc-price-header__change.down {
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.1);
+}
+
+.sc-price-header__updated {
+  font-size: 0.75rem;
+  color: #475569;
+}
+
+/* ── Controls row ────────────────────────────────────────────── */
+.sc-controls-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 20px;
+  flex-wrap: wrap;
+  background: #0d1117;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* Timeframe buttons */
+.sc-tf-bar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  padding: 3px;
+}
+
+.sc-tf-btn {
+  padding: 5px 11px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #64748b;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  letter-spacing: 0.04em;
+}
+
+.sc-tf-btn:hover {
+  color: #cbd5e1;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.sc-tf-btn.active {
+  background: #1e2d3d;
+  color: #60a5fa;
+}
+
+/* Chart type toggle */
+.sc-chart-type-bar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  padding: 3px;
+}
+
+.sc-chart-type-btn {
+  padding: 5px 11px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #64748b;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.sc-chart-type-btn:hover {
+  color: #cbd5e1;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.sc-chart-type-btn.active {
+  background: #1e2d3d;
+  color: #a78bfa;
+}
+
+/* Legend pills */
+.sc-legend-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-left: auto;
+  flex-wrap: wrap;
+}
+
+.sc-legend-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sc-legend-pill__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.sc-legend-pill__dash {
+  display: inline-block;
+  width: 18px;
+  border-top: 2px dashed;
+  flex-shrink: 0;
+}
+
+.sc-legend-pill__label {
+  font-size: 0.76rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* ── Zoom controls ───────────────────────────────────────────── */
+.sc-zoom-bar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  padding: 3px;
+}
+
+.sc-zoom-btn {
+  padding: 4px 10px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #64748b;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  line-height: 1;
+}
+
+.sc-zoom-btn:hover {
+  color: #cbd5e1;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.sc-zoom-btn--reset {
+  font-size: 1rem;
+}
+
+/* ── DMA Checkboxes ──────────────────────────────────────────── */
+.sc-dma-checks {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sc-dma-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #64748b;
+  user-select: none;
+  transition: color 0.15s;
+}
+
+.sc-dma-label:hover {
+  color: #cbd5e1;
+}
+
+.sc-dma-label input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid #475569;
+  border-radius: 3px;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.sc-dma-label input[type="checkbox"]:checked {
+  background: #1e2d3d;
+  border-color: #60a5fa;
+}
+
+.sc-dma-label input[type="checkbox"]:checked::after {
+  content: '✓';
+  position: absolute;
+  top: -2px;
+  left: 1px;
+  font-size: 0.7rem;
+  color: #60a5fa;
+  font-weight: 700;
+}
+
+.sc-dma-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+
+.sc-chart-card {
+  background: #161c27;
+  /* Use 0 horizontal margin so chart uses every available pixel.
+     Vertical spacing retained for visual breathing room. */
+  margin: 16px 0 0;
+  border-radius: 0;
+  /* flush to edges in main column */
+  overflow: visible;
+  /* CRITICAL: lightweight-charts needs pointer events to reach edge */
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  position: relative;
+  /* Ensure the card never adds internal padding that offsets chart width */
+  padding: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ── OHLCV Legend Bar (above chart, inside card) ─────────────── */
+.sc-ohlcv-legend {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 8px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.15);
+  /* No border-radius — flush card */
+  min-height: 38px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8rem;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.sc-ohlcv-legend--empty .lwl-hint {
+  color: #334155;
+  font-size: 0.76rem;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.lwl-sym {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: 0.05em;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.lwl-date {
+  font-size: 0.78rem;
+  color: #475569;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.lwl-item {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.lwl-lbl {
+  font-size: 0.72rem;
+  color: #475569;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.lwl-val {
+  color: #e2e8f0;
+  font-weight: 500;
+}
+
+.lwl-high {
+  color: #26c6a2 !important;
+}
+
+.lwl-low {
+  color: #ef5350 !important;
+}
+
+/* ── Chart wrapper — zero padding, full width ────────────────── */
+.sc-lw-price {
+  width: 100%;
+  position: relative;
+  /* No border-radius here — the card handles visual rounding */
+  overflow: hidden;
+  /* lightweight-charts handles internal overflow */
+  padding: 0;
+  margin: 0;
+  display: block;
+  box-sizing: border-box;
+}
+
+/* ── Error state ─────────────────────────────────────────────── */
+.sc-error {
+  padding: 14px 18px;
+  color: #f87171;
+  font-size: 0.84rem;
+  background: rgba(248, 113, 113, 0.06);
+  margin: 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(248, 113, 113, 0.18);
+}
+
+/* ── Skeleton ────────────────────────────────────────────────── */
+.sc-skeleton {
+  height: 520px;
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  padding: 20px 16px;
+  border-radius: 0 0 12px 12px;
+  overflow: hidden;
+}
+
+.sc-skeleton__pulse {
+  flex: 1;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+  border-radius: 3px;
+  animation: sc-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes sc-pulse {
+
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+
+  50% {
+    opacity: 0.9;
+  }
+}
+
+/* ── Stats strip ─────────────────────────────────────────────── */
+.sc-stats-strip {
+  display: flex;
+  align-items: stretch;
+  background: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 0;
+  margin: 0;
+  border-top: none;
+  /* visually connected to chart card below */
+  overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.sc-stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 8px;
+  gap: 5px;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sc-stat:last-child {
+  border-right: none;
+}
+
+.sc-stat__label {
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  color: #475569;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.sc-stat__val {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #f1f5f9;
+  font-family: 'DM Mono', monospace;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Price History Table  — light theme
+   ══════════════════════════════════════════════════════════════════ */
+
+.sc-history-card {
+  background: #ffffff;
+  border-radius: 0;
+  margin: 24px 0 0;
+  overflow: hidden;
+  border-top: 1px solid #e5e7eb;
+  box-shadow: none;
+}
+
+.sc-history-title {
+  padding: 20px 20px 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #111827;
+  letter-spacing: -0.01em;
+}
+
+.sc-history-controls {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  padding: 14px 20px 0;
+  flex-wrap: wrap;
+}
+
+.sc-history-select-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sc-history-select-label {
+  font-size: 0.67rem;
+  font-weight: 700;
+  color: #6b7280;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.sc-history-select,
+.sc-history-date {
+  height: 34px;
+  padding: 0 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #fff;
+  color: #374151;
+  font-size: 0.83rem;
+  outline: none;
+  min-width: 130px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.sc-history-select:focus,
+.sc-history-date:focus {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.12);
+}
+
+.sc-history-date {
+  min-width: 148px;
+  cursor: text;
+}
+
+.sc-history-export-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 34px;
+  padding: 0 14px;
+  background: #f9fafb;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  color: #374151;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.sc-history-export-btn:hover {
+  background: #f1f5f9;
+  border-color: #9ca3af;
+}
+
+.sc-history-table-wrap {
+  margin-top: 14px;
+  overflow-x: auto;
+}
+
+.sc-history-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+}
+
+.sc-history-table thead tr {
+  background: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.sc-history-table th {
+  padding: 10px 20px;
+  text-align: left;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  color: #6b7280;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.sc-history-table td {
+  padding: 12px 20px;
+  color: #111827;
+  border-bottom: 1px solid #f3f4f6;
+  white-space: nowrap;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.84rem;
+}
+
+.sc-history-table td:first-child {
+  font-family: 'DM Sans', sans-serif;
+  color: #374151;
+  font-weight: 500;
+}
+
+.sc-history-table tbody tr:hover {
+  background: #f9fafb;
+}
+
+.sc-history-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.sc-history-empty {
+  text-align: center;
+  color: #9ca3af !important;
+  padding: 40px 0 !important;
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 0.88rem !important;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .sc-page {
+    flex-direction: column;
+  }
+
+  .sc-sidenav {
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 8px;
+    position: static;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .sc-sidenav .nav-item {
+    border-left: none;
+    border-bottom: 2px solid transparent;
+    padding: 7px 10px;
+    font-size: 0.78rem;
+  }
+
+  .sc-sidenav .nav-item.active {
+    border-left: none;
+    border-bottom-color: #60a5fa;
+  }
+
+  /* sc-main resets width:0 trick on mobile since it's stacked */
+  .sc-main {
+    width: 100%;
+    overflow: visible;
+  }
+
+  .sc-chart-card {
+    margin: 0;
+  }
+
+  .sc-controls-row {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+
+  .sc-stats-strip {
+    flex-wrap: wrap;
+  }
+
+  .sc-stat {
+    min-width: 33%;
+  }
+
+  .sc-history-card {
+    margin: 0;
+  }
+
+  .sc-history-title {
+    padding: 16px 16px 0;
+  }
+
+  .sc-history-controls {
+    padding: 12px 16px 0;
+  }
+
+  .sc-legend-row {
+    margin-left: 0;
+  }
+}
+
+/* Price column emphasis */
+.sc-price-cell {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #111827;
+}
+
+/* Change badge */
+.sc-change {
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.sc-change.up {
+  color: #16a34a;
+}
+
+.sc-change.down {
+  color: #dc2626;
+}
+
+/* High / Low colors */
+.sc-high {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+.sc-low {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+/* Row spacing improvement */
+.sc-history-table td {
+  padding: 14px 20px;
+}
+
+/* Hover polish */
+.sc-history-table tbody tr:hover {
+  background: #f1f5f9;
+}
+
+@media (max-width: 600px) {
+  .sc-stat {
+    min-width: 50%;
+  }
+
+  .sc-history-controls {
+    gap: 8px;
+  }
+
+  .sc-tf-bar {
+    flex-wrap: wrap;
+  }
+
+}

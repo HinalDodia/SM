@@ -1,0 +1,127 @@
+.home-root {
+  padding: 3rem 2rem;
+  text-align: center;
+  color: #e6eef6;
+  background: linear-gradient(180deg, #05080a, #0b0f12 80%);
+  min-height: 100vh;
+}
+
+.home-hero {
+  margin-bottom: 4rem;
+}
+
+.home-title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #7c8cff;
+  text-shadow: 0 0 12px rgba(124, 140, 255, 0.6);
+}
+
+.home-subtitle {
+  font-size: 1.2rem;
+  margin: 1rem auto 2rem;
+  max-width: 600px;
+  color: #9fb0bf;
+}
+
+.home-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.home-cta {
+  font-size: 1.1rem;
+  padding: 0.7rem 1.8rem;
+  border-radius: 8px;
+}
+
+.home-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.feature-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 6px 16px rgba(124, 140, 255, 0.2);
+}
+.login-section {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.btn-login {
+  background: transparent;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.btn-login:hover {
+  background: #155ab6;
+}
+
+/* hero CTA button */
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 15px;
+  color: #051923;
+  background: linear-gradient(90deg,#1d87ff,#06b6d4);
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(13,110,253,0.18);
+  transition: all 200ms ease;
+}
+
+.hero-cta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(13,110,253,0.28);
+}
+
+/* optional icon inside */
+.hero-cta span {
+  font-size: 18px;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 15px;
+  color: #051923;
+  background: linear-gradient(90deg,#1d87ff,#06b6d4);
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(13,110,253,0.18);
+  transition: all 200ms ease;
+}
+
+.hero-cta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(13,110,253,0.28);
+}
+
+/* optional icon inside */
+.hero-cta span {
+  font-size: 18px;
+}
+
+

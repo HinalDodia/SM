@@ -1,0 +1,61 @@
+/* FILINGS CONTENT CONTAINER */
+.filings-content {
+  flex: 1;
+  padding: 30px 40px;
+  max-width: calc(100% - 260px);
+  box-sizing: border-box;
+}
+
+/* SUMMARY BOX */
+.summary-box {
+  background: rgba(30, 41, 59, 0.4);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #cbd5e1;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.summary-box strong {
+  font-weight: 600;
+  color: #f8fafc;
+}
+
+/* CHART CONTAINERS (used for table section) */
+.chart-section {
+  background: rgba(30, 41, 59, 0.4);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.chart-section .chart-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #f8fafc;
+  margin-bottom: 16px;
+}
+
+/* Positive/Negative colors */
+.pos {
+  color: #34d399; /* emerald-400 */
+}
+
+.neg {
+  color: #f87171; /* red-400 */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .filings-content {
+    max-width: 100%;
+    padding: 20px;
+  }
+}

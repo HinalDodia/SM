@@ -545,5 +545,36 @@ def download_filing_pdf(symbol):
         status=404,
         mimetype="text/plain",
     )
+
+@routes_bp.route("/bse-company/<symbol>", methods=["GET"])
+@cross_origin(supports_credentials=True)
+def bse_company(symbol):
+    symbol     = symbol.upper().strip()
+    scrip_code = get_bse_scrip(symbol)
+    if not scrip_code:
+        return jsonify({"error": f"Unknown symbol: {symbol}"}), 404
  
+    info   = COMPANY_LIST.get(symbol, {})
+    result = {
+        "symbol":     symbol,
+        "scrip_code": scrip_code,
+        "name":       info.get("name", ""),
+        "sector":     info.get("sector", ""),
+        "industry":   info.get("industry", ""),
+        "isin":       "",
+    }
+ 
+    try:
+        resp = requests.get(
+            f"{BSE_BASE}/CompanyReach/w?scripcode={scrip_code}",
+            headers=BSE_HEADERS, timeout=6,
+        )
+        row = (resp.json().get("Table") or [{}])[0]
+        result["isin"] = row.get("ISIN_CODE", "")
+        if not result["name"]:
+            result["name"] = row.get("LONGNAME", "")
+    except Exception:
+        pass
+ 
+    return jsonify(result)
  

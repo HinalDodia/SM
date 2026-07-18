@@ -1,4 +1,6 @@
 import os
+
+# pyrefly: ignore [missing-import]  
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
@@ -111,22 +113,9 @@ def create_app():
 
     from .dashboard import dashboard_bp
     from .auth import auth_bp
-    from .routes import (
-        stock_chart_bp, stock_page_bp, stock_headlines_bp,
-        stock_competitors_bp, stock_dividend_bp, stock_earnings_bp,
-        stock_financials_bp, bse_filings_bp, stock_short_interest_bp,
-    )
 
     print("DEBUG: Registering routes_bp...")
     app.register_blueprint(routes_bp)
-
-    # Domain-specific blueprints extracted from routes.py
-    for bp in [
-        stock_chart_bp, stock_page_bp, stock_headlines_bp,
-        stock_competitors_bp, stock_dividend_bp, stock_earnings_bp,
-        stock_financials_bp, bse_filings_bp, stock_short_interest_bp,
-    ]:
-        app.register_blueprint(bp)
 
     print("DEBUG: Registering dashboard_bp...")
     app.register_blueprint(dashboard_bp)

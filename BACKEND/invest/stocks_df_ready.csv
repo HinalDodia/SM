@@ -1,0 +1,2116 @@
+stockname,companyname,sector,market_cap_bucket,PE,sentiment,price
+20MICRONS,20 Microns Limited,Textiles,large,28.52,-0.04,1903.97
+21STCENMGM,21st Century Management Services Limited,Industrial,mid,29.75,0.04,4756.04
+360ONE,360 ONE WAM LIMITED,Cement,mid,13.97,0.03,3673.37
+3IINFOLTD,3i Infotech Limited,Cement,large,30.16,-0.05,3013.36
+3MINDIA,3M India Limited,Finance,large,15.13,-0.02,822.29
+3PLAND,3P Land Holdings Limited,Textiles,large,49.78,-0.08,822.17
+5PAISA,5Paisa Capital Limited,IT,large,31.56,0.01,337.51
+63MOONS,63 moons technologies limited,Finance,mid,13.14,0.08,4337.57
+A2ZINFRA,A2Z Infra Engineering Limited,Pharma,large,53.03,0.03,3025.52
+AAATECH,AAA Technologies Limited,IT,large,31.7,0.08,3554.96
+AADHARHFC,Aadhar Housing Finance Limited,Industrial,large,8.37,-0.07,151.89
+AAKASH,Aakash Exploration Services Limited,IT,large,47.24,0.07,4851.05
+AAREYDRUGS,Aarey Drugs & Pharmaceuticals Limited,IT,small,5.58,-0.03,4170.59
+AARON,Aaron Industries Limited,Pharma,small,37.3,0.01,1101.08
+AARTECH,Aartech Solonics Limited,Cement,small,50.19,0.08,950.03
+AARTIDRUGS,Aarti Drugs Limited,Pharma,mid,36.69,-0.05,957.85
+AARTIIND,Aarti Industries Limited,Chemicals,mid,21.67,0.07,1556.0
+AARTIPHARM,Aarti Pharmalabs Limited,Industrial,small,21.28,-0.03,2647.54
+AARTISURF,Aarti Surfactants Limited,Chemicals,mid,17.98,-0.08,2188.13
+AARVEEDEN,Aarvee Denims & Exports Limited,Automobile,mid,17.43,0.05,1491.58
+AARVI,Aarvi Encon Limited,Energy,mid,9.9,0.01,3078.67
+AAVAS,Aavas Financiers Limited,Finance,large,47.28,0.09,740.49
+ABAN,Aban Offshore Limited,Automobile,small,22.24,-0.01,1496.12
+ABB,ABB India Limited,Industrial,mid,19.12,0.02,1863.49
+ABBOTINDIA,Abbott India Limited,Cement,large,29.51,0.01,2307.55
+ABCAPITAL,Aditya Birla Capital Limited,Energy,large,23.6,0.1,3936.62
+ABDL,Allied Blenders and Distillers Limited,Pharma,small,32.52,0.07,1038.39
+ABFRL,Aditya Birla Fashion and Retail Limited,IT,large,32.58,0.04,2595.46
+ABINFRA,A B Infrabuild Limited,Chemicals,mid,25.84,-0.02,2982.45
+ABLBL,Aditya Birla Lifestyle Brands Limited,Industrial,mid,52.52,-0.03,279.93
+ABMINTLLTD,ABM International Limited,Finance,small,51.0,0.01,3057.35
+ABREL,Aditya Birla Real Estate Limited,IT,mid,21.17,-0.04,894.09
+ABSLAMC,Aditya Birla Sun Life AMC Limited,IT,small,7.49,-0.01,372.01
+ACC,ACC Limited,Textiles,large,38.51,-0.01,4746.98
+ACCELYA,Accelya Solutions India Limited,Industrial,mid,44.13,0.01,4829.88
+ACCURACY,Accuracy Shipping Limited,Energy,small,46.77,0.02,4051.57
+ACE,Action Construction Equipment Limited,IT,large,36.98,0.03,1557.84
+ACEINTEG,Ace Integrated Solutions Limited,Textiles,mid,48.11,-0.08,533.48
+ACI,Archean Chemical Industries Limited,Energy,large,5.8,0.06,3436.95
+ACL,Andhra Cements Limited,Industrial,mid,34.52,0.09,2228.75
+ACLGATI,Allcargo Gati Limited,Energy,large,43.5,0.04,654.09
+ACMESOLAR,Acme Solar Holdings Limited,Automobile,mid,57.75,-0.09,2501.13
+ACUTAAS,Acutaas Chemicals Limited,Chemicals,small,31.55,0.09,220.22
+ADANIENSOL,Adani Energy Solutions Limited,Automobile,large,7.58,-0.08,4551.14
+ADANIENT,Adani Enterprises Limited,Energy,mid,43.3,-0.01,1330.96
+ADANIGREEN,Adani Green Energy Limited,Cement,small,28.91,0.07,3329.49
+ADANIPORTS,Adani Ports and Special Economic Zone Limited,Automobile,large,34.4,0.0,1592.97
+ADANIPOWER,Adani Power Limited,Automobile,mid,45.07,0.1,2624.34
+ADFFOODS,ADF Foods Limited,Cement,small,25.16,-0.09,2756.22
+ADL,Archidply Decor Limited,IT,large,48.83,0.05,965.03
+ADOR,Ador Welding Limited,Automobile,mid,47.27,-0.05,4849.44
+ADROITINFO,Adroit Infotech Limited,IT,large,47.19,0.08,3886.91
+ADSL,Allied Digital Services Limited,Industrial,mid,55.45,-0.03,4700.52
+ADVANIHOTR,Advani Hotels & Resorts (India) Limited,Textiles,small,42.83,0.07,4479.4
+ADVENZYMES,Advanced Enzyme Technologies Limited,IT,mid,56.48,0.07,3009.6
+AEGISLOG,Aegis Logistics Limited,Pharma,small,16.6,-0.06,4613.28
+AEGISVOPAK,Aegis Vopak Terminals Limited,IT,large,21.08,0.05,488.04
+AEROENTER,Aeroflex Enterprises Limited,Energy,small,14.44,-0.03,1020.12
+AEROFLEX,Aeroflex Industries Limited,Automobile,large,32.37,-0.09,273.88
+AETHER,Aether Industries Limited,Energy,large,58.27,-0.03,1660.39
+AFCONS,Afcons Infrastructure Limited,Pharma,large,9.98,-0.04,1973.95
+AFFLE,Affle 3i Limited,Pharma,large,25.48,-0.09,1393.18
+AFFORDABLE,Affordable Robotic & Automation Limited,Textiles,mid,12.94,-0.09,4152.25
+AFIL,Akme Fintrade (India) Limited,Pharma,mid,49.46,0.0,1815.93
+AFSL,Abans Financial Services Limited,Chemicals,mid,49.12,-0.0,1440.63
+AGARIND,Agarwal Industrial Corporation Limited,Chemicals,mid,55.02,-0.04,2736.35
+AGARWALEYE,Dr. Agarwal's Health Care Limited,Finance,small,37.65,0.02,747.57
+AGI,AGI Greenpac Limited,Automobile,mid,34.63,0.02,4020.88
+AGIIL,Agi Infra Limited,Textiles,small,28.56,-0.04,419.03
+AGRITECH,Agri-Tech (India) Limited,Industrial,large,10.16,0.02,4935.09
+AGROPHOS,Agro Phos India Limited,Chemicals,small,58.62,0.02,3872.61
+AGSTRA,AGS Transact Technologies Limited,Textiles,small,43.95,0.1,1033.64
+AHLADA,Ahlada Engineers Limited,Automobile,small,42.78,-0.01,77.33
+AHLEAST,Asian Hotels (East) Limited,Energy,small,6.74,0.08,4086.53
+AHLUCONT,Ahluwalia Contracts (India) Limited,Finance,small,58.66,-0.01,3548.94
+AIAENG,AIA Engineering Limited,Industrial,mid,20.24,-0.08,3658.59
+AIIL,Authum Investment & Infrastructure Limited,Industrial,small,41.48,-0.0,3867.79
+AIRAN,Airan Limited,Chemicals,mid,24.24,0.08,416.52
+AIROLAM,Airo Lam limited,Cement,mid,17.2,-0.05,1824.41
+AJANTPHARM,Ajanta Pharma Limited,Energy,small,9.42,-0.08,623.55
+AJAXENGG,Ajax Engineering Limited,Industrial,large,13.35,-0.02,4322.36
+AJMERA,Ajmera Realty & Infra India Limited,Chemicals,small,17.76,0.02,3135.33
+AJOONI,Ajooni Biotech Limited,Automobile,mid,11.43,-0.09,1687.95
+AKASH,Akash Infra-Projects Limited,Energy,small,45.45,0.1,364.61
+AKG,Akg Exim Limited,Cement,mid,14.41,-0.03,1589.36
+AKI,AKI India Limited,Pharma,small,24.37,-0.08,1659.66
+AKSHAR,Akshar Spintex Limited,Automobile,mid,29.65,0.09,3661.55
+AKSHARCHEM,AksharChem India Limited,Textiles,mid,8.06,-0.1,3205.91
+AKSHOPTFBR,Aksh Optifibre Limited,Finance,large,5.44,-0.07,4441.7
+AKUMS,Akums Drugs and Pharmaceuticals Limited,Cement,small,33.14,-0.03,2387.46
+AKZOINDIA,Akzo Nobel India Limited,Finance,mid,42.77,0.06,641.99
+ALANKIT,Alankit Limited,Textiles,mid,15.27,-0.05,3580.56
+ALBERTDAVD,Albert David Limited,Automobile,mid,54.98,0.08,3815.89
+ALEMBICLTD,Alembic Limited,Textiles,mid,6.23,-0.09,2828.32
+ALICON,Alicon Castalloy Limited,Cement,mid,18.46,-0.09,3866.29
+ALIVUS,Alivus Life Sciences Limited,Chemicals,mid,17.35,-0.05,2494.29
+ALKALI,Alkali Metals Limited,IT,mid,25.11,-0.05,2637.53
+ALKEM,Alkem Laboratories Limited,Energy,small,57.01,-0.03,2166.33
+ALKYLAMINE,Alkyl Amines Chemicals Limited,Chemicals,mid,56.83,0.03,175.82
+ALLCARGO,Allcargo Logistics Limited,Pharma,mid,51.41,0.04,584.06
+ALLDIGI,Alldigi Tech Limited,Industrial,small,56.1,0.06,205.57
+ALMONDZ,Almondz Global Securities Limited,Industrial,mid,13.34,-0.04,3200.23
+ALOKINDS,Alok Industries Limited,Energy,mid,49.26,-0.04,1606.06
+ALPA,Alpa Laboratories Limited,Automobile,mid,9.51,0.07,2567.42
+ALPHAGEO,Alphageo (India) Limited,Energy,mid,37.51,0.04,4542.45
+AMBER,Amber Enterprises India Limited,Finance,large,13.45,0.08,1284.0
+AMBICAAGAR,Ambica Agarbathies & Aroma industries Limited,Industrial,small,16.75,0.09,2081.4
+AMBIKCO,Ambika Cotton Mills Limited,Textiles,large,21.71,0.0,3789.98
+AMBUJACEM,Ambuja Cements Limited,Industrial,large,32.73,0.06,1182.55
+AMDIND,AMD Industries Limited,Chemicals,mid,20.29,0.01,431.05
+AMJLAND,Amj Land Holdings Limited,Chemicals,large,30.75,0.08,1484.27
+AMNPLST,Amines & Plasticizers Limited,Industrial,large,49.51,-0.02,848.05
+AMRUTANJAN,Amrutanjan Health Care Limited,Chemicals,large,39.71,-0.08,4652.0
+ANANDRATHI,Anand Rathi Wealth Limited,Pharma,large,47.79,0.06,4050.2
+ANANTRAJ,Anant Raj Limited,Chemicals,large,29.94,-0.1,3185.35
+ANDHRAPAP,ANDHRA PAPER LIMITED,Finance,small,19.83,0.01,4363.73
+ANDHRSUGAR,The Andhra Sugars Limited,Pharma,large,50.95,-0.07,4028.18
+ANGELONE,Angel One Limited,Energy,small,25.05,-0.03,973.52
+ANIKINDS,Anik Industries Limited,Finance,large,13.29,0.04,4468.17
+ANKITMETAL,Ankit Metal & Power Limited,Industrial,mid,57.6,0.08,2719.74
+ANMOL,Anmol India Limited,Chemicals,mid,43.22,0.03,4046.83
+ANSALAPI,Ansal Properties & Infrastructure Limited,Industrial,small,55.47,-0.03,4485.65
+ANTGRAPHIC,Antarctica Limited,Textiles,mid,33.6,0.05,1624.12
+ANTHEM,Anthem Biosciences Limited,Industrial,small,5.41,-0.01,594.76
+ANUHPHR,Anuh Pharma Limited,Industrial,small,48.52,0.02,1178.28
+ANUP,The Anup Engineering Limited,Finance,large,59.34,-0.03,2164.18
+ANURAS,Anupam Rasayan India Limited,Textiles,small,48.67,-0.04,4099.17
+APARINDS,Apar Industries Limited,IT,small,25.46,-0.02,4310.62
+APCL,Anjani Portland Cement Limited,IT,large,48.62,-0.05,84.41
+APCOTEXIND,Apcotex Industries Limited,IT,small,16.61,-0.01,2578.2
+APEX,Apex Frozen Foods Limited,Cement,mid,28.28,0.06,2116.18
+APLAPOLLO,APL Apollo Tubes Limited,Pharma,mid,9.95,-0.07,1149.43
+APLLTD,Alembic Pharmaceuticals Limited,Energy,large,18.04,0.05,643.33
+APOLLO,Apollo Micro Systems Limited,Pharma,small,8.95,0.04,1721.2
+APOLLOHOSP,Apollo Hospitals Enterprise Limited,Pharma,mid,31.18,-0.01,4717.4
+APOLLOPIPE,Apollo Pipes Limited,Finance,mid,10.38,0.08,1649.85
+APOLLOTYRE,Apollo Tyres Limited,Textiles,large,15.64,0.08,2618.01
+APOLSINHOT,Apollo Sindoori Hotels Limited,IT,large,19.66,0.0,3529.94
+APTECHT,Aptech Limited,Textiles,small,35.09,-0.09,1849.97
+APTUS,Aptus Value Housing Finance India Limited,Industrial,large,25.73,-0.02,4860.32
+ARCHIDPLY,Archidply Industries Limited,Chemicals,mid,49.55,-0.04,4814.11
+ARCHIES,Archies Limited,Energy,small,29.0,-0.01,1296.32
+ARE&M,Amara Raja Energy & Mobility Limited,IT,small,37.8,-0.03,2511.38
+ARENTERP,Rajdarshan Industries Limited,Finance,mid,7.32,0.01,1539.35
+ARFIN,Arfin India Limited,IT,mid,37.6,0.09,1459.96
+ARIES,Aries Agro Limited,IT,mid,13.4,-0.09,232.59
+ARIHANTCAP,Arihant Capital Markets Limited,IT,small,56.56,0.06,3067.34
+ARIHANTSUP,Arihant Superstructures Limited,Textiles,mid,55.54,0.05,2538.26
+ARISINFRA,Arisinfra Solutions Limited,Industrial,mid,9.86,0.06,304.82
+ARKADE,Arkade Developers Limited,Automobile,mid,13.03,0.0,1429.3
+ARMANFIN,Arman Financial Services Limited,Automobile,small,41.34,0.06,4545.92
+AROGRANITE,Aro Granite Industries Limited,Industrial,mid,27.92,-0.06,1235.83
+ARROWGREEN,Arrow Greentech Limited,Finance,mid,19.49,0.06,767.23
+ARSSINFRA,ARSS Infrastructure Projects Limited,Textiles,small,12.53,0.06,2472.79
+ARTEMISMED,Artemis Medicare Services Limited,Energy,large,26.61,-0.09,4928.97
+ARTNIRMAN,Art Nirman Limited,Textiles,small,30.95,-0.06,1248.17
+ARVEE,Arvee Laboratories (India) Limited,Textiles,mid,25.38,0.03,3377.07
+ARVIND,Arvind Limited,Cement,small,5.54,-0.03,3820.02
+ARVINDFASN,Arvind Fashions Limited,Cement,large,13.3,-0.01,1226.31
+ARVSMART,Arvind SmartSpaces Limited,Pharma,mid,48.37,-0.09,3654.67
+ASAHIINDIA,Asahi India Glass Limited,Cement,small,33.6,-0.05,1870.53
+ASAHISONG,Asahi Songwon Colors Limited,Industrial,small,18.59,0.02,3179.91
+ASAL,Automotive Stampings and Assemblies Limited,Chemicals,large,16.62,0.08,3185.97
+ASALCBR,Associated Alcohols & Breweries Ltd.,Chemicals,mid,30.62,-0.02,2702.08
+ASHAPURMIN,Ashapura Minechem Limited,Finance,mid,35.88,0.01,496.93
+ASHIANA,Ashiana Housing Limited,Automobile,small,42.58,-0.01,4184.75
+ASHIMASYN,Ashima Limited,Cement,mid,18.83,0.05,1637.86
+ASHOKA,Ashoka Buildcon Limited,Pharma,large,59.3,0.09,973.27
+ASHOKAMET,Ashoka Metcast Limited,Finance,large,57.53,-0.04,251.84
+ASHOKLEY,Ashok Leyland Limited,Energy,mid,39.55,0.07,2974.92
+ASIANENE,Asian Energy Services Limited,Finance,large,14.87,-0.06,3403.94
+ASIANHOTNR,Asian Hotels (North) Limited,Energy,mid,8.36,0.06,132.11
+ASIANPAINT,Asian Paints Limited,Energy,mid,37.07,0.01,2584.86
+ASIANTILES,Asian Granito India Limited,Industrial,small,37.33,-0.09,1171.15
+ASKAUTOLTD,ASK Automotive Limited,Finance,large,23.46,-0.09,3243.61
+ASMS,Bartronics India Limited,Cement,mid,59.6,0.04,913.11
+ASPINWALL,Aspinwall and Company Limited,Energy,mid,47.69,-0.05,3470.14
+ASTEC,Astec LifeSciences Limited,Cement,mid,12.6,-0.05,1964.34
+ASTERDM,Aster DM Healthcare Limited,Industrial,mid,19.26,0.06,4686.81
+ASTRAL,Astral Limited,Energy,mid,54.28,0.09,730.73
+ASTRAMICRO,Astra Microwave Products Limited,Chemicals,small,45.54,-0.07,1738.28
+ASTRAZEN,AstraZeneca Pharma India Limited,Energy,mid,49.54,-0.05,611.69
+ASTRON,Astron Paper & Board Mill Limited,Textiles,mid,58.92,0.01,4627.23
+ATALREAL,Atal Realtech Limited,Automobile,small,16.02,0.04,4392.83
+ATAM,Atam Valves Limited,Automobile,small,47.71,-0.05,1326.81
+ATGL,Adani Total Gas Limited,Energy,small,32.42,-0.07,3316.92
+ATHERENERG,Ather Energy Limited,Pharma,small,9.72,0.04,4095.25
+ATL,Allcargo Terminals Limited,Finance,large,9.96,-0.02,2798.24
+ATLANTAA,ATLANTAA LIMITED,Chemicals,mid,12.04,0.09,2671.77
+ATLASCYCLE,Atlas Cycles (Haryana) Limited,Textiles,large,7.76,0.01,1247.17
+ATUL,Atul Limited,IT,mid,28.78,0.06,510.86
+ATULAUTO,Atul Auto Limited,Finance,large,19.43,-0.01,4491.22
+AUBANK,AU Small Finance Bank Limited,Textiles,small,57.74,-0.01,4507.07
+AURIONPRO,Aurionpro Solutions Limited,Textiles,large,48.84,-0.07,3183.85
+AUROPHARMA,Aurobindo Pharma Limited,Textiles,small,51.89,0.0,1728.2
+AURUM,Aurum PropTech Limited,Textiles,small,11.05,-0.0,1778.59
+AUSOMENT,Ausom Enterprise Limited,Textiles,large,16.18,-0.08,3643.48
+AUTOAXLES,Automotive Axles Limited,Textiles,mid,49.71,0.09,4490.7
+AUTOIND,Autoline Industries Limited,Industrial,small,7.07,-0.06,4441.08
+AVADHSUGAR,Avadh Sugar & Energy Limited,Textiles,mid,52.43,-0.09,3910.38
+AVALON,Avalon Technologies Limited,Automobile,small,44.55,0.02,3228.06
+AVANTEL,Avantel Limited,Energy,mid,35.21,-0.05,466.49
+AVANTIFEED,Avanti Feeds Limited,Automobile,mid,38.71,0.07,850.06
+AVG,AVG Logistics Limited,Energy,small,24.82,0.06,4497.84
+AVL,Aditya Vision Limited,Pharma,mid,29.88,-0.1,3051.82
+AVONMORE,Avonmore Capital & Management Services Limited,Pharma,large,10.89,0.02,95.53
+AVROIND,AVRO INDIA LIMITED,Pharma,mid,14.17,-0.06,552.28
+AVTNPL,AVT Natural Products Limited,IT,small,33.2,0.02,3334.33
+AWFIS,Awfis Space Solutions Limited,Automobile,mid,43.93,-0.08,75.05
+AWHCL,Antony Waste Handling Cell Limited,IT,mid,52.68,-0.03,846.0
+AWL,AWL Agri Business Limited,Textiles,mid,46.71,-0.05,2766.23
+AXISBANK,Axis Bank Limited,Industrial,small,6.57,0.05,3474.88
+AXISCADES,AXISCADES Technologies Limited,Textiles,mid,40.03,-0.09,3277.21
+AXITA,Axita Cotton Limited,Textiles,mid,11.59,0.08,1160.13
+AYMSYNTEX,AYM Syntex Limited,Energy,small,6.44,-0.01,3575.29
+AZAD,Azad Engineering Limited,Textiles,large,9.64,0.06,1224.38
+BAFNAPH,Bafna Pharmaceuticals Limited,IT,large,27.33,-0.09,1660.73
+BAGFILMS,B.A.G Films and Media Limited,Industrial,large,40.94,0.01,3745.13
+BAIDFIN,Baid Finserv Limited,Energy,large,15.08,0.02,3265.68
+BAJAJ-AUTO,Bajaj Auto Limited,Energy,large,31.54,-0.09,4253.66
+BAJAJCON,Bajaj Consumer Care Limited,Pharma,small,47.28,0.05,3305.18
+BAJAJELEC,Bajaj Electricals Limited,Cement,small,12.61,0.03,2863.13
+BAJAJFINSV,Bajaj Finserv Limited,IT,mid,25.84,-0.06,513.69
+BAJAJHCARE,Bajaj Healthcare Limited,IT,mid,17.73,-0.05,1870.19
+BAJAJHFL,Bajaj Housing Finance Limited,IT,mid,27.56,0.07,1362.75
+BAJAJHIND,Bajaj Hindusthan Sugar Limited,Energy,mid,54.7,-0.09,1257.75
+BAJAJHLDNG,Bajaj Holdings & Investment Limited,Cement,mid,43.89,0.02,4866.4
+BAJAJINDEF,Indef Manufacturing Limited,Industrial,mid,10.84,-0.01,1995.83
+BAJEL,Bajel Projects Limited,Energy,mid,47.69,-0.02,4465.63
+BAJFINANCE,Bajaj Finance Limited,Finance,small,30.39,-0.09,3174.14
+BALAJEE,Shree Tirupati Balajee Agro Trading Company Limited,Automobile,small,20.86,-0.05,3984.32
+BALAJITELE,Balaji Telefilms Limited,Industrial,small,27.52,-0.09,2538.05
+BALAMINES,Balaji Amines Limited,Cement,large,30.93,-0.08,2905.67
+BALAXI,BALAXI PHARMACEUTICALS LIMITED,Chemicals,large,34.19,0.02,2487.96
+BALKRISHNA,Balkrishna Paper Mills Limited,Textiles,mid,12.32,-0.05,1016.45
+BALKRISIND,Balkrishna Industries Limited,Pharma,large,48.16,-0.09,3626.14
+BALMLAWRIE,Balmer Lawrie & Company Limited,Automobile,small,20.62,0.04,1439.82
+BALPHARMA,Bal Pharma Limited,Finance,large,19.7,-0.03,170.36
+BALRAMCHIN,Balrampur Chini Mills Limited,Finance,large,38.66,0.05,3245.09
+BALUFORGE,Balu Forge Industries Limited,Automobile,small,40.08,0.05,926.7
+BANARBEADS,Banaras Beads Limited,Cement,large,44.07,0.03,4705.27
+BANARISUG,Bannari Amman Sugars Limited,IT,large,25.98,-0.07,4771.95
+BANCOINDIA,Banco Products (I) Limited,Energy,large,35.15,0.0,4578.58
+BANDHANBNK,Bandhan Bank Limited,IT,small,11.92,-0.03,1882.29
+BANG,Bang Overseas Limited,Chemicals,mid,27.03,0.08,126.51
+BANKA,Banka BioLoo Limited,Industrial,mid,26.67,-0.08,4645.18
+BANKBARODA,Bank of Baroda,Chemicals,mid,51.43,0.06,2169.51
+BANKINDIA,Bank of India,Chemicals,mid,12.15,-0.02,4834.94
+BANSALWIRE,Bansal Wire Industries Limited,Textiles,small,46.45,-0.03,4819.92
+BANSWRAS,Banswara Syntex Limited,Industrial,small,30.91,0.07,4272.4
+BARBEQUE,Barbeque Nation Hospitality Limited,Automobile,large,53.92,-0.04,1507.52
+BASF,BASF India Limited,Cement,small,5.44,0.06,1956.23
+BASML,Bannari Amman Spinning Mills Limited,Textiles,small,15.82,0.09,4263.13
+BATAINDIA,Bata India Limited,Energy,mid,21.64,0.08,1618.76
+BAYERCROP,Bayer Cropscience Limited,IT,large,22.0,-0.05,888.99
+BBL,Bharat Bijlee Limited,Finance,small,48.05,-0.06,2806.17
+BBOX,Black Box Limited,Finance,large,59.02,0.06,4683.97
+BBTC,Bombay Burmah Trading Corporation Limited,IT,large,11.8,0.07,3495.35
+BBTCL,B&B Triplewall Containers Limited,IT,large,24.93,0.1,2871.8
+BCG,Brightcom Group Limited,Textiles,small,40.51,-0.03,531.02
+BCLIND,Bcl Industries Limited,Energy,mid,59.5,0.02,3094.29
+BCONCEPTS,Brand Concepts Limited,Pharma,large,47.18,-0.01,4950.77
+BDL,Bharat Dynamics Limited,Chemicals,large,51.8,-0.1,743.42
+BEARDSELL,Beardsell Limited,Textiles,large,19.31,0.02,2615.73
+BECTORFOOD,Mrs. Bectors Food Specialities Limited,Energy,mid,17.07,0.09,4393.0
+BEDMUTHA,Bedmutha Industries Limited,Chemicals,mid,53.09,0.08,3716.8
+BEL,Bharat Electronics Limited,Energy,small,5.47,0.0,3500.23
+BELLACASA,Bella Casa Fashion & Retail Limited,Cement,mid,8.01,0.07,3527.3
+BELRISE,Belrise Industries Limited,Chemicals,mid,11.68,-0.03,1829.48
+BEML,BEML Limited,Chemicals,large,43.11,0.08,1503.28
+BEPL,Bhansali Engineering Polymers Limited,Chemicals,mid,26.67,0.08,4056.34
+BERGEPAINT,Berger Paints (I) Limited,Industrial,large,33.12,0.01,4060.06
+BESTAGRO,Best Agrolife Limited,Industrial,large,34.88,-0.02,4342.01
+BFINVEST,BF Investment Limited,Pharma,large,16.36,0.06,4570.54
+BFUTILITIE,BF Utilities Limited,Cement,large,23.17,0.04,2581.14
+BGRENERGY,BGR Energy Systems Limited,Energy,small,56.29,0.09,2532.51
+BHAGCHEM,Bhagiradha Chemicals & Industries Limited,Automobile,small,29.84,0.05,4001.56
+BHAGERIA,Bhageria Industries Limited,Automobile,small,25.81,-0.06,3267.32
+BHAGYANGR,Bhagyanagar India Limited,Cement,large,45.57,0.06,3524.74
+BHANDARI,Bhandari Hosiery Exports Limited,Pharma,mid,7.17,-0.03,3989.17
+BHARATFORG,Bharat Forge Limited,Automobile,small,55.5,0.05,4455.53
+BHARATGEAR,Bharat Gears Limited,Automobile,small,19.1,-0.09,1723.08
+BHARATRAS,Bharat Rasayan Limited,Pharma,large,34.89,-0.07,1909.14
+BHARATSE,Bharat Seats Limited,Energy,mid,8.49,-0.03,515.21
+BHARATWIRE,Bharat Wire Ropes Limited,Energy,large,58.56,-0.08,2912.49
+BHARTIARTL,Bharti Airtel Limited,Textiles,mid,25.38,0.05,227.91
+BHARTIHEXA,Bharti Hexacom Limited,Chemicals,mid,49.5,-0.07,2354.71
+BHEL,Bharat Heavy Electricals Limited,Industrial,large,48.76,0.01,2736.09
+BIGBLOC,Bigbloc Construction Limited,Finance,small,59.4,-0.06,1468.38
+BIKAJI,Bikaji Foods International Limited,Industrial,small,34.93,-0.09,2974.62
+BIL,Bhartiya International Limited,Chemicals,mid,15.0,0.08,200.98
+BILVYAPAR,BIL VYAPAR LIMITED,Finance,small,41.2,0.02,234.87
+BIOCON,Biocon Limited,Cement,small,39.71,-0.05,4121.87
+BIOFILCHEM,Biofil Chemicals & Pharmaceuticals Limited,Pharma,large,56.87,-0.07,1832.94
+BIRLACABLE,Birla Cable Limited,Energy,large,24.71,0.06,678.95
+BIRLACORPN,Birla Corporation Limited,Finance,small,44.46,-0.07,2635.1
+BIRLAMONEY,Aditya Birla Money Limited,Automobile,large,17.51,0.07,3861.47
+BIRLANU,BirlaNu Limited,Industrial,large,26.1,-0.05,1118.31
+BLACKBUCK,Zinka Logistics Solutions Limited,Automobile,mid,56.75,0.05,3133.31
+BLAL,BEML Land Assets Limited,Chemicals,large,15.42,0.04,472.47
+BLBLIMITED,BLB Limited,Cement,mid,37.3,-0.03,305.82
+BLISSGVS,Bliss GVS Pharma Limited,Automobile,large,30.5,-0.03,2680.21
+BLKASHYAP,B. L. Kashyap and Sons Limited,Finance,small,50.01,0.04,2726.14
+BLS,BLS International Services Limited,Cement,mid,31.05,0.0,3205.28
+BLSE,BLS E-Services Limited,Automobile,large,37.72,-0.09,3644.15
+BLUECOAST,Blue Coast Hotels Limited,Automobile,small,14.9,-0.06,4880.47
+BLUEDART,Blue Dart Express Limited,Industrial,small,44.46,0.01,2605.69
+BLUEJET,Blue Jet Healthcare Limited,Industrial,large,36.96,0.08,1648.63
+BLUESTARCO,Blue Star Limited,Textiles,large,56.95,0.02,3986.17
+BLUSPRING,Bluspring Enterprises Limited,Energy,mid,20.8,0.01,1390.62
+BODALCHEM,Bodal Chemicals Limited,Cement,large,41.59,0.05,2222.91
+BOHRAIND,Bohra Industries Limited,Finance,mid,44.58,0.03,438.36
+BOMDYEING,Bombay Dyeing & Mfg Company Limited,Automobile,mid,15.8,0.02,175.49
+BORANA,Borana Weaves Limited,Pharma,large,49.54,0.01,4815.11
+BOROLTD,Borosil Limited,Automobile,large,10.88,-0.07,4188.1
+BORORENEW,BOROSIL RENEWABLES LIMITED,Energy,mid,29.05,-0.08,3495.07
+BOROSCI,Borosil Scientific Limited,IT,small,22.48,-0.08,2074.32
+BOSCHLTD,Bosch Limited,Chemicals,small,34.88,0.02,907.81
+BPCL,Bharat Petroleum Corporation Limited,IT,mid,51.88,0.05,824.36
+BPL,BPL Limited,Cement,mid,11.73,-0.06,1288.7
+BRIGADE,Brigade Enterprises Limited,Industrial,large,19.29,-0.02,2768.67
+BRITANNIA,Britannia Industries Limited,Energy,large,55.23,0.06,3587.25
+BRNL,Bharat Road Network Limited,Energy,mid,44.57,-0.02,3317.98
+BROOKS,Brooks Laboratories Limited,Chemicals,small,59.29,-0.09,1435.67
+BSE,BSE Limited,Industrial,mid,48.57,0.09,4776.58
+BSHSL,Bombay Super Hybrid Seeds Limited,Automobile,large,36.33,-0.05,3702.59
+BSL,BSL Limited,Energy,small,55.29,-0.1,2794.05
+BSOFT,BIRLASOFT LIMITED,Chemicals,large,8.46,-0.05,3078.02
+BTML,Bodhi Tree Multimedia Limited,Cement,mid,51.37,0.04,2127.02
+BUTTERFLY,Butterfly Gandhimathi Appliances Limited,Automobile,small,53.19,-0.06,1276.27
+BVCL,Barak Valley Cements Limited,Chemicals,large,5.92,0.03,1812.06
+BYKE,The Byke Hospitality Ltd,Industrial,small,14.57,-0.08,3801.34
+CALSOFT,California Software Company Limited,Energy,mid,34.02,-0.09,121.25
+CAMLINFINE,Camlin Fine Sciences Limited,Pharma,small,57.33,0.0,624.56
+CAMPUS,Campus Activewear Limited,Textiles,mid,47.61,0.09,277.71
+CAMS,Computer Age Management Services Limited,Chemicals,small,53.35,-0.04,251.61
+CANBK,Canara Bank,IT,large,59.35,0.06,4284.53
+CANFINHOME,Can Fin Homes Limited,Finance,large,52.97,0.01,3533.11
+CANTABIL,Cantabil Retail India Limited,Chemicals,large,24.62,0.01,2397.16
+CAPACITE,Capacit'e Infraprojects Limited,Cement,mid,41.53,0.03,534.28
+CAPITALSFB,Capital Small Finance Bank Limited,Textiles,small,40.74,0.1,2483.5
+CAPLIPOINT,Caplin Point Laboratories Limited,Energy,large,44.82,0.09,2393.69
+CAPTRUST,Capital Trust Limited,Industrial,mid,11.03,0.04,907.35
+CARBORUNIV,Carborundum Universal Limited,Energy,large,52.45,0.1,2197.57
+CARERATING,CARE Ratings Limited,Chemicals,large,42.84,-0.01,2022.6
+CARRARO,Carraro India Limited,Finance,small,38.27,0.09,3098.46
+CARTRADE,Cartrade Tech Limited,Textiles,large,50.9,-0.04,3193.71
+CARYSIL,CARYSIL LIMITED,IT,small,39.55,0.04,274.25
+CASTROLIND,Castrol India Limited,Automobile,large,10.65,-0.08,1904.33
+CCCL,Consolidated Construction Consortium Limited,Energy,small,5.59,0.08,3148.01
+CCHHL,Country Club Hospitality & Holidays Limited,Cement,small,28.54,0.07,2540.52
+CCL,CCL Products (India) Limited,Automobile,large,45.52,-0.01,4289.62
+CDSL,Central Depository Services (India) Limited,Industrial,small,53.36,-0.09,3310.53
+CEATLTD,CEAT Limited,Energy,mid,31.01,0.0,856.53
+CEIGALL,Ceigall India Limited,Pharma,large,55.29,-0.05,399.32
+CELEBRITY,Celebrity Fashions Limited,Textiles,mid,14.6,0.09,3229.98
+CELLO,Cello World Limited,IT,large,17.62,0.04,181.23
+CENTENKA,Century Enka Limited,Finance,small,20.19,-0.03,2949.59
+CENTEXT,Century Extrusions Limited,Finance,mid,29.68,-0.09,4704.14
+CENTRALBK,Central Bank of India,Cement,mid,22.16,-0.02,2898.6
+CENTRUM,Centrum Capital Limited,Pharma,mid,27.73,0.06,1971.44
+CENTUM,Centum Electronics Limited,Finance,small,38.35,0.0,3234.28
+CENTURYPLY,Century Plyboards (India) Limited,Cement,small,54.45,-0.05,2318.35
+CERA,Cera Sanitaryware Limited,Finance,small,45.89,0.06,2750.8
+CEREBRAINT,Cerebra Integrated Technologies Limited,Chemicals,small,55.75,0.04,4710.25
+CESC,CESC Limited,Automobile,small,47.8,-0.0,1961.21
+CEWATER,Concord Enviro Systems Limited,Energy,small,32.64,-0.09,4807.89
+CGCL,Capri Global Capital Limited,Automobile,large,39.99,-0.01,4531.49
+CGPOWER,CG Power and Industrial Solutions Limited,Cement,large,36.19,-0.01,1019.17
+CHALET,Chalet Hotels Limited,Industrial,small,56.44,-0.02,393.34
+CHAMBLFERT,Chambal Fertilizers & Chemicals Limited,Finance,large,41.61,-0.0,548.85
+CHEMBOND,Chembond Material Technologies Limited,Textiles,large,10.84,0.03,140.2
+CHEMBONDCH,Chembond Chemicals Limited,IT,large,44.14,-0.03,517.49
+CHEMCON,Chemcon Speciality Chemicals Limited,Chemicals,large,8.19,0.07,3430.88
+CHEMFAB,Chemfab Alkalis Limited,Energy,large,23.26,0.03,402.38
+CHEMPLASTS,Chemplast Sanmar Limited,Energy,mid,55.2,0.01,1628.93
+CHENNPETRO,Chennai Petroleum Corporation Limited,Finance,mid,29.48,-0.08,4232.13
+CHEVIOT,Cheviot Company Limited,Energy,large,14.17,0.07,165.2
+CHOICEIN,Choice International Limited,Textiles,large,19.67,-0.08,4081.62
+CHOLAFIN,Cholamandalam Investment and Finance Company Limited,Finance,mid,24.18,-0.04,1445.18
+CHOLAHLDNG,Cholamandalam Financial Holdings Limited,Automobile,small,58.36,-0.09,634.92
+CIEINDIA,CIE Automotive India Limited,Pharma,large,56.74,0.08,3498.85
+CIFL,Capital India Finance Limited,Finance,mid,6.64,-0.09,3163.27
+CIGNITITEC,Cigniti Technologies Limited,Cement,large,8.52,-0.02,4393.49
+CINELINE,Cineline India Limited,Finance,small,55.72,0.01,3688.6
+CINEVISTA,Cinevista Limited,Cement,small,31.85,0.06,4027.23
+CIPLA,Cipla Limited,Automobile,small,46.66,0.03,1446.07
+CLEAN,Clean Science and Technology Limited,Chemicals,small,54.76,0.03,928.33
+CLEDUCATE,CL Educate Limited,Chemicals,large,15.37,-0.08,3765.54
+CLSEL,Chaman Lal Setia Exports Limited,Textiles,small,29.13,0.03,4043.83
+CMSINFO,CMS Info Systems Limited,Industrial,mid,57.79,-0.02,4953.0
+COALINDIA,Coal India Limited,Energy,mid,57.45,-0.05,2092.46
+COASTCORP,Coastal Corporation Limited,Cement,small,55.05,-0.03,1891.49
+COCHINSHIP,Cochin Shipyard Limited,Textiles,small,7.7,-0.06,3893.24
+COFFEEDAY,Coffee Day Enterprises Limited,Industrial,small,20.58,-0.01,1736.98
+COFORGE,Coforge Limited,Automobile,large,19.44,-0.04,4657.25
+COHANCE,Cohance Lifesciences Limited,IT,large,42.68,-0.02,4299.14
+COLPAL,Colgate Palmolive (India) Limited,Textiles,mid,13.69,-0.02,2173.52
+COMPUSOFT,Compucom Software Limited,Pharma,large,19.99,-0.06,3766.81
+COMSYN,Commercial Syn Bags Limited,Energy,mid,14.85,0.0,3784.99
+CONCOR,Container Corporation of India Limited,Finance,small,28.51,0.03,560.46
+CONCORDBIO,Concord Biotech Limited,Automobile,mid,59.44,-0.06,4517.64
+CONFIPET,Confidence Petroleum India Limited,Chemicals,large,42.58,0.01,2551.0
+CONSOFINVT,Consolidated Finvest & Holdings Limited,IT,small,11.22,0.08,4140.96
+CONTROLPR,Control Print Limited,Industrial,large,24.57,0.03,1634.25
+CORALFINAC,Coral India Finance & Housing Limited,Pharma,mid,25.32,-0.07,4482.84
+CORDSCABLE,Cords Cable Industries Limited,Finance,mid,36.27,0.08,1976.55
+COROMANDEL,Coromandel International Limited,Automobile,small,47.2,0.06,103.65
+COSMOFIRST,COSMO FIRST LIMITED,IT,large,22.89,0.01,4531.64
+COUNCODOS,Country Condo's Limited,Industrial,large,34.13,0.01,501.87
+CPCAP,CP Capital Limited,IT,large,57.72,0.03,1630.6
+CRAFTSMAN,Craftsman Automation Limited,Chemicals,large,5.36,-0.04,4752.81
+CREATIVE,Creative Newtech Limited,Textiles,small,59.88,0.07,4755.51
+CREATIVEYE,Creative Eye Limited,Pharma,small,42.09,0.04,2888.52
+CREDITACC,CREDITACCESS GRAMEEN LIMITED,Cement,small,46.82,-0.04,3177.59
+CREST,Crest Ventures Limited,Pharma,large,14.34,-0.1,2269.81
+CRISIL,CRISIL Limited,Cement,small,53.14,-0.1,1501.39
+CRIZAC,Crizac Limited,Textiles,small,56.27,0.01,1676.89
+CROMPTON,Crompton Greaves Consumer Electricals Limited,Finance,small,59.62,0.06,3378.97
+CROWN,Crown Lifters Limited,Energy,small,41.68,0.0,3774.25
+CSBBANK,CSB Bank Limited,Cement,large,29.08,0.04,3968.32
+CSLFINANCE,CSL Finance Limited,Energy,mid,58.6,0.08,3958.61
+CTE,Cambridge Technology Enterprises Limited,Textiles,mid,18.83,-0.02,501.47
+CUB,City Union Bank Limited,Chemicals,small,59.9,0.04,2497.38
+CUBEXTUB,Cubex Tubings Limited,Chemicals,mid,17.01,-0.01,334.92
+CUMMINSIND,Cummins India Limited,Chemicals,large,35.25,-0.01,2770.17
+CUPID,Cupid Limited,Finance,mid,33.2,-0.05,2235.58
+CURAA,Cura Technologies Limited,Pharma,mid,40.38,-0.09,4444.14
+CYBERMEDIA,Cyber Media (India) Limited,Textiles,large,17.9,-0.05,1787.03
+CYBERTECH,Cybertech Systems And Software Limited,IT,mid,38.67,0.02,629.48
+CYIENT,Cyient Limited,Automobile,small,16.2,-0.07,757.81
+CYIENTDLM,Cyient DLM Limited,Pharma,small,57.27,-0.09,3819.48
+DABUR,Dabur India Limited,Automobile,small,23.86,0.04,3110.18
+DALBHARAT,Dalmia Bharat Limited,Automobile,large,7.75,-0.08,550.56
+DALMIASUG,Dalmia Bharat Sugar and Industries Limited,Pharma,small,38.69,-0.05,466.33
+DAMCAPITAL,Dam Capital Advisors Limited,IT,mid,24.89,0.04,3519.8
+DAMODARIND,Damodar Industries Limited,Pharma,small,11.14,0.06,410.18
+DANGEE,Dangee Dums Limited,Textiles,mid,6.51,-0.06,4118.21
+DATAMATICS,Datamatics Global Services Limited,Chemicals,small,51.85,0.04,3545.9
+DATAPATTNS,Data Patterns (India) Limited,Cement,mid,59.24,-0.07,452.68
+DAVANGERE,Davangere Sugar Company Limited,Cement,mid,57.04,0.03,469.95
+DBCORP,D.B.Corp Limited,Industrial,large,13.72,0.01,4933.87
+DBEIL,Deepak Builders & Engineers India Limited,Chemicals,large,27.72,-0.07,1902.64
+DBL,Dilip Buildcon Limited,Finance,mid,27.92,-0.01,1884.68
+DBOL,Dhampur Bio Organics Limited,Industrial,large,24.31,-0.04,4073.36
+DBREALTY,Valor Estate Limited,Textiles,large,49.02,-0.08,4738.88
+DBSTOCKBRO,DB (International) Stock Brokers Limited,Pharma,small,53.87,-0.06,4930.71
+DCAL,Dishman Carbogen Amcis Limited,Automobile,small,54.63,-0.07,3779.22
+DCBBANK,DCB Bank Limited,Automobile,large,26.82,-0.03,1912.48
+DCI,Dc Infotech And Communication Limited,Cement,large,56.09,0.05,463.33
+DCM,DCM  Limited,Chemicals,mid,54.37,0.08,3896.88
+DCMFINSERV,DCM Financial Services Limited,Chemicals,mid,8.15,0.04,2814.1
+DCMNVL,DCM Nouvelle Limited,Automobile,mid,37.74,0.08,2149.9
+DCMSHRIRAM,DCM Shriram Limited,Finance,large,20.63,0.05,4536.45
+DCMSRIND,DCM Shriram Industries Limited,Automobile,mid,33.53,0.0,600.43
+DCW,DCW Limited,IT,large,56.43,0.05,2488.49
+DCXINDIA,DCX Systems Limited,Cement,mid,17.64,0.01,106.2
+DDEVPLSTIK,Ddev Plastiks Industries Limited,Chemicals,small,35.07,-0.08,2369.87
+DECCANCE,Deccan Cements Limited,Automobile,small,53.55,0.09,328.7
+DEEDEV,DEE Development Engineers Limited,IT,large,46.34,-0.01,638.15
+DEEPAKFERT,Deepak Fertilizers and Petrochemicals Corporation Limited,Energy,small,51.14,-0.05,631.75
+DEEPAKNTR,Deepak Nitrite Limited,Industrial,large,51.72,-0.05,3263.59
+DEEPINDS,Deep Industries Limited,Pharma,small,54.3,0.07,3742.92
+DELHIVERY,Delhivery Limited,Chemicals,small,48.06,0.09,2937.68
+DELPHIFX,DELPHI WORLD MONEY LIMITED,Textiles,small,13.88,0.02,4812.75
+DELTACORP,Delta Corp Limited,IT,large,47.88,-0.01,1905.61
+DELTAMAGNT,Delta Manufacturing Limited,Automobile,large,38.78,0.02,1464.27
+DEN,Den Networks Limited,Energy,small,10.04,-0.01,4349.57
+DENORA,De Nora India Limited,Automobile,mid,58.97,0.01,1156.8
+DENTA,Denta Water and Infra Solutions Limited,Textiles,mid,51.26,-0.01,4817.95
+DEVIT,Dev Information Technology Limited,Pharma,large,39.32,0.04,110.16
+DEVYANI,Devyani International Limited,Cement,large,18.82,-0.02,4850.9
+DGCONTENT,Digicontent Limited,Finance,mid,37.66,-0.01,263.64
+DHAMPURSUG,Dhampur Sugar Mills Limited,Automobile,small,50.34,0.04,4461.16
+DHANBANK,Dhanlaxmi Bank Limited,Automobile,small,13.95,0.06,2662.12
+DHANI,Dhani Services Limited,Industrial,small,44.38,0.07,4965.18
+DHANUKA,Dhanuka Agritech Limited,Finance,large,42.32,-0.09,415.29
+DHARAN,DHARAN INFRA-EPC LIMITED,IT,mid,10.71,0.06,2791.58
+DHARMAJ,Dharmaj Crop Guard Limited,Automobile,small,8.25,-0.06,4848.05
+DHRUV,Dhruv Consultancy Services Limited,Cement,large,44.47,0.06,2639.33
+DHUNINV,Dhunseri Investments Limited,Cement,mid,10.5,0.05,3165.52
+DIACABS,Diamond Power Infrastructure Limited,Energy,small,44.59,0.09,3493.96
+DIAMINESQ,Diamines & Chemicals Limited,IT,mid,5.87,-0.03,2299.98
+DIAMONDYD,Prataap Snacks Limited,Automobile,mid,11.71,-0.04,3156.41
+DICIND,DIC India Limited,Finance,large,52.37,0.04,2942.36
+DIFFNKG,Diffusion Engineers Limited,Automobile,large,10.34,0.0,4510.73
+DIGIDRIVE,Digidrive Distributors Limited,Industrial,large,45.13,0.02,274.96
+DIGISPICE,DiGiSPICE Technologies Limited,IT,large,41.81,-0.06,1440.77
+DIGITIDE,Digitide Solutions Limited,Textiles,small,8.18,0.03,4754.54
+DIGJAMLMTD,Digjam Limited,IT,large,6.03,-0.05,4456.81
+DIL,Debock Industries Limited,Energy,small,48.87,-0.09,2305.5
+DISHTV,Dish TV India Limited,Industrial,mid,40.07,0.05,3119.66
+DIVGIITTS,Divgi Torqtransfer Systems Limited,Chemicals,small,24.97,-0.04,1423.04
+DIVISLAB,Divi's Laboratories Limited,Textiles,mid,13.34,0.02,981.2
+DIXON,Dixon Technologies (India) Limited,Pharma,mid,6.02,0.06,2345.31
+DJML,DJ Mediaprint & Logistics Limited,Industrial,small,8.75,-0.05,1799.09
+DLF,DLF Limited,Pharma,small,51.4,0.09,2939.1
+DLINKINDIA,D-Link (India) Limited,Automobile,mid,48.66,-0.1,434.79
+DMART,Avenue Supermarts Limited,Chemicals,small,13.77,-0.06,4873.25
+DMCC,DMCC SPECIALITY CHEMICALS LIMITED,IT,large,6.89,-0.03,4931.74
+DNAMEDIA,Diligent Media Corporation Limited,Industrial,mid,33.91,0.01,3505.9
+DODLA,Dodla Dairy Limited,Energy,small,29.92,-0.08,2703.68
+DOLATALGO,Dolat Algotech Limited,Industrial,small,10.8,0.03,1582.16
+DOLLAR,Dollar Industries Limited,Finance,mid,26.87,0.08,4078.29
+DOLPHIN,Dolphin Offshore Enterprises (India) Limited,Finance,small,20.91,-0.07,3439.42
+DOMS,DOMS Industries Limited,Industrial,small,11.97,-0.03,854.95
+DONEAR,Donear Industries Limited,Energy,large,25.03,-0.07,4559.09
+DPABHUSHAN,D. P. Abhushan Limited,Industrial,mid,23.37,-0.04,4121.56
+DPSCLTD,DPSC Limited,Finance,mid,49.41,-0.04,4751.51
+DPWIRES,D P Wires Limited,Automobile,small,34.63,0.09,3642.31
+DRCSYSTEMS,DRC Systems India Limited,Energy,mid,38.21,0.03,3086.41
+DREAMFOLKS,Dreamfolks Services Limited,Automobile,mid,50.66,-0.04,2120.3
+DREDGECORP,Dredging Corporation of India Limited,Industrial,large,26.43,0.1,4667.01
+DRREDDY,Dr. Reddy's Laboratories Limited,Textiles,large,15.29,0.05,4337.02
+DSSL,Dynacons Systems & Solutions Limited,Energy,mid,23.94,0.09,273.83
+DTIL,Dhunseri Tea & Industries Limited,Energy,mid,50.48,-0.03,180.52
+DUCON,Ducon Infratechnologies Limited,Finance,large,39.39,-0.06,1913.49
+DVL,Dhunseri Ventures Limited,Automobile,mid,27.48,-0.05,4062.24
+DWARKESH,Dwarikesh Sugar Industries Limited,Finance,small,53.16,-0.03,4937.02
+DYCL,Dynamic Cables Limited,Chemicals,large,6.76,-0.05,794.56
+DYNAMATECH,Dynamatic Technologies Limited,Energy,mid,15.54,0.04,2990.95
+DYNPRO,Dynemic Products Limited,IT,large,18.14,-0.04,1935.41
+E2E,E2E Networks Limited,Automobile,large,34.25,0.07,4851.08
+EASEMYTRIP,Easy Trip Planners Limited,Textiles,small,58.3,0.05,4218.49
+ECLERX,eClerx Services Limited,Pharma,mid,50.43,-0.04,4199.73
+ECOSMOBLTY,Ecos (India) Mobility & Hospitality Limited,IT,small,23.96,-0.08,2370.03
+EDELWEISS,Edelweiss Financial Services Limited,Energy,mid,59.46,-0.05,2103.36
+EICHERMOT,Eicher Motors Limited,Automobile,small,42.15,0.06,1403.37
+EIDPARRY,EID Parry India Limited,Automobile,mid,19.72,-0.04,329.06
+EIEL,Enviro Infra Engineers Limited,Industrial,small,27.47,-0.03,4330.38
+EIFFL,Euro India Fresh Foods Limited,Automobile,small,48.6,0.01,4073.86
+EIHAHOTELS,EIH Associated Hotels Limited,Cement,mid,23.04,0.03,4998.6
+EIHOTEL,EIH Limited,IT,small,44.6,0.08,4983.35
+EIMCOELECO,Eimco Elecon (India) Limited,Industrial,large,37.17,-0.08,2799.39
+EKC,Everest Kanto Cylinder Limited,Textiles,small,23.01,0.04,3856.49
+ELDEHSG,Eldeco Housing And Industries Limited,IT,large,23.19,0.07,4726.59
+ELECON,Elecon Engineering Company Limited,Industrial,large,40.6,-0.08,4255.75
+ELECTCAST,Electrosteel Castings Limited,Automobile,large,31.83,0.05,1274.37
+ELECTHERM,Electrotherm (India) Limited,Cement,large,59.24,-0.0,2280.19
+ELGIEQUIP,Elgi Equipments Limited,Chemicals,mid,53.27,0.08,689.34
+ELGIRUBCO,Elgi Rubber Company Limited,Cement,mid,16.47,-0.03,4772.55
+ELIN,Elin Electronics Limited,Finance,large,56.01,0.09,3050.56
+ELLEN,Ellenbarrie Industrial Gases Limited,Textiles,large,46.9,0.09,1181.78
+EMAMILTD,Emami Limited,Finance,small,38.19,0.02,3374.92
+EMAMIPAP,Emami Paper Mills Limited,Industrial,small,42.08,-0.03,3109.73
+EMAMIREAL,Emami Realty Limited,Cement,small,47.34,-0.08,1822.91
+EMBDL,Embassy Developments Limited,Automobile,mid,36.52,-0.08,612.11
+EMCURE,Emcure Pharmaceuticals Limited,Cement,mid,42.44,-0.09,3374.29
+EMIL,Electronics Mart India Limited,Chemicals,small,7.94,-0.02,2625.52
+EMKAY,Emkay Global Financial Services Limited,Industrial,mid,45.13,-0.02,3872.98
+EMMBI,Emmbi Industries Limited,Finance,mid,33.05,-0.04,2624.81
+EMSLIMITED,EMS Limited,Finance,mid,38.44,-0.01,4268.3
+EMUDHRA,eMudhra Limited,IT,large,22.43,0.05,2781.94
+ENDURANCE,Endurance Technologies Limited,Finance,small,38.9,0.01,2826.64
+ENERGYDEV,Energy Development Company Limited,Textiles,small,58.65,0.01,4389.44
+ENGINERSIN,Engineers India Limited,Textiles,large,25.05,0.04,2047.24
+ENIL,Entertainment Network (India) Limited,Energy,mid,31.06,-0.02,713.38
+ENRIN,Siemens Energy India Limited,Pharma,small,26.54,-0.06,192.47
+ENTERO,Entero Healthcare Solutions Limited,Cement,small,45.07,-0.08,3787.93
+EPACK,EPACK Durable Limited,Textiles,small,43.89,-0.05,3120.53
+EPIGRAL,Epigral Limited,Chemicals,small,19.48,-0.01,3535.19
+EPL,EPL Limited,Automobile,mid,50.21,-0.06,1104.17
+EQUIPPP,Equippp Social Impact Technologies Limited,Cement,small,54.51,0.04,725.04
+EQUITASBNK,Equitas Small Finance Bank Limited,Chemicals,small,14.7,0.1,122.0
+ERIS,Eris Lifesciences Limited,Energy,mid,46.72,0.06,1785.41
+ESABINDIA,Esab India Limited,Finance,small,53.67,0.09,2970.09
+ESAFSFB,ESAF Small Finance Bank Limited,Finance,mid,57.65,0.04,1991.61
+ESCORTS,Escorts Kubota Limited,Cement,small,47.19,0.06,2215.5
+ESSARSHPNG,Essar Shipping Limited,Textiles,small,29.09,0.09,4525.59
+ESSENTIA,Integra Essentia Limited,Finance,small,48.03,0.04,1773.86
+ESTER,Ester Industries Limited,Textiles,mid,46.84,-0.09,2594.25
+ETERNAL,ETERNAL LIMITED,IT,small,31.04,0.0,3929.08
+ETHOSLTD,Ethos Limited,Industrial,large,42.72,0.03,2012.89
+EUREKAFORB,Eureka Forbes Limited,Industrial,large,47.2,-0.05,3129.33
+EUROTEXIND,Eurotex Industries and Exports Limited,Finance,small,25.06,-0.08,4318.7
+EVEREADY,Eveready Industries India Limited,Chemicals,large,47.4,0.1,4750.13
+EVERESTIND,Everest Industries Limited,Finance,large,32.33,0.09,778.01
+EXCEL,Excel Realty N Infra Limited,Finance,mid,6.1,0.02,4636.61
+EXCELINDUS,Excel Industries Limited,IT,small,55.85,-0.01,2485.98
+EXICOM,Exicom Tele-Systems Limited,IT,small,58.3,-0.02,1328.31
+EXICOM-RE,Exicom Tele-Systems Ltd-RE,Pharma,mid,28.0,-0.08,2322.72
+EXIDEIND,Exide Industries Limited,IT,mid,25.46,0.06,4901.16
+EXPLEOSOL,Expleo Solutions Limited,Textiles,small,8.02,0.06,2488.46
+EXXARO,Exxaro Tiles Limited,Textiles,small,37.44,0.06,1677.32
+FACT,Fertilizers and Chemicals Travancore Limited,Cement,mid,8.17,-0.04,3185.33
+FAIRCHEMOR,Fairchem Organics Limited,Pharma,mid,17.65,-0.02,1238.72
+FAZE3Q,Faze Three Limited,IT,mid,7.29,-0.0,425.52
+FCL,Fineotex Chemical Limited,Pharma,large,52.47,0.07,687.95
+FCSSOFT,FCS Software Solutions Limited,Textiles,small,51.87,-0.07,683.83
+FDC,FDC Limited,Industrial,mid,32.33,0.04,801.92
+FEDERALBNK,The Federal Bank  Limited,Textiles,small,46.9,-0.04,737.19
+FEDFINA,Fedbank Financial Services Limited,Cement,large,23.74,0.1,3222.33
+FEL,Future Enterprises Limited,Pharma,mid,39.74,-0.09,950.31
+FELDVR,Future Enterprises Limited,Automobile,small,7.85,0.08,1761.05
+FIBERWEB,Fiberweb (India) Limited,Chemicals,small,45.44,-0.05,4489.1
+FIEMIND,Fiem Industries Limited,Finance,mid,15.37,-0.07,2396.11
+FILATEX,Filatex India Limited,IT,small,55.26,-0.01,3354.41
+FILATFASH,Filatex Fashions Limited,Automobile,mid,39.63,0.09,902.98
+FINCABLES,Finolex Cables Limited,IT,mid,17.19,-0.09,1001.83
+FINEORG,Fine Organic Industries Limited,Automobile,large,50.95,-0.06,252.3
+FINOPB,Fino Payments Bank Limited,Textiles,large,5.72,0.07,886.23
+FINPIPE,Finolex Industries Limited,Chemicals,large,7.29,0.02,1429.02
+FIRSTCRY,Brainbees Solutions Limited,Energy,small,22.71,-0.04,926.2
+FISCHER,Fischer Medical Ventures Limited,Automobile,large,44.79,-0.02,489.08
+FIVESTAR,Five-Star Business Finance Limited,Energy,large,10.32,-0.06,647.15
+FLAIR,Flair Writing Industries Limited,Industrial,large,56.07,-0.09,2330.85
+FLEXITUFF,Flexituff Ventures International Limited,Textiles,large,8.44,-0.09,1071.35
+FLUOROCHEM,Gujarat Fluorochemicals Limited,IT,large,28.45,0.01,1853.14
+FMGOETZE,Federal-Mogul Goetze (India) Limited.,Automobile,small,59.5,0.06,2541.92
+FMNL,Future Market Networks Limited,Textiles,small,35.59,-0.03,3467.45
+FOCUS,Focus Lighting and Fixtures Limited,Finance,large,13.33,-0.04,244.6
+FOODSIN,Foods & Inns Limited,Industrial,small,38.05,-0.04,4007.08
+FORCEMOT,FORCE MOTORS LTD,Automobile,mid,55.65,-0.06,3158.11
+FORTIS,Fortis Healthcare Limited,Energy,mid,27.49,0.09,454.71
+FOSECOIND,Foseco India Limited,Cement,small,49.28,0.03,4374.21
+FSL,Firstsource Solutions Limited,Industrial,mid,34.01,0.03,4608.32
+FUSION,Fusion Finance Limited,Industrial,large,7.27,0.02,352.34
+GABRIEL,Gabriel India Limited,Energy,mid,14.71,0.06,1420.54
+GAEL,Gujarat Ambuja Exports Limited,Industrial,mid,25.17,-0.03,4040.7
+GAIL,GAIL (India) Limited,Automobile,large,25.85,0.02,3753.89
+GALAPREC,Gala Precision Engineering Limited,Chemicals,mid,14.85,0.08,963.38
+GALAXYSURF,Galaxy Surfactants Limited,Pharma,mid,10.68,0.03,1086.28
+GALLANTT,Gallantt Ispat Limited,Chemicals,small,12.85,-0.04,1883.84
+GANDHAR,Gandhar Oil Refinery (India) Limited,Industrial,large,33.18,0.06,2448.39
+GANDHITUBE,Gandhi Special Tubes Limited,Textiles,small,25.58,0.07,3110.36
+GANECOS,Ganesha Ecosphere Limited,Pharma,mid,50.57,-0.03,1876.12
+GANESHBE,Ganesh Benzoplast Limited,Textiles,mid,12.65,0.02,2339.55
+GANESHHOUC,Ganesh Housing Corporation Limited,Industrial,mid,27.61,0.01,3749.98
+GANGAFORGE,Ganga Forging Limited,Textiles,large,59.41,-0.09,231.58
+GANGESSECU,Ganges Securities Limited,Cement,large,28.2,0.02,1299.56
+GARFIBRES,Garware Technical Fibres Limited,Chemicals,small,27.33,0.08,3581.08
+GARUDA,Garuda Construction and Engineering Limited,Chemicals,mid,10.34,0.04,4481.27
+GATECH,GACM Technologies Limited,Cement,large,39.51,0.1,2582.8
+GATECHDVR,GACM Technologies Limited,Finance,large,12.94,0.03,2683.96
+GATEWAY,Gateway Distriparks Limited,Pharma,mid,8.76,-0.07,580.5
+GAYAHWS,Gayatri Highways Limited,Finance,small,53.94,0.08,2264.69
+GAYAPROJ,Gayatri Projects Limited,Chemicals,small,58.4,0.05,2686.46
+GEECEE,GeeCee Ventures Limited,Textiles,large,17.19,-0.08,1250.23
+GEEKAYWIRE,Geekay Wires Limited,Industrial,mid,54.63,0.03,1382.75
+GENCON,Generic Engineering Construction and Projects Limited,Cement,mid,53.34,-0.07,1917.56
+GENESYS,Genesys International Corporation Limited,Cement,small,50.75,-0.09,149.35
+GENUSPAPER,Genus Paper & Boards Limited,Automobile,mid,9.21,-0.03,1644.29
+GENUSPOWER,Genus Power Infrastructures Limited,Pharma,large,49.21,-0.02,1096.67
+GEOJITFSL,Geojit Financial Services Limited,Industrial,large,27.96,0.02,1671.11
+GEPIL,GE Power India Limited,Chemicals,mid,17.86,0.03,642.82
+GESHIP,The Great Eastern Shipping Company Limited,Automobile,large,50.04,0.08,4458.11
+GFLLIMITED,GFL Limited,Automobile,mid,30.12,-0.1,2988.28
+GHCL,GHCL Limited,IT,large,23.61,-0.0,3411.56
+GHCLTEXTIL,GHCL Textiles Limited,Energy,mid,49.99,-0.06,3956.4
+GICHSGFIN,GIC Housing Finance Limited,Industrial,large,46.95,0.03,2517.29
+GICRE,General Insurance Corporation of India,Pharma,small,50.87,0.09,480.26
+GILLANDERS,Gillanders Arbuthnot & Company Limited,Textiles,large,46.07,-0.05,2708.68
+GILLETTE,Gillette India Limited,Finance,small,7.05,0.1,2954.86
+GINNIFILA,Ginni Filaments Limited,Energy,mid,47.76,0.1,3739.93
+GIPCL,Gujarat Industries Power Company Limited,Automobile,large,28.79,-0.09,2186.71
+GKWLIMITED,GKW Limited,Pharma,large,31.52,-0.04,681.52
+GLAND,Gland Pharma Limited,IT,small,12.87,-0.09,1454.69
+GLAXO,GlaxoSmithKline Pharmaceuticals Limited,IT,small,9.05,0.06,1847.26
+GLENMARK,Glenmark Pharmaceuticals Limited,Automobile,small,47.04,0.05,3247.29
+GLFL,Gujarat Lease Financing Limited,Textiles,large,50.53,0.03,2875.35
+GLOBAL,Global Education Limited,Finance,large,17.14,0.02,1812.68
+GLOBALE,Globale Tessile Limited,Finance,large,48.61,-0.0,4933.25
+GLOBALVECT,Global Vectra Helicorp Limited,Industrial,small,10.06,-0.08,3048.59
+GLOBE,Globe Textiles (India) Limited,Textiles,large,20.53,-0.07,1224.27
+GLOBECIVIL,Globe Civil Projects Limited,Pharma,small,7.53,0.03,553.82
+GLOBUSSPR,Globus Spirits Limited,Pharma,mid,24.73,0.09,806.65
+GLOSTERLTD,Gloster Limited,Chemicals,small,44.2,0.07,1267.49
+GMBREW,GM Breweries Limited,Chemicals,large,43.73,-0.02,845.37
+GMDCLTD,Gujarat Mineral Development Corporation Limited,Energy,large,37.98,0.1,973.51
+GMMPFAUDLR,GMM Pfaudler Limited,Industrial,large,34.7,0.05,1461.22
+GMRAIRPORT,GMR AIRPORTS LIMITED,Energy,small,31.84,0.09,908.2
+GMRP&UI,GMR Power and Urban Infra Limited,Textiles,mid,11.45,0.0,4488.99
+GNA,GNA Axles Limited,Chemicals,small,31.61,0.08,447.16
+GNFC,Gujarat Narmada Valley Fertilizers and Chemicals Limited,Energy,small,29.91,-0.01,2646.33
+GOACARBON,Goa Carbon Limited,Automobile,small,36.16,-0.06,2081.46
+GOCLCORP,GOCL Corporation Limited,Pharma,mid,30.47,0.0,4912.77
+GOCOLORS,Go Fashion (India) Limited,Energy,mid,24.41,0.03,604.59
+GODAVARIB,Godavari Biorefineries Limited,Automobile,small,20.48,0.04,2019.39
+GODFRYPHLP,Godfrey Phillips India Limited,IT,large,37.92,0.0,4848.88
+GODHA,Godha Cabcon & Insulation Limited,IT,mid,22.99,0.08,4334.26
+GODIGIT,Go Digit General Insurance Limited,Pharma,mid,11.39,-0.03,4094.51
+GODREJAGRO,Godrej Agrovet Limited,Chemicals,mid,8.46,0.09,1326.62
+GODREJCP,Godrej Consumer Products Limited,IT,small,40.37,-0.1,895.89
+GODREJIND,Godrej Industries Limited,Industrial,small,18.63,0.09,3359.78
+GODREJPROP,Godrej Properties Limited,Chemicals,mid,50.55,0.06,4650.41
+GOENKA,Goenka Diamond and Jewels Limited,IT,small,41.38,-0.03,2805.98
+GOKEX,Gokaldas Exports Limited,Industrial,large,43.46,-0.07,2879.48
+GOKUL,Gokul Refoils and Solvent Limited,IT,mid,19.29,0.07,1435.9
+GOKULAGRO,Gokul Agro Resources Limited,Energy,small,25.15,0.05,3858.99
+GOLDENTOBC,Golden Tobacco Limited,Energy,mid,33.7,-0.01,975.87
+GOLDIAM,Goldiam International Limited,Chemicals,mid,54.7,-0.07,1652.21
+GOLDTECH,AION-TECH SOLUTIONS LIMITED,IT,mid,24.48,-0.02,2155.91
+GOODLUCK,Goodluck India Limited,Automobile,small,35.33,0.03,2562.67
+GOPAL,Gopal Snacks Limited,Pharma,large,16.6,0.1,1249.93
+GOYALALUM,Goyal Aluminiums Limited,IT,large,47.24,-0.02,618.44
+GPIL,Godawari Power And Ispat limited,Industrial,small,55.42,-0.02,3072.57
+GPPL,Gujarat Pipavav Port Limited,Textiles,mid,5.95,0.05,1478.72
+GPTHEALTH,GPT Healthcare Limited,Chemicals,small,19.26,0.08,2927.13
+GPTINFRA,GPT Infraprojects Limited,Cement,mid,57.37,0.1,814.1
+GRANULES,Granules India Limited,Energy,small,15.14,0.01,2431.64
+GRAPHITE,Graphite India Limited,Chemicals,large,25.57,0.07,2686.32
+GRASIM,Grasim Industries Limited,Pharma,large,19.34,0.0,306.53
+GRAVITA,Gravita India Limited,Automobile,large,11.58,-0.07,1716.19
+GREAVESCOT,Greaves Cotton Limited,IT,mid,58.66,-0.02,715.35
+GREENLAM,Greenlam Industries Limited,IT,small,10.91,0.05,363.71
+GREENPANEL,Greenpanel Industries Limited,Industrial,mid,57.56,-0.07,4950.3
+GREENPLY,Greenply Industries Limited,Chemicals,large,20.37,0.06,1645.65
+GREENPOWER,Orient Green Power Company Limited,Industrial,mid,38.77,0.05,4058.88
+GRINDWELL,Grindwell Norton Limited,Cement,mid,42.87,-0.1,1310.47
+GRINFRA,G R Infraprojects Limited,Automobile,large,15.02,-0.01,3423.44
+GRMOVER,GRM Overseas Limited,IT,mid,24.08,0.03,3813.13
+GROBTEA,The Grob Tea Company Limited,Pharma,mid,58.3,0.07,2998.41
+GRPLTD,GRP Limited,Textiles,large,14.35,0.05,2384.3
+GRSE,Garden Reach Shipbuilders & Engineers Limited,Finance,mid,52.9,-0.04,2088.61
+GRWRHITECH,Garware Hi-Tech Films Limited,Textiles,mid,15.53,-0.05,1776.9
+GSFC,Gujarat State Fertilizers & Chemicals Limited,Energy,mid,25.29,0.01,4651.17
+GSLSU,Global Surfaces Limited,Finance,large,24.65,0.07,4161.57
+GSPL,Gujarat State Petronet Limited,Industrial,large,44.18,-0.04,4826.88
+GSS,GSS Infotech Limited,Energy,small,34.15,-0.01,665.27
+GTECJAINX,G-TEC JAINX EDUCATION LIMITED,IT,large,43.66,0.03,3667.79
+GTL,GTL Limited,Pharma,small,9.49,-0.01,4694.79
+GTLINFRA,GTL Infrastructure Limited,Textiles,mid,59.56,0.03,947.1
+GTPL,GTPL Hathway Limited,Industrial,large,27.25,0.06,379.16
+GUFICBIO,Gufic Biosciences Limited,Finance,mid,47.99,0.1,3718.55
+GUJALKALI,Gujarat Alkalies and Chemicals Limited,Finance,mid,43.85,0.06,2893.64
+GUJAPOLLO,Gujarat Apollo Industries Limited,Finance,large,45.36,-0.06,4217.05
+GUJGASLTD,Gujarat Gas Limited,Pharma,mid,22.95,-0.05,741.87
+GUJRAFFIA,Gujarat Raffia Industries Limited,Finance,large,6.36,-0.01,3986.57
+GUJTHEM,Gujarat Themis Biosyn Limited,Automobile,mid,51.58,0.01,1048.06
+GULFOILLUB,Gulf Oil Lubricants India Limited,Finance,large,28.63,-0.05,860.1
+GULFPETRO,GP Petroleums Limited,Energy,small,45.49,-0.07,863.12
+GULPOLY,Gulshan Polyols Limited,Industrial,small,58.12,0.06,4082.14
+GVKPIL,GVK Power & Infrastructure Limited,Finance,mid,40.77,0.07,3342.73
+GVPTECH,GVP Infotech Limited,Cement,mid,27.28,-0.05,2639.17
+GVT&D,GE Vernova T&D India Limited,IT,large,23.19,0.07,1826.21
+HAL,Hindustan Aeronautics Limited,Industrial,large,36.36,0.02,4392.14
+HAPPSTMNDS,Happiest Minds Technologies Limited,Pharma,large,43.77,0.09,1992.6
+HAPPYFORGE,Happy Forgings Limited,Textiles,large,23.6,-0.09,4092.17
+HARDWYN,Hardwyn India Limited,Pharma,large,59.54,0.02,2223.72
+HARIOMPIPE,Hariom Pipe Industries Limited,Pharma,small,22.78,-0.0,1915.87
+HARRMALAYA,Harrisons  Malayalam Limited,Cement,mid,6.42,0.07,2340.26
+HARSHA,Harsha Engineers International Limited,Energy,large,17.29,-0.1,1541.82
+HATHWAY,Hathway Cable & Datacom Limited,Chemicals,large,37.37,0.04,3750.67
+HATSUN,Hatsun Agro Product Limited,IT,mid,48.19,0.04,2538.47
+HAVELLS,Havells India Limited,Chemicals,mid,13.49,0.09,1199.45
+HAVISHA,Sri Havisha Hospitality and Infrastructure Limited,Cement,mid,49.74,0.04,4502.89
+HBLENGINE,HBL Engineering Limited,Textiles,large,50.92,-0.05,1950.26
+HBSL,HB Stockholdings Limited,Textiles,large,27.72,0.04,2740.59
+HCC,Hindustan Construction Company Limited,Finance,large,16.64,-0.04,4537.04
+HCG,Healthcare Global Enterprises Limited,Textiles,large,17.33,0.05,3139.98
+HCL-INSYS,HCL Infosystems Limited,IT,small,51.23,0.04,628.65
+HCLTECH,HCL Technologies Limited,Pharma,large,29.88,-0.06,4702.17
+HDBFS,HDB Financial Services Limited,Industrial,mid,16.32,0.03,3157.15
+HDFCAMC,HDFC Asset Management Company Limited,Automobile,large,49.22,0.07,1707.78
+HDFCBANK,HDFC Bank Limited,Textiles,mid,6.84,-0.07,739.4
+HDFCLIFE,HDFC Life Insurance Company Limited,Chemicals,large,26.27,0.02,3980.42
+HEADSUP,Heads UP Ventures Limited,Textiles,mid,42.0,0.06,3119.36
+HECPROJECT,HEC Infra Projects Limited,Energy,large,29.9,-0.06,2690.63
+HEG,HEG Limited,Chemicals,small,22.26,0.03,4474.77
+HEIDELBERG,HeidelbergCement India Limited,Cement,large,28.02,-0.05,3953.56
+HEMIPROP,Hemisphere Properties India Limited,Pharma,small,7.89,-0.03,800.79
+HERANBA,Heranba Industries Limited,Energy,mid,37.33,-0.08,1593.02
+HERCULES,Hercules Hoists Limited,Cement,large,25.52,-0.04,1280.02
+HERITGFOOD,Heritage Foods Limited,Pharma,small,52.46,-0.02,3732.53
+HEROMOTOCO,Hero MotoCorp Limited,Chemicals,mid,29.07,0.03,215.99
+HESTERBIO,Hester Biosciences Limited,Industrial,small,39.23,0.04,2870.95
+HEUBACHIND,Heubach Colorants India Limited,IT,small,44.55,-0.08,3824.17
+HEXATRADEX,Hexa Tradex Limited,Pharma,mid,18.89,-0.04,4389.99
+HEXT,Hexaware Technologies Limited,Textiles,mid,46.2,0.03,1743.3
+HFCL,HFCL Limited,Industrial,small,44.7,-0.06,4115.22
+HGINFRA,H.G. Infra Engineering Limited,Pharma,small,25.45,-0.06,597.63
+HGS,Hinduja Global Solutions Limited,Finance,small,46.22,-0.02,4239.94
+HIKAL,Hikal Limited,IT,large,41.36,0.04,681.07
+HILTON,Hilton Metal Forging Limited,Chemicals,large,27.88,-0.06,2016.57
+HIMATSEIDE,Himatsingka Seide Limited,Automobile,large,40.26,0.1,3996.61
+HINDALCO,Hindalco Industries Limited,Pharma,large,49.82,-0.04,792.09
+HINDCOMPOS,Hindustan Composites Limited,Pharma,small,26.87,0.02,1184.79
+HINDCON,Hindcon Chemicals Limited,Chemicals,mid,6.25,0.04,3625.15
+HINDCOPPER,Hindustan Copper Limited,Industrial,small,55.94,-0.01,3614.18
+HINDMOTORS,Hindustan Motors Limited,Energy,small,53.51,-0.02,3223.68
+HINDOILEXP,Hindustan Oil Exploration Company Limited,Energy,large,48.88,-0.05,3485.04
+HINDPETRO,Hindustan Petroleum Corporation Limited,Finance,large,19.62,0.03,2736.49
+HINDUNILVR,Hindustan Unilever Limited,Automobile,mid,45.33,-0.03,1296.41
+HINDWAREAP,Hindware Home Innovation Limited,IT,large,5.48,0.03,1761.2
+HINDZINC,Hindustan Zinc Limited,IT,small,22.45,0.01,948.91
+HIRECT,Hind Rectifiers Limited,Pharma,large,45.22,0.0,4546.83
+HISARMETAL,Hisar Metal Industries Limited,Textiles,mid,56.44,-0.1,2937.79
+HITECH,Hi-Tech Pipes Limited,IT,mid,22.03,0.03,2034.21
+HITECHCORP,Hitech Corporation Limited,Chemicals,mid,28.9,-0.07,2336.93
+HITECHGEAR,The Hi-Tech Gears Limited,Chemicals,small,23.36,0.01,4739.05
+HLEGLAS,HLE Glascoat Limited,Industrial,mid,31.42,-0.09,809.09
+HLVLTD,HLV LIMITED,Pharma,mid,18.35,0.0,2951.84
+HMAAGRO,HMA Agro Industries Limited,Cement,large,51.93,-0.02,2554.15
+HMT,HMT Limited,Industrial,large,35.19,0.03,3076.7
+HMVL,Hindustan Media Ventures Limited,Cement,small,15.29,-0.01,139.65
+HNDFDS,Hindustan Foods Limited,Industrial,mid,38.66,-0.08,4367.01
+HOMEFIRST,Home First Finance Company India Limited,Energy,large,23.04,-0.03,4663.99
+HONASA,Honasa Consumer Limited,Cement,large,36.88,0.05,2847.41
+HONAUT,Honeywell Automation India Limited,Chemicals,large,50.44,0.04,3498.42
+HONDAPOWER,Honda India Power Products Limited,Cement,large,50.1,0.08,4616.37
+HOVS,HOV Services Limited,IT,small,39.51,-0.03,3550.83
+HPAL,HP Adhesives Limited,Pharma,mid,24.19,-0.01,805.07
+HPIL,Hindprakash Industries Limited,IT,large,48.85,0.05,2902.63
+HPL,HPL Electric & Power Limited,Energy,mid,26.77,0.02,3053.24
+HSCL,Himadri Speciality Chemical Limited,Chemicals,mid,13.14,0.09,2149.45
+HTMEDIA,HT Media Limited,Industrial,large,22.77,0.02,3695.4
+HUBTOWN,Hubtown Limited,Energy,mid,28.37,-0.05,4675.12
+HUDCO,Housing & Urban Development Corporation Limited,Industrial,mid,36.93,-0.03,4631.56
+HUHTAMAKI,Huhtamaki India Limited,Energy,large,46.37,-0.1,2281.65
+HYBRIDFIN,Hybrid Financial Services Limited,IT,small,11.68,0.06,610.53
+HYUNDAI,Hyundai Motor India Limited,Cement,mid,43.07,0.06,4924.96
+ICDSLTD,ICDS Limited,Energy,mid,13.59,-0.04,4202.55
+ICEMAKE,Ice Make Refrigeration Limited,Energy,mid,42.17,0.09,667.08
+ICICIBANK,ICICI Bank Limited,Finance,small,30.28,0.02,4608.17
+ICICIGI,ICICI Lombard General Insurance Company Limited,Automobile,small,59.35,-0.02,4355.99
+ICICIPRULI,ICICI Prudential Life Insurance Company Limited,IT,large,14.64,0.05,2618.25
+ICIL,Indo Count Industries Limited,Textiles,small,59.08,-0.03,2976.81
+ICRA,ICRA Limited,Textiles,mid,10.42,0.02,2025.06
+IDBI,IDBI Bank Limited,Pharma,small,45.13,-0.03,321.07
+IDEA,Vodafone Idea Limited,Automobile,small,37.52,-0.0,1709.23
+IDEAFORGE,Ideaforge Technology Limited,Cement,large,7.4,0.06,4024.12
+IDFCFIRSTB,IDFC First Bank Limited,Textiles,large,40.19,-0.07,72.93
+IEL,Indiabulls Enterprises Limited,Chemicals,large,48.91,0.02,1700.82
+IEX,Indian Energy Exchange Limited,Cement,large,14.27,-0.06,2020.94
+IFBAGRO,IFB Agro Industries Limited,Textiles,large,10.79,0.08,2710.11
+IFBIND,IFB Industries Limited,Chemicals,mid,50.84,-0.03,4603.29
+IFCI,IFCI Limited,Cement,small,57.91,-0.09,1764.41
+IFGLEXPOR,IFGL Refractories Limited,Pharma,large,34.17,-0.02,1767.42
+IGARASHI,Igarashi Motors India Limited,Energy,mid,46.73,-0.06,3700.63
+IGCL,Indogulf Cropsciences Limited,Energy,large,5.26,0.04,2288.48
+IGIL,International Gemmological Institute (India) Limited,Automobile,large,33.04,-0.06,1161.79
+IGL,Indraprastha Gas Limited,IT,mid,6.74,0.09,2289.58
+IGPL,IG Petrochemicals Limited,Textiles,mid,20.13,-0.06,747.24
+IIFL,IIFL Finance Limited,Finance,small,52.66,0.04,923.12
+IIFLCAPS,IIFL Capital Services Limited,IT,large,11.18,-0.07,2516.92
+IITL,Industrial Investment Trust Limited,Industrial,large,31.08,0.01,2123.68
+IKIO,IKIO Technologies Limited,Finance,large,9.72,0.08,4578.49
+IKS,Inventurus Knowledge Solutions Limited,Energy,large,13.2,-0.06,1843.85
+IL&FSENGG,IL&FS Engineering and Construction Company Limited,IT,small,38.75,-0.04,2923.91
+IL&FSTRANS,IL&FS Transportation Networks Limited,Automobile,small,23.62,0.02,3179.71
+IMAGICAA,Imagicaaworld Entertainment Limited,Energy,mid,56.19,0.07,114.82
+IMFA,Indian Metals & Ferro Alloys Limited,Energy,small,43.74,0.09,3334.51
+IMPAL,India Motor Parts and Accessories Limited,Industrial,mid,42.6,0.07,931.28
+IMPEXFERRO,Impex Ferro Tech Limited,Pharma,mid,18.44,0.07,4807.3
+INCREDIBLE,INCREDIBLE INDUSTRIES LIMITED,Textiles,small,12.46,-0.02,785.88
+INDBANK,Indbank Merchant Banking Services Limited,Finance,large,33.6,0.06,2102.39
+INDGN,Indegene Limited,Finance,large,27.67,-0.05,472.48
+INDHOTEL,The Indian Hotels Company Limited,Automobile,small,15.9,-0.05,4984.53
+INDIACEM,The India Cements Limited,Textiles,mid,49.78,0.03,2535.87
+INDIAGLYCO,India Glycols Limited,Industrial,mid,35.48,0.08,2997.16
+INDIAMART,Indiamart Intermesh Limited,Industrial,small,9.76,-0.01,382.03
+INDIANB,Indian Bank,Cement,large,9.34,-0.07,3762.3
+INDIANCARD,Indian Card Clothing Company Limited,Automobile,large,15.07,0.06,1089.03
+INDIANHUME,Indian Hume Pipe Company Limited,Pharma,large,50.16,0.03,4495.37
+INDIASHLTR,India Shelter Finance Corporation Limited,Automobile,mid,20.06,0.06,1065.44
+INDIGO,InterGlobe Aviation Limited,Pharma,large,49.6,-0.07,993.9
+INDIGOPNTS,Indigo Paints Limited,Finance,mid,32.72,0.07,230.92
+INDNIPPON,India Nippon Electricals Limited,IT,mid,33.12,0.05,2386.73
+INDOAMIN,Indo Amines Limited,Pharma,large,34.07,0.1,2845.96
+INDOBORAX,Indo Borax & Chemicals Limited,Cement,mid,10.4,0.08,375.26
+INDOCO,Indoco Remedies Limited,IT,mid,10.49,0.06,3888.86
+INDOFARM,Indo Farm Equipment Limited,IT,mid,29.66,-0.03,2293.78
+INDORAMA,Indo Rama Synthetics (India) Limited,Chemicals,mid,59.98,-0.03,2645.73
+INDOSTAR,IndoStar Capital Finance Limited,Automobile,mid,50.34,-0.06,2231.78
+INDOTECH,Indo Tech Transformers Limited,Chemicals,small,52.38,-0.04,2033.78
+INDOTHAI,Indo Thai Securities Limited,Pharma,large,53.5,-0.01,2820.22
+INDOUS,Indo Us Biotech Limited,Pharma,small,27.22,0.03,818.44
+INDOWIND,Indowind Energy Limited,IT,small,18.56,0.01,950.54
+INDRAMEDCO,Indraprastha Medical Corporation Limited,Energy,large,51.59,0.06,4315.84
+INDSWFTLAB,Ind-Swift Laboratories Limited,Finance,large,49.49,0.01,4733.27
+INDSWFTLTD,Ind-Swift Limited,Finance,small,15.75,0.1,1897.88
+INDTERRAIN,Indian Terrain Fashions Limited,Chemicals,mid,32.46,-0.0,1390.19
+INDUSINDBK,IndusInd Bank Limited,Textiles,small,8.78,-0.07,3237.8
+INDUSTOWER,Indus Towers Limited,Automobile,small,57.95,0.01,2073.23
+INFIBEAM,Infibeam Avenues Limited,Finance,large,45.63,-0.01,175.66
+INFOBEAN,InfoBeans Technologies Limited,Textiles,small,37.46,-0.07,822.96
+INFY,Infosys Limited,Industrial,mid,48.34,0.08,3594.06
+INGERRAND,Ingersoll Rand (India) Limited,Textiles,small,30.05,-0.08,3311.67
+INNOVACAP,Innova Captab Limited,Industrial,mid,37.32,-0.06,184.13
+INNOVANA,Innovana Thinklabs Limited,Industrial,mid,48.8,0.08,1148.76
+INOXGREEN,Inox Green Energy Services Limited,Cement,mid,9.27,0.1,1193.82
+INOXINDIA,INOX India Limited,IT,small,47.38,-0.06,3375.87
+INOXWIND,Inox Wind Limited,Automobile,large,50.86,0.07,147.57
+INSECTICID,Insecticides (India) Limited,Cement,small,45.54,0.04,565.34
+INSPIRISYS,Inspirisys Solutions Limited,Energy,large,43.11,-0.02,4009.58
+INTELLECT,Intellect Design Arena Limited,Cement,large,23.43,0.09,933.8
+INTENTECH,Intense Technologies Limited,Finance,small,19.34,-0.09,3281.09
+INTERARCH,Interarch Building Solutions Limited,Pharma,small,31.05,0.03,1229.0
+INTLCONV,International Conveyors Limited,Chemicals,mid,53.24,-0.04,542.23
+INVENTURE,Inventure Growth & Securities Limited,Cement,small,15.22,-0.04,1253.7
+IOB,Indian Overseas Bank,Chemicals,mid,55.87,-0.07,3625.22
+IOC,Indian Oil Corporation Limited,Automobile,large,31.62,0.0,4285.7
+IOLCP,IOL Chemicals and Pharmaceuticals Limited,IT,small,6.31,-0.07,4159.59
+IONEXCHANG,ION Exchange (India) Limited,IT,small,35.14,-0.07,2016.06
+IPCALAB,IPCA Laboratories Limited,Energy,mid,56.92,-0.05,3357.02
+IPL,India Pesticides Limited,IT,mid,51.4,0.01,1064.67
+IRB,IRB Infrastructure Developers Limited,IT,large,14.97,0.07,1501.08
+IRCON,Ircon International Limited,IT,large,11.93,-0.0,4486.86
+IRCTC,Indian Railway Catering And Tourism Corporation Limited,Industrial,mid,12.2,-0.01,114.36
+IREDA,Indian Renewable Energy Development Agency Limited,Industrial,small,20.55,0.05,473.27
+IRFC,Indian Railway Finance Corporation Limited,Finance,mid,54.83,0.03,1079.04
+IRIS,Iris Business Services Limited,Chemicals,small,26.23,-0.01,181.33
+IRISDOREME,Iris Clothings Limited,Textiles,mid,37.79,-0.09,948.11
+IRMENERGY,IRM Energy Limited,Industrial,large,36.25,0.08,2936.06
+ISFT,Intrasoft Technologies Limited,IT,large,41.71,0.05,2136.05
+ISGEC,Isgec Heavy Engineering Limited,Chemicals,small,52.36,0.01,4468.72
+ISHANCH,Ishan Dyes and Chemicals Limited,IT,small,46.68,0.03,4096.35
+ITC,ITC Limited,IT,large,34.65,0.08,1742.0
+ITCHOTELS,ITC Hotels Limited,Chemicals,small,45.19,-0.09,1334.15
+ITDC,India Tourism Development Corporation Limited,Energy,large,52.66,0.08,1929.48
+ITDCEM,ITD Cementation India Limited,IT,large,11.68,-0.09,2971.96
+ITI,ITI Limited,Finance,small,38.57,-0.05,1376.92
+IVC,IL&FS Investment Managers Limited,Industrial,small,17.8,0.04,3139.54
+IVP,IVP Limited,Textiles,large,50.19,0.07,2076.59
+IXIGO,Le Travenues Technology Limited,Finance,small,32.76,0.02,2782.63
+IZMO,IZMO Limited,Industrial,large,49.26,-0.01,2208.83
+J&KBANK,The Jammu & Kashmir Bank Limited,Textiles,small,43.87,0.07,1507.61
+JAGRAN,Jagran Prakashan Limited,Pharma,mid,24.37,-0.01,4744.84
+JAGSNPHARM,Jagsonpal Pharmaceuticals Limited,Finance,large,8.0,0.03,3829.85
+JAIBALAJI,Jai Balaji Industries Limited,Textiles,large,40.19,-0.03,743.56
+JAICORPLTD,Jai Corp Limited,Finance,small,26.6,-0.06,4348.92
+JAIPURKURT,Nandani Creation Limited,Cement,mid,26.48,0.04,2462.78
+JAMNAAUTO,Jamna Auto Industries Limited,IT,small,31.52,0.05,4478.03
+JASH,Jash Engineering Limited,IT,mid,39.43,-0.08,4009.28
+JAYAGROGN,Jayant Agro Organics Limited,Energy,small,21.08,0.07,2154.81
+JAYBARMARU,Jay Bharat Maruti Limited,Textiles,mid,34.21,-0.09,161.22
+JAYNECOIND,Jayaswal Neco Industries Limited,Industrial,small,26.44,0.09,1379.95
+JAYSREETEA,Jayshree Tea & Industries Limited,Textiles,mid,58.75,-0.04,2731.09
+JBCHEPHARM,JB Chemicals & Pharmaceuticals Limited,Chemicals,mid,41.5,0.02,3185.72
+JBMA,JBM Auto Limited,Textiles,large,45.67,0.08,1326.54
+JCHAC,Johnson Controls - Hitachi Air Conditioning India Limited,Textiles,small,5.52,-0.02,739.81
+JETFREIGHT,Jet Freight Logistics Limited,Chemicals,small,38.48,0.0,4182.9
+JGCHEM,J.G.Chemicals Limited,Cement,small,48.39,0.0,4922.79
+JHS,JHS Svendgaard Laboratories Limited,Industrial,mid,48.25,0.05,2652.17
+JINDALPHOT,Jindal Photo Limited,Pharma,large,34.67,0.09,899.81
+JINDALPOLY,Jindal Poly Films Limited,Chemicals,large,46.69,-0.05,1397.92
+JINDALSAW,Jindal Saw Limited,Pharma,large,10.46,0.05,141.03
+JINDALSTEL,Jindal Steel & Power Limited,Finance,small,46.08,-0.01,4575.78
+JINDRILL,Jindal Drilling And Industries Limited,Energy,small,32.84,-0.05,632.87
+JINDWORLD,Jindal Worldwide Limited,Chemicals,mid,49.95,-0.06,2903.76
+JIOFIN,Jio Financial Services Limited,Automobile,mid,36.24,0.04,1406.57
+JISLDVREQS,Jain Irrigation Systems Limited,Automobile,large,54.51,0.01,2793.18
+JISLJALEQS,Jain Irrigation Systems Limited,Industrial,small,58.33,0.05,3274.53
+JITFINFRA,JITF Infralogistics Limited,Finance,large,43.84,0.06,4157.22
+JKCEMENT,JK Cement Limited,Finance,large,11.88,0.1,1071.79
+JKIL,J.Kumar Infraprojects Limited,Industrial,mid,7.83,0.09,104.43
+JKLAKSHMI,JK Lakshmi Cement Limited,Cement,large,14.03,-0.03,727.58
+JKPAPER,JK Paper Limited,Pharma,small,21.49,0.09,4505.09
+JKTYRE,JK Tyre & Industries Limited,Chemicals,small,23.86,-0.01,4375.76
+JLHL,Jupiter Life Line Hospitals Limited,Energy,mid,30.04,0.05,3007.19
+JMA,Jullundur Motor Agency (Delhi) Limited,Industrial,mid,14.21,-0.03,3022.56
+JMFINANCIL,JM Financial Limited,Pharma,large,15.08,0.04,3341.93
+JNKINDIA,JNK India Limited,Textiles,small,46.75,0.08,918.09
+JOCIL,Jocil Limited,Energy,mid,57.31,0.04,4576.34
+JPOLYINVST,Jindal Poly Investment and Finance Company Limited,Pharma,mid,21.72,0.05,2122.91
+JPPOWER,Jaiprakash Power Ventures Limited,Finance,mid,26.82,-0.09,1946.54
+JSFB,Jana Small Finance Bank Limited,Finance,small,45.03,-0.08,2618.64
+JSL,Jindal Stainless Limited,Chemicals,small,7.46,0.04,282.48
+JSWENERGY,JSW Energy Limited,Automobile,mid,33.77,-0.07,873.1
+JSWHL,JSW Holdings Limited,Energy,mid,43.98,0.03,3703.27
+JSWINFRA,JSW Infrastructure Limited,Energy,large,28.21,0.05,459.85
+JSWSTEEL,JSW Steel Limited,Chemicals,large,31.37,0.03,3035.6
+JTEKTINDIA,Jtekt India Limited,Finance,mid,51.78,0.04,1264.48
+JTLIND,JTL INDUSTRIES LIMITED,Chemicals,small,31.52,-0.01,1977.01
+JUBLCPL,Jubilant Agri and Consumer Products Limited,Automobile,large,31.96,-0.01,1479.03
+JUBLFOOD,Jubilant Foodworks Limited,Pharma,mid,46.5,-0.07,1810.58
+JUBLINGREA,Jubilant Ingrevia Limited,Finance,small,39.05,-0.05,3609.28
+JUBLPHARMA,Jubilant Pharmova Limited,Energy,small,7.65,0.06,1520.75
+JUNIPER,Juniper Hotels Limited,IT,mid,44.05,0.01,2853.7
+JUSTDIAL,Just Dial Limited,Energy,mid,21.21,0.05,2406.45
+JWL,Jupiter Wagons Limited,Finance,mid,6.64,0.02,3335.17
+JYOTHYLAB,Jyothy Labs Limited,Cement,large,38.35,0.08,4687.31
+JYOTICNC,Jyoti CNC Automation Limited,Finance,mid,29.98,0.04,3676.23
+JYOTISTRUC,Jyoti Structures Limited,Pharma,large,44.26,-0.03,1113.95
+KABRAEXTRU,Kabra Extrusion Technik Limited,Textiles,small,34.02,0.05,204.36
+KAJARIACER,Kajaria Ceramics Limited,Automobile,mid,29.83,0.01,1348.21
+KAKATCEM,Kakatiya Cement Sugar & Industries Limited,Pharma,small,34.12,-0.03,2995.64
+KALAMANDIR,Sai Silks (Kalamandir) Limited,Automobile,large,32.63,-0.09,304.56
+KALPATARU,Kalpataru Limited,Automobile,large,36.16,0.01,2507.01
+KALYANI,Kalyani Commercials Limited,Cement,mid,41.08,0.05,3004.37
+KALYANIFRG,Kalyani Forge Limited,Industrial,mid,36.14,0.07,1704.51
+KALYANKJIL,Kalyan Jewellers India Limited,Finance,small,41.07,-0.04,3866.02
+KAMATHOTEL,Kamat Hotels (I) Limited,Chemicals,mid,23.13,-0.08,577.66
+KAMDHENU,Kamdhenu Limited,IT,large,47.7,0.01,421.93
+KAMOPAINTS,Kamdhenu Ventures Limited,IT,small,13.17,-0.03,3654.53
+KANANIIND,Kanani Industries Limited,Chemicals,small,56.21,0.04,2502.68
+KANORICHEM,Kanoria Chemicals & Industries Limited,Automobile,large,43.22,0.04,3457.59
+KANPRPLA,Kanpur Plastipack Limited,IT,mid,27.61,0.01,2202.4
+KANSAINER,Kansai Nerolac Paints Limited,Energy,large,45.23,0.0,1269.69
+KAPSTON,Kapston Services Limited,Textiles,small,26.48,-0.06,4104.56
+KARMAENG,Karma Energy Limited,Chemicals,small,43.82,0.06,4007.11
+KARURVYSYA,Karur Vysya Bank Limited,Cement,small,26.47,0.02,3488.75
+KAUSHALYA,Kaushalya Infrastructure Development Corporation Limited,Finance,large,59.58,0.02,1397.12
+KAVDEFENCE,Kavveri Defence & Wireless Technologies Limited,Finance,mid,59.3,0.08,2971.64
+KAYA,Kaya Limited,Industrial,mid,13.26,0.07,1836.82
+KAYNES,Kaynes Technology India Limited,Automobile,small,52.1,0.01,503.33
+KCP,KCP Limited,Cement,mid,11.16,-0.09,4590.7
+KCPSUGIND,KCP Sugar and Industries Corporation Limited,Textiles,large,25.96,-0.02,727.25
+KDDL,KDDL Limited,Energy,mid,47.29,0.05,4753.67
+KEC,KEC International Limited,Chemicals,large,38.52,-0.07,2257.73
+KECL,Kirloskar Electric Company Limited,IT,mid,7.61,-0.07,966.41
+KEEPLEARN,DSJ Keep Learning Limited,IT,small,33.5,0.03,2732.41
+KEI,KEI Industries Limited,Automobile,small,50.3,0.1,4371.08
+KELLTONTEC,Kellton Tech Solutions Limited,Finance,mid,16.65,-0.09,3674.51
+KERNEX,Kernex Microsystems (India) Limited,Energy,mid,34.15,0.1,4042.48
+KESORAMIND,Kesoram Industries Limited,Energy,small,31.42,0.02,3310.98
+KEYFINSERV,Keynote Financial Services Limited,Finance,mid,16.42,0.02,3476.77
+KFINTECH,Kfin Technologies Limited,Finance,small,27.63,0.06,4253.52
+KHADIM,Khadim India Limited,Cement,mid,40.91,0.1,1285.86
+KHAICHEM,Khaitan Chemicals & Fertilizers Limited,Pharma,mid,26.68,-0.1,2472.65
+KHAITANLTD,Khaitan (India) Limited,Pharma,small,40.81,0.01,1144.99
+KHANDSE,Khandwala Securities Limited,IT,mid,29.03,-0.08,4938.96
+KICL,Kalyani Investment Company Limited,Chemicals,mid,37.06,-0.07,4723.09
+KILITC-RE,Kilitch Drugs (India) Ltd-RE,Automobile,large,40.6,0.03,245.16
+KILITCH,Kilitch Drugs (India) Limited,Automobile,mid,18.37,0.01,3542.6
+KIMS,Krishna Institute of Medical Sciences Limited,Chemicals,mid,17.73,-0.08,4629.98
+KINGFA,Kingfa Science & Technology (India) Limited,Energy,mid,58.8,0.04,943.85
+KIOCL,KIOCL Limited,Automobile,mid,37.58,-0.08,2861.33
+KIRIINDUS,Kiri Industries Limited,Industrial,small,23.23,-0.1,4581.67
+KIRLOSBROS,Kirloskar Brothers Limited,Automobile,mid,16.82,0.04,218.03
+KIRLOSENG,Kirloskar Oil Engines Limited,Pharma,mid,42.64,-0.0,3502.23
+KIRLOSIND,Kirloskar Industries Limited,Textiles,large,29.56,0.08,1521.88
+KIRLPNU,Kirloskar Pneumatic Company Limited,Textiles,mid,38.98,0.02,4625.76
+KITEX,Kitex Garments Limited,Cement,mid,16.77,-0.09,4856.74
+KKCL,Kewal Kiran Clothing Limited,Automobile,large,59.41,-0.02,4724.12
+KMEW,Knowledge Marine & Engineering Works Limited,Pharma,large,10.48,-0.06,2397.36
+KMSUGAR,K.M.Sugar Mills Limited,Finance,small,15.25,0.05,4317.11
+KNRCON,KNR Constructions Limited,Energy,large,33.48,0.04,4230.52
+KOHINOOR,Kohinoor Foods Limited,Energy,large,49.72,-0.02,1629.55
+KOKUYOCMLN,Kokuyo Camlin Limited,Cement,small,12.99,-0.01,4153.13
+KOLTEPATIL,Kolte - Patil Developers Limited,Automobile,large,23.47,0.08,233.19
+KOPRAN,Kopran Limited,Finance,large,43.87,0.05,3001.54
+KOTAKBANK,Kotak Mahindra Bank Limited,Industrial,mid,35.91,-0.1,1188.54
+KOTARISUG,Kothari Sugars And Chemicals Limited,Textiles,mid,45.03,0.1,646.81
+KOTHARIPET,Kothari Petrochemicals Limited,Finance,small,25.81,-0.1,430.92
+KOTHARIPRO,Kothari Products Limited,Textiles,mid,22.75,0.04,3496.63
+KPEL,K.P. Energy Limited,Pharma,large,48.01,0.01,1732.38
+KPIGREEN,KPI Green Energy Limited,Cement,small,33.21,-0.09,3637.6
+KPIL,Kalpataru Projects International Limited,Finance,large,18.9,-0.05,373.51
+KPITTECH,KPIT Technologies Limited,Chemicals,large,15.1,-0.0,1610.69
+KPRMILL,K.P.R. Mill Limited,Chemicals,mid,44.59,0.02,2720.48
+KRBL,KRBL Limited,Automobile,mid,11.7,-0.09,3964.08
+KREBSBIO,Krebs Biochemicals and Industries Limited,Textiles,mid,12.53,-0.09,1627.82
+KRIDHANINF,Kridhan Infra Limited,Pharma,mid,50.12,-0.09,3148.16
+KRISHANA,Krishana Phoschem Limited,Textiles,large,50.4,0.05,4435.59
+KRISHIVAL,Krishival Foods Limited,Automobile,mid,25.33,-0.06,3098.52
+KRITI,Kriti Industries (India) Limited,Energy,large,51.81,-0.09,1203.15
+KRITIKA,Kritika Wires Limited,Finance,mid,15.64,0.03,170.78
+KRITINUT,Kriti Nutrients Limited,Finance,small,37.86,0.07,4356.99
+KRN,KRN Heat Exchanger and Refrigeration Limited,IT,small,54.65,0.05,155.28
+KRONOX,Kronox Lab Sciences Limited,Energy,small,12.02,0.03,4379.77
+KROSS,Kross Limited,IT,small,14.14,0.0,2668.24
+KRSNAA,Krsnaa Diagnostics Limited,Industrial,mid,56.85,-0.05,4698.39
+KRYSTAL,Krystal Integrated Services Limited,Finance,mid,29.22,0.06,4003.98
+KSB,Ksb Limited,Textiles,small,5.19,0.03,4989.77
+KSCL,Kaveri Seed Company Limited,Finance,small,47.59,-0.03,1786.02
+KSHITIJPOL,Kshitij Polyline Limited,Textiles,small,27.12,0.04,3847.58
+KSL,Kalyani Steels Limited,Pharma,mid,59.43,-0.06,2039.56
+KSOLVES,Ksolves India Limited,Cement,mid,37.37,0.08,2425.38
+KTKBANK,The Karnataka Bank Limited,Pharma,large,18.71,0.05,3156.15
+KUANTUM,Kuantum Papers Limited,Energy,mid,53.37,-0.08,4374.7
+LAGNAM,Lagnam Spintex Limited,IT,mid,15.71,0.03,4921.21
+LAKPRE,Lakshmi Precision Screws Limited,Industrial,large,21.48,-0.02,3852.95
+LAL,Lorenzini Apparels Limited,Cement,large,56.97,-0.06,2117.95
+LALPATHLAB,Dr. Lal Path Labs Ltd.,IT,large,46.91,-0.1,2135.72
+LAMBODHARA,Lambodhara Textiles Limited,Industrial,large,17.63,0.04,3701.03
+LANCORHOL,Lancor Holdings Limited,Finance,large,44.8,-0.07,1231.95
+LANDMARK,Landmark Cars Limited,Industrial,large,12.12,0.0,596.85
+LAOPALA,La Opala RG Limited,Finance,large,15.55,0.07,1805.38
+LASA,Lasa Supergenerics Limited,Energy,small,23.43,-0.06,1471.83
+LATENTVIEW,Latent View Analytics Limited,Pharma,small,7.9,-0.08,1516.73
+LATTEYS,Latteys Industries Limited,Energy,small,46.39,-0.02,1206.36
+LAURUSLABS,Laurus Labs Limited,Pharma,large,29.34,-0.07,258.36
+LAXMICOT,Laxmi Cotspin Limited,Pharma,large,52.88,-0.08,138.48
+LAXMIDENTL,Laxmi Dental Limited,Chemicals,large,15.57,0.02,4939.23
+LCCINFOTEC,LCC Infotech Limited,Pharma,large,28.76,-0.0,2167.48
+LEMONTREE,Lemon Tree Hotels Limited,IT,large,6.89,0.07,1952.42
+LFIC,Lakshmi Finance & Industrial Corporation Limited,Finance,large,56.08,0.05,3414.25
+LGBBROSLTD,LG Balakrishnan & Bros Limited,Energy,mid,11.12,-0.07,1130.36
+LGHL,Laxmi Goldorna House Limited,Automobile,small,46.29,0.0,4752.31
+LIBAS,Libas Consumer Products Limited,Industrial,small,5.23,0.08,3942.41
+LIBERTSHOE,Liberty Shoes Limited,Finance,mid,30.96,-0.03,492.58
+LICHSGFIN,LIC Housing Finance Limited,Pharma,mid,11.68,0.05,2117.02
+LICI,Life Insurance Corporation Of India,IT,large,12.29,0.06,4401.64
+LIKHITHA,Likhitha Infrastructure Limited,Energy,mid,57.43,0.05,4726.42
+LINC,Linc Limited,Finance,large,53.76,0.05,2363.64
+LINCOLN,Lincoln Pharmaceuticals Limited,Energy,large,59.13,-0.04,3086.39
+LINDEINDIA,Linde India Limited,Cement,small,20.49,-0.07,876.82
+LLOYDSENGG,LLOYDS ENGINEERING WORKS LIMITED,Energy,small,36.77,-0.06,4956.28
+LLOYDSENT,Lloyds Enterprises Limited,Automobile,small,47.86,-0.07,1196.77
+LLOYDSME,Lloyds Metals And Energy Limited,Automobile,small,9.93,0.01,4716.52
+LMW,LMW Limited,Chemicals,mid,38.27,0.01,3265.75
+LODHA,Lodha Developers Limited,Finance,large,14.72,-0.08,3058.3
+LOKESHMACH,Lokesh Machines Limited,Textiles,mid,51.02,0.09,2587.81
+LORDSCHLO,Lords Chloro Alkali Limited,IT,large,13.49,0.1,1191.82
+LOTUSEYE,Lotus Eye Hospital and Institute Limited,IT,small,8.11,0.09,923.81
+LOVABLE,Lovable Lingerie Limited,Industrial,mid,56.72,-0.0,1141.41
+LOYALTEX,Loyal Textile Mills Limited,Pharma,mid,55.9,0.03,972.87
+LPDC,Landmark Property Development Company Limited,Cement,large,19.89,0.01,3908.94
+LT,Larsen & Toubro Limited,IT,small,37.4,-0.01,1783.12
+LTF,L&T Finance Limited,Cement,mid,6.21,0.08,336.32
+LTFOODS,LT Foods Limited,IT,large,11.55,0.05,4847.06
+LTIM,LTIMindtree Limited,Industrial,mid,10.23,0.07,4424.74
+LTTS,L&T Technology Services Limited,Industrial,small,27.27,-0.02,4642.37
+LUMAXIND,Lumax Industries Limited,Finance,mid,30.01,0.05,4974.79
+LUMAXTECH,Lumax Auto Technologies Limited,Chemicals,large,8.52,0.09,910.78
+LUPIN,Lupin Limited,Automobile,small,20.54,0.06,2011.4
+LUXIND,Lux Industries Limited,Finance,small,29.58,-0.06,3803.28
+LXCHEM,Laxmi Organic Industries Limited,Energy,large,43.76,-0.03,3495.3
+LYKALABS,Lyka Labs Limited,Finance,small,48.53,-0.09,811.78
+LYPSAGEMS,Lypsa Gems & Jewellery Limited,Automobile,large,56.42,0.08,4088.37
+M&M,Mahindra & Mahindra Limited,Textiles,large,31.64,0.09,1160.98
+M&MFIN,Mahindra & Mahindra Financial Services Limited,Chemicals,large,35.23,-0.05,1157.9
+MAANALU,Maan Aluminium Limited,Energy,large,35.9,0.03,2708.02
+MACPOWER,Macpower CNC Machines Limited,Chemicals,mid,18.9,-0.0,2985.05
+MADHAV,Madhav Marbles and Granites Limited,Finance,large,45.95,0.08,2921.43
+MADHUCON,Madhucon Projects Limited,Pharma,mid,31.94,0.04,502.86
+MADRASFERT,Madras Fertilizers Limited,Industrial,mid,12.36,0.06,4393.43
+MAGADSUGAR,Magadh Sugar & Energy Limited,Chemicals,small,48.73,-0.07,1364.72
+MAGNUM,Magnum Ventures Limited,Energy,large,51.15,-0.05,691.1
+MAHABANK,Bank of Maharashtra,Pharma,large,54.33,-0.05,4449.3
+MAHAPEXLTD,Maha Rashtra Apex Corporation Limited,Automobile,mid,33.68,-0.1,4780.47
+MAHASTEEL,Mahamaya Steel Industries Limited,Pharma,small,41.88,-0.01,4317.53
+MAHEPC,Mahindra EPC Irrigation Limited,IT,small,13.94,-0.07,4057.1
+MAHESHWARI,Maheshwari Logistics Limited,Chemicals,large,40.3,-0.04,3293.45
+MAHLIFE,Mahindra Lifespace Developers Limited,IT,large,11.47,-0.01,2776.74
+MAHLOG,Mahindra Logistics Limited,Energy,large,50.52,-0.06,480.58
+MAHSCOOTER,Maharashtra Scooters Limited,Automobile,mid,18.44,0.07,2071.84
+MAHSEAMLES,Maharashtra Seamless Limited,Energy,mid,37.36,0.02,1894.81
+MAITHANALL,Maithan Alloys Limited,Industrial,mid,16.93,-0.04,1335.78
+MALLCOM,Mallcom (India) Limited,Automobile,small,48.39,0.02,3630.93
+MALUPAPER,Malu Paper Mills Limited,Automobile,mid,45.05,0.02,2504.58
+MAMATA,Mamata Machinery Limited,Chemicals,mid,57.15,-0.08,451.18
+MANAKALUCO,Manaksia Aluminium Company Limited,Automobile,large,32.74,0.07,1139.91
+MANAKCOAT,Manaksia Coated Metals & Industries Limited,Pharma,small,59.23,0.03,3432.13
+MANAKSIA,Manaksia Limited,Energy,mid,33.26,-0.01,426.85
+MANAKSTEEL,Manaksia Steels Limited,Energy,large,16.89,0.07,4263.47
+MANALIPETC,Manali Petrochemicals Limited,Finance,large,53.45,0.06,2500.98
+MANAPPURAM,Manappuram Finance Limited,Automobile,mid,40.76,0.06,2428.9
+MANBA,Manba Finance Limited,Finance,small,38.15,0.03,2982.42
+MANCREDIT,Mangal Credit and Fincorp Limited,Chemicals,small,51.38,-0.01,4132.17
+MANGALAM,Mangalam Drugs And Organics Limited,Automobile,small,11.54,-0.03,1771.66
+MANGCHEFER,Mangalore Chemicals & Fertilizers Limited,Automobile,large,25.16,0.01,3406.18
+MANGLMCEM,Mangalam Cement Limited,Chemicals,small,24.61,-0.05,2850.37
+MANINDS,Man Industries (India) Limited,Chemicals,mid,8.88,0.09,1371.79
+MANINFRA,Man Infraconstruction Limited,IT,small,49.08,0.04,4399.22
+MANKIND,Mankind Pharma Limited,Finance,large,10.67,-0.08,3997.26
+MANOMAY,Manomay Tex India Limited,Energy,small,37.23,0.04,3309.34
+MANORAMA,Manorama Industries Limited,Cement,small,54.35,-0.07,4260.38
+MANORG,Mangalam Organics Limited,Industrial,large,53.87,0.04,4343.11
+MANUGRAPH,Manugraph India Limited,IT,small,5.91,0.06,3556.4
+MANYAVAR,Vedant Fashions Limited,Chemicals,small,14.82,-0.02,4193.22
+MAPMYINDIA,C.E. Info Systems Limited,Energy,small,6.8,0.05,3502.48
+MARALOVER,Maral Overseas Limited,IT,mid,9.59,0.07,3416.7
+MARATHON,Marathon Nextgen Realty Limited,Energy,mid,34.14,0.1,3112.13
+MARICO,Marico Limited,Energy,mid,30.65,0.08,3775.95
+MARINE,Marine Electricals (India) Limited,IT,large,31.38,0.09,835.1
+MARKSANS,Marksans Pharma Limited,Textiles,large,30.84,0.06,4410.31
+MARUTI,Maruti Suzuki India Limited,Finance,mid,51.86,-0.07,4365.63
+MASFIN,MAS Financial Services Limited,IT,mid,38.55,0.04,194.77
+MASKINVEST,Mask Investments Limited,Industrial,mid,20.4,0.08,4137.79
+MASTEK,Mastek Limited,Finance,small,52.89,0.01,687.91
+MASTERTR,Master Trust Limited,Chemicals,mid,29.41,-0.03,1708.84
+MATRIMONY,Matrimony.Com Limited,IT,small,33.96,0.03,3730.37
+MAWANASUG,Mawana Sugars Limited,Pharma,large,52.0,0.05,845.76
+MAXESTATES,Max Estates Limited,IT,mid,44.75,0.04,4098.94
+MAXHEALTH,Max Healthcare Institute Limited,Pharma,large,26.8,-0.03,4169.06
+MAXIND,Max India Limited,Industrial,small,21.7,-0.0,2561.97
+MAYURUNIQ,Mayur Uniquoters Ltd,IT,mid,33.6,0.06,81.61
+MAZDA,Mazda Limited,Pharma,mid,17.25,-0.03,1470.84
+MAZDOCK,Mazagon Dock Shipbuilders Limited,IT,large,27.8,-0.03,3103.79
+MBAPL,Madhya Bharat Agro Products Limited,Energy,small,48.61,0.03,4906.87
+MBLINFRA,MBL Infrastructure Limited,Automobile,mid,39.0,0.07,3177.48
+MCL,Madhav Copper Limited,Cement,large,39.83,0.04,1336.03
+MCLEODRUSS,Mcleod Russel India Limited,Energy,mid,37.15,0.07,3188.33
+MCLOUD,Magellanic Cloud Limited,Industrial,large,23.19,0.06,2722.93
+MCX,Multi Commodity Exchange of India Limited,Finance,large,59.11,0.01,3910.23
+MEDANTA,Global Health Limited,IT,small,8.01,0.07,579.55
+MEDIASSIST,Medi Assist Healthcare Services Limited,Energy,large,59.71,-0.09,3817.09
+MEDICAMEQ,Medicamen Biotech Limited,Textiles,mid,51.09,0.09,2729.27
+MEDICO,Medico Remedies Limited,Textiles,mid,25.81,-0.1,4816.81
+MEDPLUS,Medplus Health Services Limited,Automobile,large,39.32,0.07,1742.27
+MEGASOFT,Megasoft Limited,Pharma,small,25.55,0.03,3181.48
+MEGASTAR,Megastar Foods Limited,Industrial,small,53.9,0.08,4663.54
+MENONBE,Menon Bearings Limited,Energy,mid,10.02,0.1,557.42
+MEP,MEP Infrastructure Developers Limited,IT,large,11.59,-0.04,4689.28
+METROBRAND,Metro Brands Limited,Automobile,mid,28.24,-0.05,3455.03
+METROPOLIS,Metropolis Healthcare Limited,IT,mid,6.47,-0.09,385.79
+MFML,Mahalaxmi Fabric Mills Limited,Pharma,large,11.56,0.09,1539.77
+MFSL,Max Financial Services Limited,Energy,mid,20.39,-0.05,3555.45
+MGEL,Mangalam Global Enterprise Limited,Finance,mid,9.73,0.08,383.39
+MGL,Mahanagar Gas Limited,Automobile,small,13.66,0.06,2931.74
+MHLXMIRU,Mahalaxmi Rubtech Limited,Chemicals,large,20.51,-0.06,1762.12
+MHRIL,Mahindra Holidays & Resorts India Limited,Finance,small,50.49,0.02,3123.53
+MICEL,MIC Electronics Limited,Energy,small,8.75,-0.08,276.42
+MIDHANI,Mishra Dhatu Nigam Limited,Industrial,large,39.09,-0.03,4364.11
+MINDACORP,Minda Corporation Limited,Cement,large,34.14,0.09,4868.77
+MINDTECK,Mindteck (India) Limited,IT,large,41.02,0.01,4845.95
+MIRCELECTR,MIRC Electronics Limited,Industrial,large,36.48,-0.06,3760.78
+MIRZAINT,Mirza International Limited,Industrial,large,17.23,-0.08,693.93
+MITCON,MITCON Consultancy & Engineering Services Limited,Textiles,large,46.6,0.01,3803.4
+MITTAL,Mittal Life Style Limited,Energy,large,45.97,0.03,171.71
+MKPL,M K Proteins Limited,Chemicals,mid,22.41,0.04,159.51
+MMFL,MM Forgings Limited,Textiles,large,27.2,-0.1,1651.87
+MMP,MMP Industries Limited,Pharma,mid,33.43,-0.01,2468.78
+MMTC,MMTC Limited,Cement,small,40.48,0.06,3863.52
+MOBIKWIK,One Mobikwik Systems Limited,Chemicals,mid,21.29,0.02,3432.31
+MODIRUBBER,Modi Rubber Limited,Cement,mid,7.86,-0.04,2257.22
+MODISONLTD,MODISON LIMITED,Textiles,small,19.52,-0.07,1404.45
+MODTHREAD,Modern Threads (India) Limited,IT,large,47.12,0.09,4985.77
+MOHITIND,Mohit Industries Limited,Cement,small,11.85,0.03,2159.6
+MOIL,MOIL Limited,Pharma,mid,38.17,-0.07,2284.37
+MOKSH,Moksh Ornaments Limited,Industrial,small,8.99,-0.06,859.94
+MOL,Meghmani Organics Limited,Energy,mid,47.25,0.06,3984.31
+MOLDTECH,Mold-Tek Technologies Limited,Cement,large,12.53,0.1,3483.73
+MOLDTKPAC,Mold-Tek Packaging Limited,Automobile,large,11.46,-0.03,1142.81
+MONARCH,Monarch Networth Capital Limited,Textiles,small,5.75,-0.08,457.79
+MONTECARLO,Monte Carlo Fashions Limited,Automobile,mid,44.53,0.09,3418.47
+MOREPENLAB,Morepen Laboratories Limited,Pharma,small,56.44,-0.07,3289.83
+MOSCHIP,Moschip Technologies Limited,Automobile,large,24.19,0.0,1402.63
+MOTHERSON,Samvardhana Motherson International Limited,Pharma,mid,8.77,0.09,4756.77
+MOTILALOFS,Motilal Oswal Financial Services Limited,Industrial,large,15.92,-0.0,797.74
+MOTISONS,Motisons Jewellers Limited,Cement,mid,32.41,0.02,2190.06
+MOTOGENFIN,The Motor & General Finance Limited,Energy,large,19.06,0.02,4720.9
+MPHASIS,MphasiS Limited,Energy,small,48.78,0.03,2127.65
+MPSLTD,MPS Limited,IT,small,12.45,0.06,3210.7
+MRF,MRF Limited,Cement,mid,27.27,-0.1,2018.09
+MRPL,Mangalore Refinery and Petrochemicals Limited,Chemicals,small,57.66,-0.04,1407.37
+MSPL,MSP Steel & Power Limited,Energy,large,26.91,-0.03,4920.69
+MSTCLTD,Mstc Limited,Industrial,small,11.89,-0.08,2076.2
+MSUMI,Motherson Sumi Wiring India Limited,Cement,mid,56.39,0.02,4475.79
+MTARTECH,Mtar Technologies Limited,Finance,large,41.19,-0.08,1188.28
+MTEDUCARE,MT Educare Limited,Chemicals,mid,45.14,-0.05,1104.87
+MTNL,Mahanagar Telephone Nigam Limited,Cement,large,15.84,0.08,204.11
+MUFIN,Mufin Green Finance Limited,Chemicals,mid,8.37,0.08,3275.75
+MUFTI,Credo Brands Marketing Limited,Energy,small,34.76,-0.07,1874.21
+MUKANDLTD,Mukand Limited,Cement,mid,14.54,-0.01,4328.57
+MUKKA,Mukka Proteins Limited,Automobile,small,11.9,0.06,2392.39
+MUKTAARTS,Mukta Arts Limited,IT,small,24.76,-0.04,4842.56
+MUNJALAU,Munjal Auto Industries Limited,Industrial,small,14.83,-0.07,968.35
+MUNJALSHOW,Munjal Showa Limited,Textiles,large,36.7,-0.04,4349.68
+MURUDCERA,Murudeshwar Ceramics Limited,Cement,large,51.12,0.06,3894.15
+MUTHOOTCAP,Muthoot Capital Services Limited,Energy,mid,47.14,0.03,3866.06
+MUTHOOTFIN,Muthoot Finance Limited,Pharma,small,37.53,-0.04,4231.68
+MUTHOOTMF,Muthoot Microfin Limited,Energy,mid,45.47,-0.05,3817.07
+MVGJL,Manoj Vaibhav Gems N Jewellers Limited,Pharma,large,58.54,-0.08,3149.79
+NACLIND,NACL Industries Limited,Cement,mid,15.4,-0.03,699.66
+NAGAFERT,Nagarjuna Fertilizers and Chemicals Limited,Pharma,large,36.4,-0.03,211.0
+NAGREEKCAP,Nagreeka Capital & Infrastructure Limited,Finance,small,17.12,-0.07,4608.2
+NAGREEKEXP,Nagreeka Exports Limited,Chemicals,small,21.32,-0.05,3102.42
+NAHARCAP,Nahar Capital and Financial Services Limited,Pharma,large,15.5,0.07,3992.86
+NAHARINDUS,Nahar Industrial Enterprises Limited,IT,small,56.76,-0.03,2433.54
+NAHARPOLY,Nahar Poly Films Limited,Pharma,mid,51.51,-0.03,630.68
+NAHARSPING,Nahar Spinning Mills Limited,Automobile,small,52.81,-0.09,669.67
+NAM-INDIA,Nippon Life India Asset Management Limited,Industrial,small,46.53,-0.07,3443.55
+NARMADA,Narmada Agrobase Limited,Pharma,small,31.33,0.03,2180.01
+NATCAPSUQ,Natural Capsules Limited,Textiles,large,16.81,0.1,1042.6
+NATCOPHARM,Natco Pharma Limited,IT,mid,15.92,0.09,2483.39
+NATHBIOGEN,Nath Bio-Genes (India) Limited,Energy,large,35.2,-0.03,367.83
+NATIONALUM,National Aluminium Company Limited,Pharma,large,8.63,-0.07,2930.76
+NAUKRI,Info Edge (India) Limited,Finance,large,47.1,-0.06,1381.52
+NAVA,NAVA LIMITED,Energy,large,15.38,-0.07,3997.92
+NAVINFLUOR,Navin Fluorine International Limited,Energy,large,55.82,-0.09,1586.29
+NAVKARCORP,Navkar Corporation Limited,Cement,mid,18.59,0.06,2303.34
+NAVKARURB,Navkar Urbanstructure Limited,Finance,small,46.76,0.01,107.52
+NAVNETEDUL,Navneet Education Limited,Chemicals,mid,33.45,-0.1,408.61
+NAZARA,Nazara Technologies Limited,Textiles,small,5.96,-0.06,1992.84
+NBCC,NBCC (India) Limited,Energy,large,39.56,0.0,2425.7
+NBIFIN,N. B. I. Industrial Finance Company Limited,Chemicals,small,17.34,-0.03,3020.1
+NCC,NCC Limited,Chemicals,large,23.96,-0.05,1493.73
+NCLIND,NCL Industries Limited,Energy,large,27.91,0.07,3490.16
+NDGL,Naga Dhunseri Group Limited,Pharma,mid,5.32,0.02,4307.61
+NDL,Nandan Denim Limited,Finance,mid,22.06,0.03,3910.26
+NDLVENTURE,NDL Ventures Limited,IT,mid,10.07,-0.03,246.11
+NDRAUTO,Ndr Auto Components Limited,Chemicals,large,55.12,0.04,2428.51
+NDTV,New Delhi Television Limited,Industrial,large,58.73,-0.03,569.4
+NECCLTD,North Eastern Carrying Corporation Limited,Textiles,large,44.12,0.02,1248.12
+NECLIFE,Nectar Lifesciences Limited,Industrial,mid,51.68,0.07,4933.98
+NELCAST,Nelcast Limited,Energy,small,13.44,-0.08,755.35
+NELCO,NELCO Limited,Finance,large,12.26,-0.02,2519.5
+NEOGEN,Neogen Chemicals Limited,Textiles,small,55.71,-0.01,3109.87
+NESCO,Nesco Limited,Chemicals,small,36.02,-0.05,3527.2
+NESTLEIND,Nestle India Limited,Textiles,mid,34.82,-0.05,2820.26
+NETWEB,Netweb Technologies India Limited,Chemicals,large,37.1,0.02,98.37
+NETWORK18,Network18 Media & Investments Limited,IT,small,27.0,0.03,1665.98
+NEULANDLAB,Neuland Laboratories Limited,Pharma,mid,50.64,-0.02,2612.67
+NEWGEN,Newgen Software Technologies Limited,Industrial,small,44.71,-0.04,484.94
+NEXTMEDIA,Next Mediaworks Limited,Cement,large,33.23,-0.0,1785.6
+NFL,National Fertilizers Limited,Chemicals,mid,21.54,-0.03,214.36
+NGIL,Nakoda Group of Industries Limited,Energy,large,6.26,0.01,438.96
+NGLFINE,NGL Fine-Chem Limited,Cement,mid,40.37,0.08,2014.77
+NH,Narayana Hrudayalaya Ltd.,Industrial,large,24.13,-0.08,706.94
+NHPC,NHPC Limited,Chemicals,mid,25.73,0.06,2859.33
+NIACL,The New India Assurance Company Limited,Automobile,small,59.43,-0.06,3462.85
+NIBE,NIBE Limited,Pharma,small,10.88,-0.0,4012.9
+NIBL,NRB Industrial Bearings Limited,Chemicals,small,27.26,0.05,1040.74
+NIITLTD,NIIT Limited,Textiles,large,54.19,-0.02,879.04
+NIITMTS,NIIT Learning Systems Limited,Energy,mid,37.57,0.08,567.61
+NILAINFRA,Nila Infrastructures Limited,Industrial,mid,52.81,0.01,3200.33
+NILASPACES,Nila Spaces Limited,Automobile,small,29.55,-0.03,3547.05
+NILKAMAL,Nilkamal Limited,Finance,large,24.47,0.05,206.35
+NINSYS,NINtec Systems Limited,Energy,mid,26.53,-0.07,4684.25
+NIPPOBATRY,Indo-National Limited,Finance,small,37.63,-0.06,307.26
+NIRAJ,Niraj Cement Structurals Limited,Cement,mid,7.86,0.09,2729.42
+NIRAJISPAT,Niraj Ispat Industries Limited,Textiles,mid,24.87,-0.07,3559.85
+NITCO,Nitco Limited,Energy,small,15.85,0.05,4361.3
+NITINSPIN,Nitin Spinners Limited,Pharma,small,12.82,0.05,3584.73
+NITIRAJ,Nitiraj Engineers Limited,Energy,mid,22.66,-0.09,4018.55
+NIVABUPA,Niva Bupa Health Insurance Company Limited,IT,large,45.27,-0.06,1730.28
+NKIND,NK Industries Limited,Industrial,large,37.85,0.01,4083.38
+NLCINDIA,NLC India Limited,Textiles,small,31.39,-0.03,446.57
+NMDC,NMDC Limited,Textiles,small,45.31,0.07,4479.34
+NOCIL,NOCIL Limited,Finance,small,58.64,0.05,2760.58
+NOIDATOLL,Noida Toll Bridge Company Limited,Cement,large,54.17,0.05,4095.62
+NORBTEAEXP,Norben Tea & Exports Limited,Automobile,large,46.0,-0.09,2288.98
+NORTHARC,Northern Arc Capital Limited,Cement,small,52.42,-0.04,3235.71
+NOVAAGRI,Nova Agritech Limited,Energy,large,28.16,0.05,2655.69
+NPST,Network People Services Technologies Limited,Cement,small,31.82,-0.02,3671.37
+NRAIL,N R Agarwal Industries Limited,IT,large,30.51,0.08,454.07
+NRBBEARING,NRB Bearing Limited,Chemicals,large,7.62,0.09,348.74
+NRL,Nupur Recyclers Limited,Energy,large,43.41,0.05,1273.16
+NSIL,Nalwa Sons Investments Limited,Energy,mid,35.89,-0.03,839.75
+NSLNISP,NMDC Steel Limited,Cement,small,47.58,0.09,4365.33
+NTPC,NTPC Limited,Automobile,mid,6.01,0.05,1135.11
+NTPCGREEN,NTPC Green Energy Limited,Automobile,large,27.59,0.03,4880.53
+NUCLEUS,Nucleus Software Exports Limited,Automobile,mid,11.81,0.05,1717.63
+NURECA,Nureca Limited,Finance,small,24.0,0.04,951.48
+NUVAMA,Nuvama Wealth Management Limited,Cement,large,21.98,0.0,3959.01
+NUVOCO,Nuvoco Vistas Corporation Limited,Pharma,mid,54.4,-0.04,3310.6
+NYKAA,FSN E-Commerce Ventures Limited,Textiles,mid,39.2,0.09,2516.07
+OAL,Oriental Aromatics Limited,Chemicals,mid,55.97,0.04,2799.05
+OBCL,Orissa Bengal Carrier Limited,IT,small,21.81,0.04,3610.05
+OBEROIRLTY,Oberoi Realty Limited,Finance,mid,26.52,-0.01,1180.85
+OCCLLTD,OCCL Limited,Finance,mid,48.63,-0.08,4981.85
+ODIGMA,Odigma Consultancy Solutions Limited,Chemicals,small,11.86,-0.1,4875.23
+OFSS,Oracle Financial Services Software Limited,IT,large,35.36,0.02,3269.11
+OIL,Oil India Limited,Industrial,small,59.49,0.04,1037.74
+OILCOUNTUB,Oil Country Tubular Limited,Chemicals,large,52.87,-0.03,3417.13
+OLAELEC,Ola Electric Mobility Limited,Textiles,small,16.6,-0.08,407.38
+OLECTRA,Olectra Greentech Limited,Chemicals,large,9.84,0.05,201.73
+OMAXAUTO,Omax Autos Limited,Textiles,large,32.34,0.09,1325.53
+OMAXE,Omaxe Limited,Textiles,small,30.56,-0.04,2339.98
+OMINFRAL,OM INFRA LIMITED,Automobile,small,28.53,0.01,4347.95
+ONELIFECAP,Onelife Capital Advisors Limited,IT,small,58.39,-0.04,3649.49
+ONEPOINT,One Point One Solutions Limited,Chemicals,mid,32.22,-0.09,3726.4
+ONESOURCE,Onesource Specialty Pharma Limited,Cement,mid,24.68,0.03,2156.19
+ONGC,Oil & Natural Gas Corporation Limited,Chemicals,large,48.18,-0.01,1762.38
+ONMOBILE,OnMobile Global Limited,Finance,small,5.87,0.02,1886.64
+ONWARDTEC,Onward Technologies Limited,Energy,small,24.27,-0.01,4938.87
+OPTIEMUS,Optiemus Infracom Limited,Energy,mid,16.74,-0.09,248.54
+ORBTEXP,Orbit Exports Limited,Automobile,large,28.89,0.02,4341.81
+ORCHASP,Orchasp Limited,Industrial,small,45.09,-0.02,2914.44
+ORCHPHARMA,Orchid Pharma Limited,Energy,mid,29.32,0.0,2221.15
+ORICONENT,Oricon Enterprises Limited,Cement,small,43.63,-0.03,3640.03
+ORIENTALTL,Oriental Trimex Limited,Pharma,small,18.06,0.1,2459.01
+ORIENTBELL,Orient Bell Limited,Chemicals,small,25.12,0.08,4373.45
+ORIENTCEM,Orient Cement Limited,IT,large,17.14,-0.03,4508.47
+ORIENTCER,ORIENT CERATECH LIMITED,Textiles,large,47.08,0.08,2137.52
+ORIENTELEC,Orient Electric Limited,Finance,small,55.04,0.06,1420.3
+ORIENTHOT,Oriental Hotels Limited,Textiles,mid,6.47,-0.06,2982.13
+ORIENTLTD,Orient Press Limited,Automobile,large,38.9,-0.02,4566.2
+ORIENTPPR,Orient Paper & Industries Limited,Pharma,large,11.14,-0.06,1092.78
+ORIENTTECH,Orient Technologies Limited,Cement,large,54.64,-0.08,3133.68
+ORISSAMINE,The Orissa Minerals Development Company Limited,Finance,large,26.91,0.08,3176.22
+ORTEL,Ortel Communications Limited,Cement,small,32.48,-0.01,3678.91
+ORTINGLOBE,ORTIN GLOBAL LIMITED,Finance,mid,35.49,0.06,701.26
+OSIAHYPER,Osia Hyper Retail Limited,Energy,mid,40.74,-0.05,3593.33
+OSWALAGRO,Oswal Agro Mills Limited,Industrial,small,10.97,-0.09,4549.71
+OSWALGREEN,Oswal Greentech Limited,Finance,small,44.93,-0.09,939.43
+OSWALPUMPS,Oswal Pumps Limited,Industrial,mid,9.65,0.04,1225.84
+OSWALSEEDS,ShreeOswal Seeds And Chemicals Limited,Cement,large,28.19,-0.1,4858.41
+PAGEIND,Page Industries Limited,Energy,mid,26.45,-0.09,945.84
+PAISALO,Paisalo Digital Limited,Pharma,large,6.47,0.01,4279.21
+PAKKA,PAKKA LIMITED,Pharma,mid,28.16,0.06,2486.78
+PALASHSECU,Palash Securities Limited,IT,large,17.85,0.07,1273.79
+PALREDTEC,Palred Technologies Limited,Energy,mid,46.93,0.02,4360.21
+PANACEABIO,Panacea Biotec Limited,Cement,mid,44.42,-0.04,2254.26
+PANACHE,Panache Digilife Limited,Automobile,mid,14.59,0.06,2598.35
+PANAMAPET,Panama Petrochem Limited,IT,mid,37.87,0.05,1828.21
+PANSARI,Pansari Developers Limited,Textiles,small,51.37,0.05,2985.11
+PAR,Par Drugs And Chemicals Limited,Energy,large,49.57,0.08,859.44
+PARACABLES,Paramount Communications Limited,Energy,large,19.62,0.05,1985.85
+PARADEEP,Paradeep Phosphates Limited,Energy,small,28.24,0.0,4848.59
+PARAGMILK,Parag Milk Foods Limited,Energy,small,55.63,-0.09,1327.76
+PARAS,Paras Defence and Space Technologies Limited,Industrial,large,54.57,-0.0,3300.85
+PARASPETRO,Paras Petrofils Limited,IT,large,16.67,-0.04,1659.69
+PARKHOTELS,Apeejay Surrendra Park Hotels Limited,Finance,large,52.16,0.0,3878.69
+PARSVNATH,Parsvnath Developers Limited,Finance,mid,23.66,-0.09,697.82
+PASHUPATI,Pashupati Cotspin Limited,Textiles,large,27.4,0.05,4850.61
+PASUPTAC,Pasupati Acrylon Limited,IT,mid,32.08,0.06,2296.26
+PATANJALI,Patanjali Foods Limited,Automobile,mid,55.38,-0.07,1218.45
+PATELENG,Patel Engineering Limited,Textiles,large,56.04,-0.04,413.81
+PATINTLOG,Patel Integrated Logistics Limited,Industrial,small,50.77,-0.03,890.3
+PAVNAIND,Pavna Industries Limited,Finance,large,43.05,-0.05,2622.88
+PAYTM,One 97 Communications Limited,Finance,small,17.42,-0.04,1718.17
+PCBL,PCBL Chemical Limited,Cement,large,13.38,0.01,4152.97
+PCJEWELLER,PC Jeweller Limited,IT,large,17.98,-0.08,2182.89
+PDMJEPAPER,Pudumjee Paper Products Limited,Energy,large,14.52,-0.01,1281.14
+PDSL,PDS Limited,Industrial,mid,56.97,0.08,3104.87
+PEARLPOLY,Pearl Polymers Limited,Automobile,mid,32.85,-0.06,3548.55
+PEL,Piramal Enterprises Limited,Finance,mid,6.66,-0.06,876.86
+PENIND,Pennar Industries Limited,Industrial,small,12.46,-0.01,879.72
+PENINLAND,Peninsula Land Limited,Textiles,large,59.01,0.09,231.52
+PERSISTENT,Persistent Systems Limited,IT,large,59.54,-0.0,3695.19
+PETRONET,Petronet LNG Limited,Textiles,small,35.67,-0.02,3335.83
+PFC,Power Finance Corporation Limited,Finance,large,47.3,-0.05,2399.42
+PFIZER,Pfizer Limited,Textiles,small,7.36,0.08,4228.64
+PFOCUS,Prime Focus Limited,Automobile,large,58.92,-0.03,4038.07
+PFS,PTC India Financial Services Limited,Energy,large,57.94,-0.07,2947.5
+PGEL,PG Electroplast Limited,Industrial,small,26.71,0.04,4347.94
+PGHH,Procter & Gamble Hygiene and Health Care Limited,Cement,large,33.67,-0.06,1068.91
+PGHL,Procter & Gamble Health Limited,Industrial,large,19.06,-0.03,604.0
+PGIL,Pearl Global Industries Limited,Textiles,large,11.13,-0.05,1385.26
+PHOENIXLTD,The Phoenix Mills Limited,Automobile,large,5.11,-0.08,332.58
+PICCADIL,Piccadily Agro Industries Limited,Finance,mid,24.71,-0.02,2679.29
+PIDILITIND,Pidilite Industries Limited,Textiles,mid,40.71,0.09,4686.2
+PIGL,Power & Instrumentation (Gujarat) Limited,Industrial,small,21.09,0.04,244.75
+PIIND,PI Industries Limited,Chemicals,mid,13.24,-0.1,654.44
+PILANIINVS,Pilani Investment and Industries Corporation Limited,Automobile,large,46.21,-0.02,2288.39
+PILITA,PIL ITALICA LIFESTYLE LIMITED,Industrial,small,33.5,-0.04,4672.68
+PIONEEREMB,Pioneer Embroideries Limited,Industrial,mid,18.29,0.03,1614.97
+PITTIENG,Pitti Engineering Limited,Chemicals,large,24.45,-0.05,2560.81
+PIXTRANS,Pix Transmissions Limited,Automobile,small,41.79,0.09,255.79
+PKTEA,The Peria Karamalai Tea & Produce Company Limited,Pharma,mid,17.14,0.01,784.3
+PLASTIBLEN,Plastiblends India Limited,Energy,large,56.02,-0.05,4933.82
+PLATIND,Platinum Industries Limited,Chemicals,large,59.72,-0.01,4827.34
+PLAZACABLE,Plaza Wires Limited,Pharma,small,58.1,0.05,74.45
+PNB,Punjab National Bank,Energy,mid,39.41,-0.05,4761.47
+PNBGILTS,PNB Gilts Limited,Pharma,large,33.02,-0.05,3213.64
+PNBHOUSING,PNB Housing Finance Limited,Industrial,mid,47.4,-0.1,4346.2
+PNC,Pritish Nandy Communications Limited,Textiles,small,31.03,-0.05,2300.96
+PNCINFRA,PNC Infratech Limited,Finance,small,16.11,-0.07,2602.2
+PNGJL,P N Gadgil Jewellers Limited,Chemicals,large,34.91,-0.04,2469.79
+POCL,Pondy Oxides & Chemicals Limited,Automobile,large,43.24,0.05,3350.98
+PODDARMENT,Poddar Pigments Limited,IT,large,56.29,0.03,741.27
+POKARNA,Pokarna Limited,Pharma,mid,54.51,-0.03,198.37
+POLICYBZR,PB Fintech Limited,IT,large,45.07,-0.0,1574.25
+POLYCAB,Polycab India Limited,Textiles,mid,5.54,-0.08,3538.17
+POLYMED,Poly Medicure Limited,Energy,mid,55.92,0.07,1049.17
+POLYPLEX,Polyplex Corporation Limited,Textiles,small,44.24,-0.08,3383.49
+PONNIERODE,Ponni Sugars (Erode) Limited,Chemicals,mid,18.66,0.0,4851.06
+POONAWALLA,Poonawalla Fincorp Limited,Finance,large,26.86,0.08,514.81
+POWERGRID,Power Grid Corporation of India Limited,IT,small,25.22,0.08,3379.38
+POWERINDIA,Hitachi Energy India Limited,Chemicals,large,41.53,-0.0,2246.56
+POWERMECH,Power Mech Projects Limited,Industrial,large,53.99,0.08,4347.3
+PPAP,PPAP Automotive Limited,IT,large,14.97,0.08,926.89
+PPL,Prakash Pipes Limited,Industrial,large,10.24,0.07,3478.5
+PPLPHARMA,Piramal Pharma Limited,Cement,large,13.58,-0.03,4198.67
+PRABHA,Prabha Energy Limited,Automobile,mid,54.56,-0.01,4725.84
+PRAENG,Prajay Engineers Syndicate Limited,IT,small,40.1,-0.02,3432.08
+PRAJIND,Praj Industries Limited,Cement,small,32.3,-0.04,2511.02
+PRAKASH,Prakash Industries Limited,Energy,mid,37.14,0.07,3108.34
+PRAKASHSTL,Prakash Steelage Limited,Industrial,small,21.18,0.06,4351.08
+PRAXIS,Praxis Home Retail Limited,Textiles,large,21.94,0.06,2874.52
+PRECAM,Precision Camshafts Limited,Chemicals,mid,25.8,-0.04,200.42
+PRECOT,Precot Limited,Automobile,mid,32.57,0.02,4658.2
+PRECWIRE,Precision Wires India Limited,Industrial,large,11.03,-0.06,3463.16
+PREMEXPLN,Premier Explosives Limited,Chemicals,mid,52.69,0.06,3398.74
+PREMIER,Premier Limited,Energy,large,55.74,-0.03,1117.59
+PREMIERENE,Premier Energies Limited,Automobile,small,37.92,0.1,3311.48
+PREMIERPOL,Premier Polyfilm Limited,Finance,small,55.3,0.07,1999.63
+PRESTIGE,Prestige Estates Projects Limited,Cement,large,53.06,0.0,3273.6
+PRICOLLTD,Pricol Limited,Finance,small,48.73,-0.08,577.64
+PRIMESECU,Prime Securities Limited,Automobile,mid,43.65,-0.05,3306.33
+PRIMO,Primo Chemicals Limited,Chemicals,mid,31.51,0.09,4997.1
+PRINCEPIPE,Prince Pipes And Fittings Limited,Industrial,large,51.29,-0.03,288.65
+PRITI,Priti International Limited,Pharma,small,57.67,0.06,4887.01
+PRITIKAUTO,Pritika Auto Industries Limited,Energy,large,44.67,0.07,2064.19
+PRIVISCL,Privi Speciality Chemicals Limited,Cement,mid,31.9,0.06,4360.23
+PROSTARM,Prostarm Info Systems Limited,Industrial,small,33.91,0.01,3922.81
+PROTEAN,Protean eGov Technologies Limited,Finance,large,29.56,0.08,2856.73
+PROZONER,Prozone Realty Limited,Automobile,small,42.35,-0.1,3705.32
+PRSMJOHNSN,Prism Johnson Limited,Chemicals,large,9.52,-0.07,4398.65
+PRUDENT,Prudent Corporate Advisory Services Limited,Chemicals,small,55.59,-0.09,2050.49
+PRUDMOULI,Prudential Sugar Corporation Limited,Cement,large,8.05,0.01,1668.81
+PSB,Punjab & Sind Bank,Pharma,mid,5.58,-0.01,3354.59
+PSPPROJECT,PSP Projects Limited,Automobile,mid,30.61,0.03,4048.84
+PTC,PTC India Limited,Cement,small,8.83,0.07,3823.31
+PTCIL,PTC Industries Limited,Cement,small,33.61,0.01,3999.18
+PTL,PTL Enterprises Limited,Energy,small,45.04,-0.07,2206.14
+PUNJABCHEM,Punjab Chemicals & Crop Protection Limited,Automobile,mid,11.13,-0.08,4098.28
+PURVA,Puravankara Limited,Pharma,mid,24.59,-0.05,645.03
+PVP,PVP Ventures Limited,Pharma,small,19.7,-0.05,2745.22
+PVRINOX,PVR INOX Limited,Cement,mid,31.27,0.04,78.51
+PVSL,Popular Vehicles and Services Limited,Pharma,small,53.16,0.06,1656.7
+PYRAMID,Pyramid Technoplast Limited,Textiles,small,29.23,-0.03,1863.98
+QPOWER,Quality Power Electrical Equipments Limited,IT,small,49.41,0.08,2011.05
+QUADFUTURE,Quadrant Future Tek Limited,Pharma,large,56.91,-0.04,3492.56
+QUESS,Quess Corp Limited,Automobile,mid,44.65,-0.07,1973.36
+QUICKHEAL,Quick Heal Technologies Limited,Finance,small,54.02,-0.0,2271.03
+RACE,Race Eco Chain Limited,Chemicals,small,20.59,0.02,1225.84
+RACLGEAR,RACL Geartech Limited,IT,mid,16.01,0.02,1897.6
+RADAAN,Radaan Mediaworks India Limited,Automobile,large,27.71,0.06,1174.98
+RADHIKAJWE,Radhika Jeweltech Limited,Textiles,small,8.24,0.07,412.32
+RADIANTCMS,Radiant Cash Management Services Limited,Energy,small,43.51,-0.03,3037.07
+RADICO,Radico Khaitan Limited,Finance,large,47.75,-0.03,3357.65
+RADIOCITY,Music Broadcast Limited,Finance,small,14.65,0.01,3116.48
+RAILTEL,Railtel Corporation Of India Limited,Finance,small,52.37,-0.02,2344.3
+RAIN,Rain Industries Limited,Chemicals,mid,46.4,-0.02,1929.94
+RAINBOW,Rainbow Childrens Medicare Limited,Finance,large,21.26,0.05,4323.5
+RAJESHEXPO,Rajesh Exports Limited,Cement,small,21.46,0.01,2619.45
+RAJMET,Rajnandini Metal Limited,Textiles,large,48.41,-0.04,2421.95
+RAJOOENG,Rajoo Engineers Limited,IT,mid,55.8,-0.05,176.93
+RAJRATAN,Rajratan Global Wire Limited,Cement,mid,43.13,-0.02,1739.18
+RAJRILTD,Raj Rayon Industries Limited,Cement,small,5.61,-0.0,1931.97
+RAJSREESUG,Rajshree Sugars & Chemicals Limited,IT,large,38.27,0.07,2024.17
+RAJTV,Raj Television Network Limited,Finance,small,41.8,0.0,2921.85
+RALLIS,Rallis India Limited,Chemicals,small,57.89,0.04,2691.33
+RAMANEWS,Shree Rama Newsprint Limited,Automobile,large,13.65,0.08,3059.13
+RAMAPHO,Rama Phosphates Limited,IT,small,36.66,-0.1,3836.17
+RAMASTEEL,Rama Steel Tubes Limited,IT,small,38.9,0.03,4074.28
+RAMCOCEM,The Ramco Cements Limited,Energy,small,23.31,0.09,3604.71
+RAMCOIND,Ramco Industries Limited,Energy,large,6.81,0.08,4779.84
+RAMCOSYS,Ramco Systems Limited,Finance,mid,47.08,-0.05,140.25
+RAMKY,Ramky Infrastructure Limited,Automobile,mid,35.98,0.06,1019.1
+RAMRAT,Ram Ratna Wires Limited,Chemicals,mid,39.06,0.04,87.44
+RANASUG,Rana Sugars Limited,Finance,mid,59.82,0.09,3255.0
+RANEHOLDIN,Rane Holdings Limited,Pharma,large,14.76,-0.05,4495.25
+RATEGAIN,Rategain Travel Technologies Limited,Textiles,mid,36.85,0.05,1255.24
+RATNAMANI,Ratnamani Metals & Tubes Limited,Pharma,small,10.58,-0.01,4638.82
+RATNAVEER,Ratnaveer Precision Engineering Limited,Industrial,small,27.94,-0.04,348.32
+RAYMOND,Raymond Limited,Automobile,large,51.3,0.03,4675.46
+RAYMONDLSL,Raymond Lifestyle Limited,Automobile,large,38.06,0.02,1790.53
+RAYMONDREL,Raymond Realty Limited,Textiles,small,25.48,-0.09,552.03
+RBA,Restaurant Brands Asia Limited,Energy,mid,44.74,-0.09,2455.07
+RBLBANK,RBL Bank Limited,Cement,large,7.02,0.05,1321.04
+RBZJEWEL,RBZ Jewellers Limited,Chemicals,small,18.42,0.03,1460.12
+RCF,Rashtriya Chemicals and Fertilizers Limited,IT,mid,59.8,-0.04,1571.09
+RECLTD,REC Limited,Cement,small,38.12,0.01,4024.98
+REDINGTON,Redington Limited,Cement,large,38.13,-0.08,2718.85
+REDTAPE,Redtape Limited,IT,mid,14.27,0.0,1590.97
+REFEX,Refex Industries Limited,Chemicals,large,34.26,0.01,3071.15
+REGENCERAM,Regency Ceramics Limited,Energy,small,5.63,-0.0,3594.95
+RELAXO,Relaxo Footwears Limited,Cement,mid,19.53,-0.01,1399.49
+RELCHEMQ,Reliance Chemotex Industries Limited,Pharma,mid,36.33,-0.03,2097.07
+RELIABLE,Reliable Data Services Limited,Chemicals,mid,21.56,-0.09,653.34
+RELIANCE,Reliance Industries Limited,Chemicals,small,58.34,-0.01,946.69
+RELIGARE,Religare Enterprises Limited,Finance,small,33.63,0.07,3421.53
+RELINFRA,Reliance Infrastructure Limited,Textiles,mid,45.06,0.02,948.12
+RELTD,Ravindra Energy Limited,Cement,large,43.17,-0.06,2649.56
+REMSONSIND,Remsons Industries Limited,Automobile,small,24.3,-0.04,3559.78
+RENUKA,Shree Renuka Sugars Limited,Finance,mid,22.89,0.1,579.04
+REPCOHOME,Repco Home Finance Limited,Cement,small,30.08,-0.09,2858.2
+REPL,Rudrabhishek Enterprises Limited,Cement,mid,5.02,0.06,1319.99
+REPRO,Repro India Limited,Energy,large,26.42,-0.06,4816.49
+RESPONIND,Responsive Industries Limited,Automobile,small,37.44,-0.08,2443.55
+RETAIL,JHS Svendgaard Retail Ventures Limited,Cement,mid,39.74,-0.08,4039.66
+RGL,Renaissance Global Limited,Automobile,mid,52.32,-0.02,2773.62
+RHFL,Reliance Home Finance Limited,Chemicals,small,27.2,0.09,264.89
+RHIM,RHI MAGNESITA INDIA LIMITED,Industrial,large,45.62,-0.03,3184.1
+RHL,Robust Hotels Limited,IT,large,8.45,-0.08,4759.45
+RICOAUTO,Rico Auto Industries Limited,IT,large,54.53,0.06,3027.98
+RIIL,Reliance Industrial Infrastructure Limited,Automobile,mid,58.62,-0.04,4104.98
+RISHABH,Rishabh Instruments Limited,Textiles,large,12.94,0.04,4426.82
+RITCO,Ritco Logistics Limited,Energy,small,22.37,0.06,1178.99
+RITES,RITES Limited,IT,mid,15.42,0.03,1099.62
+RKDL,Ravi Kumar Distilleries Limited,Chemicals,small,12.25,0.01,3074.36
+RKEC,RKEC Projects Limited,IT,small,5.25,0.01,2084.59
+RKFORGE,Ramkrishna Forgings Limited,Energy,mid,42.69,0.05,4207.31
+RKSWAMY,R K Swamy Limited,Chemicals,small,37.17,-0.07,4505.11
+RML,Rane (Madras) Limited,Finance,large,38.46,-0.01,1799.44
+ROHLTD,Royal Orchid Hotels Limited,Industrial,small,6.1,0.03,1222.51
+ROLEXRINGS,Rolex Rings Limited,Pharma,small,44.68,-0.04,3913.6
+ROLLT,Rollatainers Limited,Cement,mid,30.24,-0.05,1410.29
+ROLTA,Rolta India Limited,Automobile,large,14.05,0.08,4121.94
+ROML,Raj Oil Mills Limited,Textiles,mid,25.1,-0.0,2147.5
+ROSSARI,Rossari Biotech Limited,Energy,small,9.56,-0.05,3354.37
+ROSSELLIND,Rossell India Limited,IT,mid,7.85,0.04,522.9
+ROSSTECH,Rossell Techsys Limited,Industrial,small,34.98,0.08,3138.1
+ROTO,Roto Pumps Limited,Automobile,small,43.89,0.08,2286.25
+ROUTE,ROUTE MOBILE LIMITED,Finance,small,13.76,-0.03,2953.71
+RPEL,Raghav Productivity Enhancers Limited,Pharma,small,36.75,-0.03,881.67
+RPGLIFE,RPG Life Sciences Limited,Finance,small,33.3,0.02,3697.53
+RPOWER,Reliance Power Limited,Automobile,mid,16.88,0.08,4320.85
+RPPINFRA,R.P.P. Infra Projects Limited,Pharma,small,23.76,0.01,1122.86
+RPPL,Rajshree Polypack Limited,Automobile,mid,19.29,0.08,523.79
+RPSGVENT,RPSG VENTURES LIMITED,IT,large,22.87,-0.1,167.01
+RPTECH,Rashi Peripherals Limited,Textiles,small,54.86,0.08,3227.76
+RRKABEL,R R Kabel Limited,Industrial,small,6.84,0.04,3055.12
+RSSOFTWARE,R. S. Software (India) Limited,Automobile,large,59.57,0.01,2756.15
+RSWM,RSWM Limited,Automobile,small,30.09,-0.08,1198.14
+RSYSTEMS,R Systems International Limited,Finance,small,19.77,0.03,1984.98
+RTNINDIA,RattanIndia Enterprises Limited,IT,mid,15.91,0.01,2992.66
+RTNPOWER,RattanIndia Power Limited,Industrial,mid,38.27,-0.02,2509.0
+RUBFILA,Rubfila International Limited,Energy,small,47.53,0.03,4939.54
+RUBYMILLS,The Ruby Mills Limited,IT,large,57.55,0.02,725.38
+RUCHINFRA,Ruchi Infrastructure Limited,Textiles,small,24.16,-0.07,3490.97
+RUCHIRA,Ruchira Papers Limited,Energy,mid,5.36,-0.04,2051.38
+RUPA,Rupa & Company Limited,Industrial,large,32.91,-0.05,2169.59
+RUSHIL,Rushil Decor Limited,Finance,large,46.96,0.06,3602.11
+RUSTOMJEE,Keystone Realtors Limited,IT,large,55.04,0.09,3477.56
+RVHL,Ravinder Heights Limited,Industrial,mid,36.62,0.07,4956.72
+RVNL,Rail Vikas Nigam Limited,Industrial,large,23.15,0.04,685.55
+RVTH,Revathi Equipment India Limited,Finance,large,30.87,-0.05,565.34
+S&SPOWER,S&S Power Switchgears Limited,Finance,mid,26.69,0.01,3635.48
+SABEVENTS,Sab Events & Governance Now Media Limited,Pharma,mid,54.6,-0.08,2913.02
+SABTNL,Sri Adhikari Brothers Television Network Limited,IT,small,48.73,0.1,1407.1
+SADBHAV,Sadbhav Engineering Limited,Industrial,mid,47.09,0.09,443.13
+SADBHIN,Sadbhav Infrastructure Project Limited,Automobile,large,28.57,0.09,474.01
+SADHNANIQ,Sadhana Nitrochem Limited,Textiles,large,45.8,-0.03,4476.24
+SAFARI,Safari Industries (India) Limited,Industrial,large,53.55,0.08,999.74
+SAGARDEEP,Sagardeep Alloys Limited,Finance,mid,26.1,-0.09,1650.69
+SAGCEM,Sagar Cements Limited,IT,mid,54.76,0.06,1171.95
+SAGILITY,Sagility India Limited,Cement,small,14.79,0.02,1807.23
+SAH,Sah Polymers Limited,Automobile,small,53.14,0.01,393.65
+SAHYADRI,Sahyadri Industries Limited,Finance,mid,40.79,-0.09,2619.35
+SAIL,Steel Authority of India Limited,Industrial,large,18.16,-0.05,384.68
+SAILIFE,Sai Life Sciences Limited,Industrial,small,52.09,0.06,4011.76
+SAKAR,Sakar Healthcare Limited,IT,large,10.1,-0.09,1206.87
+SAKHTISUG,Sakthi Sugars Limited,Chemicals,large,29.74,-0.1,2723.06
+SAKSOFT,Saksoft Limited,IT,small,51.77,-0.07,4406.39
+SAKUMA,Sakuma Exports Limited,Energy,mid,8.03,0.04,3271.84
+SALASAR,Salasar Techno Engineering Limited,Cement,mid,50.03,-0.03,2688.14
+SALONA,Salona Cotspin Limited,Finance,mid,30.86,0.01,1655.45
+SALSTEEL,S.A.L. Steel Limited,IT,mid,48.6,-0.04,1698.36
+SALZERELEC,Salzer Electronics Limited,Energy,mid,37.94,0.07,3363.96
+SAMBHAAV,Sambhaav Media Limited,Energy,small,20.95,0.04,4970.99
+SAMBHV,Sambhv Steel Tubes Limited,Energy,small,23.74,-0.01,3326.1
+SAMHI,Samhi Hotels Limited,Pharma,mid,12.69,-0.03,2811.03
+SAMMAANCAP,Sammaan Capital Limited,Industrial,small,33.15,-0.01,3666.72
+SAMPANN,Sampann Utpadan India Limited,Chemicals,large,53.26,0.07,2352.77
+SANATHAN,Sanathan Textiles Limited,IT,large,25.85,0.01,347.7
+SANDESH,The Sandesh Limited,Finance,large,48.88,-0.06,2833.37
+SANDHAR,Sandhar Technologies Limited,Finance,large,50.76,0.05,4790.25
+SANDUMA,Sandur Manganese & Iron Ores Limited,IT,large,44.79,0.09,917.75
+SANGAMIND,Sangam (India) Limited,Pharma,large,11.91,-0.09,3465.52
+SANGHIIND,Sanghi Industries Limited,Industrial,large,15.75,0.07,1044.62
+SANGHVIMOV,Sanghvi Movers Limited,Textiles,large,48.81,-0.09,2702.35
+SANGINITA,Sanginita Chemicals Limited,Energy,small,14.52,0.04,528.55
+SANOFI,Sanofi India Limited,Cement,mid,43.71,-0.05,2279.34
+SANOFICONR,Sanofi Consumer Healthcare India Limited,Pharma,mid,26.66,0.04,3793.01
+SANSERA,Sansera Engineering Limited,Pharma,large,18.12,-0.0,1770.48
+SANSTAR,Sanstar Limited,Cement,mid,44.65,-0.08,3341.31
+SANWARIA,Sanwaria Consumer Limited,Textiles,small,15.41,0.1,3987.48
+SAPPHIRE,Sapphire Foods India Limited,Industrial,small,30.61,-0.04,4639.53
+SARDAEN,Sarda Energy & Minerals Limited,Cement,mid,13.09,-0.08,1211.48
+SAREGAMA,Saregama India Limited,Chemicals,mid,20.41,0.03,2026.61
+SARLAPOLY,Sarla Performance Fibers Limited,Chemicals,mid,37.48,0.07,804.46
+SARVESHWAR,Sarveshwar Foods Limited,Industrial,small,20.94,0.09,4962.79
+SASKEN,Sasken Technologies Limited,Pharma,small,5.46,0.04,4638.65
+SASTASUNDR,Sastasundar Ventures Limited,Energy,small,40.75,0.07,2722.79
+SATIA,Satia Industries Limited,Industrial,mid,32.06,-0.07,4218.06
+SATIN,Satin Creditcare Network Limited,Chemicals,small,42.41,0.03,2628.74
+SAURASHCEM,Saurashtra Cement Limited,Cement,large,52.15,0.04,3136.75
+SBC,SBC Exports Limited,Textiles,large,35.15,0.05,491.17
+SBCL,Shivalik Bimetal Controls Limited,Chemicals,mid,49.0,-0.02,3788.59
+SBFC,SBFC Finance Limited,Chemicals,mid,42.68,0.07,682.18
+SBGLP,Suratwwala Business Group Limited,Energy,mid,24.1,0.1,4139.03
+SBICARD,SBI Cards and Payment Services Limited,IT,small,26.63,-0.08,3921.04
+SBILIFE,SBI Life Insurance Company Limited,Automobile,large,5.17,-0.03,3558.29
+SBIN,State Bank of India,Automobile,large,8.48,-0.02,228.99
+SCHAEFFLER,Schaeffler India Limited,Finance,large,39.65,0.07,1550.49
+SCHAND,S Chand And Company Limited,Textiles,mid,6.2,0.06,1352.41
+SCHNEIDER,Schneider Electric Infrastructure Limited,Pharma,large,27.36,0.06,1832.68
+SCI,Shipping Corporation Of India Limited,Industrial,large,10.78,0.09,483.83
+SCILAL,Shipping Corporation of India Land and Assets Limited,Pharma,large,5.49,-0.09,4687.94
+SCODATUBES,Scoda Tubes Limited,IT,large,28.04,0.06,2791.32
+SCPL,Sheetal Cool Products Limited,Industrial,small,52.72,0.1,1562.35
+SDBL,Som Distilleries & Breweries Limited,Energy,small,14.38,-0.07,2015.06
+SEAMECLTD,Seamec Limited,Industrial,mid,12.07,0.09,2263.65
+SECMARK,SecMark Consultancy Limited,Energy,mid,44.62,-0.05,3022.94
+SECURKLOUD,SECUREKLOUD TECHNOLOGIES LIMITED,Textiles,large,40.3,0.02,2602.61
+SEJALLTD,Sejal Glass Limited,Cement,mid,28.13,-0.03,4600.99
+SELAN,Selan Exploration Technology Limited,Finance,large,21.76,0.01,2509.97
+SELMC,SEL Manufacturing Company Limited,Industrial,large,29.55,0.04,4961.18
+SEMAC,Semac Construction Limited,Finance,large,19.8,-0.09,4264.55
+SENCO,Senco Gold Limited,IT,large,32.3,0.06,1082.13
+SENORES,Senores Pharmaceuticals Limited,Finance,large,50.9,0.09,4656.45
+SEPC,SEPC Limited,Chemicals,small,18.29,0.04,626.01
+SEQUENT,Sequent Scientific Limited,Chemicals,mid,56.36,-0.05,4096.38
+SERVOTECH,Servotech Renewable Power System Limited,IT,large,35.26,0.05,1934.09
+SESHAPAPER,Seshasayee Paper and Boards Limited,Energy,mid,11.79,-0.03,4395.97
+SETCO,Setco Automotive Limited,Textiles,small,41.07,0.01,4346.88
+SETUINFRA,Setubandhan Infrastructure Limited,Pharma,large,28.65,0.06,4039.33
+SFL,Sheela Foam Limited,Industrial,small,27.38,0.07,3960.65
+SGIL,Synergy Green Industries Limited,Chemicals,small,37.58,0.09,1558.16
+SGL,STL Global Limited,Automobile,mid,10.29,0.01,450.55
+SGLTL,Standard Glass Lining Technology Limited,Industrial,mid,17.69,-0.06,2044.75
+SHAH,Shah Metacorp Limited,Textiles,large,30.64,0.09,908.95
+SHAHALLOYS,Shah Alloys Limited,Automobile,large,20.37,-0.01,3490.01
+SHAILY,Shaily Engineering Plastics Limited,Textiles,small,36.69,0.06,1763.19
+SHAKTIPUMP,Shakti Pumps (India) Limited,Industrial,mid,57.98,-0.02,4879.27
+SHALBY,Shalby Limited,Automobile,mid,43.76,-0.06,3222.81
+SHALPAINTS,Shalimar Paints Limited,Textiles,mid,10.58,0.0,4121.28
+SHANKARA,Shankara Building Products Limited,Energy,small,8.15,0.03,706.0
+SHANTI,Shanti Overseas (India) Limited,Chemicals,small,19.94,0.03,4316.97
+SHANTIGEAR,Shanthi Gears Limited,Textiles,mid,39.53,0.0,4617.65
+SHARDACROP,Sharda Cropchem Limited,Industrial,mid,12.58,-0.07,2460.96
+SHARDAMOTR,Sharda Motor Industries Limited,Energy,mid,56.25,0.09,3050.95
+SHAREINDIA,Share India Securities Limited,Finance,large,32.36,-0.05,3835.81
+SHEKHAWATI,Shekhawati Industries Limited,Finance,small,20.9,0.08,915.45
+SHEMAROO,Shemaroo Entertainment Limited,Textiles,small,13.3,0.05,2537.7
+SHILPAMED,Shilpa Medicare Limited,Energy,large,38.38,-0.0,2023.38
+SHIVALIK,Shivalik Rasayan Limited,Chemicals,large,19.3,0.0,774.55
+SHIVAMAUTO,Shivam Autotech Limited,Cement,small,23.94,0.04,1869.3
+SHIVAMILLS,Shiva Mills Limited,Chemicals,small,31.64,0.09,387.45
+SHIVATEX,Shiva Texyarn Limited,Pharma,small,56.68,-0.08,177.77
+SHK,S H Kelkar and Company Limited,IT,mid,23.65,-0.01,719.07
+SHOPERSTOP,Shoppers Stop Limited,Pharma,large,47.19,0.1,4817.42
+SHRADHA,Shradha Infraprojects Limited,IT,small,41.43,0.04,2770.17
+SHREDIGCEM,Shree Digvijay Cement Co.Ltd,Chemicals,large,44.26,-0.08,4830.82
+SHREECEM,SHREE CEMENT LIMITED,Automobile,small,10.5,0.03,2190.86
+SHREEPUSHK,Shree Pushkar Chemicals & Fertilisers Limited,Automobile,small,22.3,-0.01,1593.49
+SHREERAMA,Shree Rama Multi-Tech Limited,Chemicals,small,38.93,-0.02,2555.4
+SHRENIK,Shrenik Limited,Automobile,small,13.86,0.08,2225.58
+SHREYANIND,Shreyans Industries Limited,Textiles,large,41.39,-0.08,573.04
+SHRIPISTON,Shriram Pistons & Rings Limited,Finance,large,39.36,0.02,3222.09
+SHRIRAMFIN,Shriram Finance Limited,Chemicals,large,59.19,-0.03,1119.39
+SHRIRAMPPS,Shriram Properties Limited,Pharma,small,20.22,-0.07,3116.96
+SHYAMCENT,Shyam Century Ferrous Limited,IT,large,39.38,-0.01,3268.5
+SHYAMMETL,Shyam Metalics and Energy Limited,Energy,mid,49.0,-0.09,802.52
+SHYAMTEL,Shyam Telecom Limited,IT,large,16.04,0.04,353.68
+SICALLOG,Sical Logistics Limited,Pharma,small,8.73,0.02,3914.77
+SIEMENS,Siemens Limited,Energy,large,47.68,-0.0,2326.01
+SIGACHI,Sigachi Industries Limited,Textiles,mid,21.52,-0.07,337.91
+SIGIND,Signet Industries Limited,Industrial,large,15.11,-0.09,4974.59
+SIGMA,Sigma Solve Limited,Textiles,mid,48.07,-0.06,336.01
+SIGNATURE,Signatureglobal (India) Limited,Textiles,large,56.08,0.03,3490.42
+SIGNPOST,Signpost India Limited,Energy,small,47.06,0.09,4919.21
+SIKKO,Sikko Industries Limited,Chemicals,mid,42.4,-0.07,1233.94
+SIL,Standard Industries Limited,Textiles,small,58.83,0.1,754.13
+SILGO,Silgo Retail Limited,Textiles,large,37.69,-0.02,650.86
+SILINV,SIL Investments Limited,Textiles,small,21.12,-0.07,1551.21
+SILLYMONKS,Silly Monks Entertainment Limited,Industrial,mid,20.56,-0.04,550.18
+SILVERTUC,Silver Touch Technologies Limited,Cement,mid,59.0,-0.07,3476.2
+SIMBHALS,Simbhaoli Sugars Limited,Pharma,mid,32.1,0.07,358.34
+SIMPLEXINF,Simplex Infrastructures Limited,Finance,mid,15.28,-0.06,2571.64
+SINCLAIR,Sinclairs Hotels Limited,Automobile,small,32.84,-0.06,4983.65
+SINDHUTRAD,Sindhu Trade Links Limited,Finance,mid,59.44,-0.01,4079.15
+SINTERCOM,Sintercom India Limited,Textiles,mid,55.53,-0.05,3095.34
+SIRCA,Sirca Paints India Limited,Pharma,large,37.73,0.07,1565.96
+SIS,SIS LIMITED,Automobile,large,5.97,-0.1,3138.28
+SITINET,Siti Networks Limited,Textiles,large,10.98,0.08,2658.86
+SIYSIL,Siyaram Silk Mills Limited,Pharma,mid,18.98,-0.01,2159.11
+SJS,S.J.S. Enterprises Limited,Cement,mid,5.29,0.01,697.02
+SJVN,SJVN Limited,Finance,small,41.01,0.08,4438.69
+SKFINDIA,SKF India Limited,Chemicals,large,57.33,-0.07,2276.43
+SKIPPER,Skipper Limited,Cement,small,18.96,-0.0,1013.38
+SKMEGGPROD,SKM Egg Products Export (India) Limited,Industrial,small,42.98,-0.03,1870.41
+SKYGOLD,SKY GOLD AND DIAMONDS LIMITED,Cement,large,25.63,0.1,2099.94
+SMARTLINK,Smartlink Holdings Limited,Chemicals,small,28.65,-0.08,4146.31
+SMARTWORKS,Smartworks Coworking Spaces Limited,Automobile,small,7.89,-0.0,3681.39
+SMCGLOBAL,SMC Global Securities Limited,Energy,mid,5.91,0.08,3858.06
+SMLISUZU,SML Isuzu Limited,IT,large,9.28,-0.06,104.6
+SMLT,Sarthak Metals Limited,Pharma,large,57.3,-0.06,2109.96
+SMSLIFE,SMS Lifesciences India Limited,Industrial,mid,59.75,0.04,2432.65
+SMSPHARMA,SMS Pharmaceuticals Limited,Energy,small,13.18,-0.07,145.0
+SNOWMAN,Snowman Logistics Limited,Pharma,mid,58.46,0.09,1336.08
+SOBHA,Sobha Limited,Automobile,small,5.15,0.1,3813.43
+SOFTTECH,Softtech Engineers Limited,Energy,large,24.04,0.02,728.69
+SOLARA,Solara Active Pharma Sciences Limited,Industrial,large,30.04,0.09,2699.79
+SOLARINDS,Solar Industries India Limited,Pharma,small,30.54,0.04,1115.25
+SOMANYCERA,Somany Ceramics Limited,Chemicals,mid,50.18,0.09,110.0
+SOMATEX,Soma Textiles & Industries Limited,Energy,large,25.29,-0.1,1243.95
+SOMICONVEY,Somi Conveyor Beltings Limited,Pharma,large,29.57,-0.07,4880.58
+SONACOMS,Sona BLW Precision Forgings Limited,Industrial,small,21.0,-0.03,4017.61
+SONAMLTD,SONAM LIMITED,Industrial,small,14.8,-0.06,4799.9
+SONATSOFTW,Sonata Software Limited,Finance,large,9.15,-0.0,2464.88
+SOTL,Savita Oil Technologies Limited,Cement,small,30.72,-0.08,593.19
+SOUTHBANK,The South Indian Bank Limited,Energy,large,57.43,-0.03,2762.4
+SOUTHWEST,South West Pinnacle Exploration Limited,Textiles,mid,38.79,-0.09,2299.17
+SPAL,S. P. Apparels Limited,Pharma,small,15.28,-0.02,4229.57
+SPANDANA,Spandana Sphoorty Financial Limited,IT,mid,44.77,0.05,535.51
+SPARC,Sun Pharma Advanced Research Company Limited,Industrial,small,16.46,0.09,2466.79
+SPCENET,Spacenet Enterprises India Limited,Textiles,small,7.59,0.02,792.74
+SPECIALITY,Speciality Restaurants Limited,Automobile,small,20.08,-0.04,1657.15
+SPECTRUM,Spectrum Electrical Industries Limited,Finance,small,7.41,-0.06,3699.92
+SPENCERS,Spencer's Retail Limited,Finance,large,36.05,-0.07,2406.29
+SPIC,Southern Petrochemicals Industries Corporation  Limited,Industrial,large,14.37,0.04,1910.65
+SPLIL,SPL Industries Limited,Finance,large,15.6,-0.08,2002.66
+SPLPETRO,Supreme Petrochem Limited,Automobile,small,53.03,0.09,2324.26
+SPMLINFRA,SPML Infra Limited,Automobile,large,55.29,0.0,3935.83
+SPORTKING,Sportking India Limited,Textiles,mid,38.07,0.04,4465.82
+SRD,Shankar Lal Rampal Dye-Chem Limited,Finance,mid,19.47,-0.1,4778.91
+SREEL,Sreeleathers Limited,Cement,mid,31.76,0.06,3945.17
+SRF,SRF Limited,Automobile,large,6.72,0.09,1611.26
+SRGHFL,SRG Housing Finance Limited,Finance,large,32.15,0.0,3456.27
+SRHHYPOLTD,Sree Rayalaseema Hi-Strength Hypo Limited,Automobile,large,5.01,-0.04,2216.14
+SRM,SRM Contractors Limited,Pharma,large,17.17,0.03,1310.62
+SSDL,Saraswati Saree Depot Limited,Industrial,large,22.58,-0.05,4212.31
+SSWL,Steel Strips Wheels Limited,Energy,large,18.52,0.07,240.21
+STALLION,Stallion India Fluorochemicals Limited,Finance,mid,54.52,-0.02,4513.72
+STANLEY,Stanley Lifestyles Limited,Cement,large,26.66,0.07,2334.31
+STAR,Strides Pharma Science Limited,IT,mid,59.67,0.06,3204.15
+STARCEMENT,Star Cement Limited,Pharma,small,52.9,-0.03,3313.8
+STARHEALTH,Star Health and Allied Insurance Company Limited,IT,small,32.31,0.05,4480.83
+STARPAPER,Star Paper Mills Limited,Automobile,large,40.64,0.06,3201.51
+STARTECK,Starteck Finance Limited,Chemicals,mid,28.59,0.05,3088.97
+STCINDIA,The State Trading Corporation of India Limited,IT,mid,17.57,-0.03,379.93
+STEELCAS,Steelcast Limited,Pharma,large,45.68,0.04,2616.12
+STEELCITY,Steel City Securities Limited,IT,mid,32.19,0.09,793.34
+STEELXIND,STEEL EXCHANGE INDIA LIMITED,Chemicals,small,42.32,-0.01,3700.3
+STEL,Stel Holdings Limited,Chemicals,small,27.88,0.0,2585.5
+STERTOOLS,Sterling Tools Limited,Automobile,small,25.45,-0.09,3417.13
+STLTECH,Sterlite Technologies Limited,IT,large,50.71,0.01,256.28
+STOVEKRAFT,Stove Kraft Limited,Energy,small,32.21,0.04,469.72
+STYLAMIND,Stylam Industries Limited,Finance,mid,51.74,0.04,3595.8
+STYLEBAAZA,Baazar Style Retail Limited,Textiles,mid,32.02,-0.03,406.82
+STYRENIX,Styrenix Performance Materials Limited,Industrial,mid,47.49,0.05,402.72
+SUBEXLTD,Subex Limited,Energy,mid,8.64,-0.03,109.94
+SUBROS,Subros Limited,Cement,small,43.87,0.04,4784.68
+SUDARSCHEM,Sudarshan Chemical Industries Limited,Pharma,small,7.6,0.0,3700.67
+SUKHJITS,Sukhjit Starch & Chemicals Limited,Textiles,small,45.4,-0.08,1798.59
+SULA,Sula Vineyards Limited,IT,mid,18.96,-0.08,1517.85
+SUMEETINDS,Sumeet Industries Limited,Chemicals,large,49.08,0.02,1781.03
+SUMICHEM,Sumitomo Chemical India Limited,Automobile,large,36.06,0.05,3884.53
+SUMIT,Sumit Woods Limited,Finance,mid,17.6,-0.0,3323.78
+SUMMITSEC,Summit Securities Limited,IT,small,49.02,0.03,966.72
+SUNCLAY,Sundaram Clayton Limited,IT,large,50.89,-0.06,911.84
+SUNDARAM,Sundaram Multi Pap Limited,Energy,mid,57.82,-0.01,537.06
+SUNDARMFIN,Sundaram Finance Limited,Textiles,small,23.13,-0.09,3318.5
+SUNDARMHLD,Sundaram Finance Holdings Limited,Pharma,mid,47.12,-0.03,3833.64
+SUNDRMBRAK,Sundaram Brake Linings Limited,Automobile,large,38.69,0.01,1361.98
+SUNDRMFAST,Sundram Fasteners Limited,Energy,mid,54.12,-0.1,153.68
+SUNDROP,Sundrop Brands Limited,Automobile,small,11.97,-0.01,456.75
+SUNFLAG,Sunflag Iron And Steel Company Limited,Industrial,large,34.42,-0.08,4840.91
+SUNPHARMA,Sun Pharmaceutical Industries Limited,Cement,large,29.87,0.08,1512.45
+SUNTECK,Sunteck Realty Limited,Pharma,large,37.6,0.08,3857.65
+SUNTV,Sun TV Network Limited,Chemicals,mid,16.75,-0.08,3142.08
+SUPERHOUSE,Superhouse Limited,Automobile,mid,17.07,0.05,1940.6
+SUPERSPIN,Super Spinning Mills Limited,Energy,large,36.57,-0.04,1068.15
+SUPRAJIT,Suprajit Engineering Limited,Chemicals,small,29.04,0.09,650.86
+SUPREME,Supreme Holdings & Hospitality (India) Limited,Automobile,large,19.05,-0.04,3094.31
+SUPREMEIND,Supreme Industries Limited,Finance,large,25.81,0.07,3884.44
+SUPREMEINF,Supreme Infrastructure India Limited,Finance,mid,45.0,-0.03,3237.33
+SUPRIYA,Supriya Lifescience Limited,Industrial,mid,12.83,0.06,2675.0
+SURAJEST,Suraj Estate Developers Limited,Textiles,large,27.58,-0.03,257.66
+SURAJLTD,Suraj Limited,Industrial,large,58.53,-0.0,4844.02
+SURAKSHA,Suraksha Diagnostic Limited,Finance,mid,5.55,-0.06,4003.64
+SURANASOL,Surana Solar Limited,Finance,large,55.62,0.02,1499.47
+SURANAT&P,Surana Telecom and Power Limited,Pharma,large,50.39,-0.05,4900.85
+SURYALAXMI,Suryalakshmi Cotton Mills Limited,Textiles,large,23.27,-0.05,3029.31
+SURYAROSNI,Surya Roshni Limited,IT,large,33.99,-0.03,2932.99
+SURYODAY,Suryoday Small Finance Bank Limited,Automobile,large,37.09,0.01,3752.96
+SUTLEJTEX,Sutlej Textiles and Industries Limited,Energy,small,46.57,-0.08,4068.26
+SUVEN,Suven Life Sciences Limited,Finance,large,58.37,0.08,3299.57
+SUVIDHAA,Suvidhaa Infoserve Limited,Finance,large,22.6,-0.06,684.07
+SUYOG,Suyog Telematics Limited,Energy,mid,30.13,0.09,1724.42
+SUZLON,Suzlon Energy Limited,Textiles,large,13.31,-0.03,4644.01
+SVLL,Shree Vasu Logistics Limited,Cement,mid,24.88,0.0,1161.85
+SVPGLOB,SVP GLOBAL TEXTILES LIMITED,Chemicals,small,10.67,-0.04,1892.23
+SWANENERGY,Swan Energy Limited,Cement,large,26.01,0.07,2188.78
+SWARAJENG,Swaraj Engines Limited,Chemicals,small,50.63,-0.05,2225.05
+SWELECTES,Swelect Energy Systems Limited,Energy,small,9.75,0.03,3084.05
+SWIGGY,Swiggy Limited,Chemicals,small,23.51,-0.01,4718.23
+SWSOLAR,Sterling and Wilson Renewable Energy Limited,Cement,mid,35.76,0.08,1241.43
+SYMPHONY,Symphony Limited,Textiles,small,42.81,-0.06,651.43
+SYNCOMF,Syncom Formulations (India) Limited,Textiles,small,40.05,-0.09,1027.48
+SYNGENE,Syngene International Limited,Energy,mid,56.87,0.06,4440.28
+SYRMA,Syrma SGS Technology Limited,Textiles,mid,57.09,-0.05,3246.76
+TAINWALCHM,Tainwala Chemical and Plastic (I) Limited,Textiles,large,9.44,0.05,1465.24
+TAJGVK,Taj GVK Hotels & Resorts Limited,Industrial,small,30.21,0.01,4088.94
+TAKE,Take Solutions Limited,Industrial,small,19.44,0.02,4313.78
+TALBROAUTO,Talbros Automotive Components Limited,Pharma,mid,16.48,-0.02,4240.25
+TANLA,Tanla Platforms Limited,Cement,mid,28.52,-0.01,4598.69
+TARACHAND,Tara Chand InfraLogistic Solutions Limited,Automobile,large,10.04,-0.04,1298.59
+TARAPUR,Tarapur Transformers Limited,Energy,mid,36.66,0.08,3787.46
+TARC,TARC Limited,Chemicals,large,52.79,-0.07,2329.67
+TARIL,Transformers And Rectifiers (India) Limited,Industrial,mid,30.12,-0.0,4217.89
+TARMAT,Tarmat Limited,IT,small,56.37,-0.01,3656.03
+TARSONS,Tarsons Products Limited,Automobile,large,9.35,0.04,3893.41
+TASTYBITE,Tasty Bite Eatables Limited,Cement,large,25.2,-0.0,3298.0
+TATACHEM,Tata Chemicals Limited,Pharma,mid,47.88,0.08,928.27
+TATACOMM,Tata Communications Limited,Energy,large,45.97,0.08,2747.88
+TATACONSUM,TATA CONSUMER PRODUCTS LIMITED,Finance,large,18.4,-0.04,4924.12
+TATAELXSI,Tata Elxsi Limited,Industrial,large,42.11,0.07,4690.07
+TATAINVEST,Tata Investment Corporation Limited,Finance,mid,21.99,-0.1,263.71
+TATAMOTORS,Tata Motors Limited,IT,small,40.39,-0.04,865.83
+TATAPOWER,Tata Power Company Limited,Finance,mid,10.57,0.03,702.06
+TATASTEEL,Tata Steel Limited,Cement,mid,6.8,0.02,3643.6
+TATATECH,Tata Technologies Limited,Textiles,small,33.66,0.06,4098.04
+TATVA,Tatva Chintan Pharma Chem Limited,Automobile,large,37.94,-0.06,1106.88
+TBOTEK,TBO Tek Limited,Pharma,small,15.27,-0.05,2553.97
+TBZ,Tribhovandas Bhimji Zaveri Limited,Textiles,large,29.37,-0.06,4211.48
+TCI,Transport Corporation of India Limited,Textiles,large,51.25,0.08,3677.37
+TCIEXP,TCI Express Limited,Cement,small,30.45,0.07,2734.07
+TCIFINANCE,TCI Finance Limited,Finance,mid,52.02,0.05,2972.22
+TCPLPACK,TCPL Packaging Limited,Finance,mid,7.21,0.01,2566.38
+TCS,Tata Consultancy Services Limited,Textiles,large,57.19,0.06,1522.86
+TDPOWERSYS,TD Power Systems Limited,Energy,large,46.85,-0.01,2846.86
+TEAMLEASE,Teamlease Services Limited,IT,mid,16.89,-0.07,3459.98
+TECHM,Tech Mahindra Limited,Chemicals,large,46.91,0.07,4372.95
+TECHNOE,Techno Electric & Engineering Company Limited,Energy,mid,50.85,-0.03,3199.64
+TECILCHEM,TECIL Chemicals and Hydro Power Limited,Industrial,mid,44.69,0.01,3817.55
+TEGA,Tega Industries Limited,Cement,mid,23.1,-0.09,842.35
+TEJASNET,Tejas Networks Limited,Cement,large,54.32,-0.1,2334.71
+TEMBO,Tembo Global Industries Limited,Cement,mid,21.81,0.01,96.19
+TERASOFT,Tera Software Limited,Finance,mid,42.49,-0.08,1271.06
+TEXINFRA,Texmaco Infrastructure & Holdings Limited,Chemicals,large,36.13,0.07,3645.99
+TEXMOPIPES,Texmo Pipes and Products Limited,Energy,small,15.87,-0.05,4959.46
+TEXRAIL,Texmaco Rail & Engineering Limited,Pharma,small,50.2,0.08,540.93
+TFCILTD,Tourism Finance Corporation of India Limited,Finance,small,24.35,-0.04,2037.4
+TFL,Transwarranty Finance Limited,Textiles,large,23.24,-0.05,4010.35
+TGBHOTELS,TGB Banquets And Hotels Limited,Cement,small,51.94,0.07,1059.98
+THANGAMAYL,Thangamayil Jewellery Limited,Industrial,large,57.83,-0.01,2797.67
+THEINVEST,The Investment Trust Of India Limited,Cement,mid,59.46,-0.03,3678.7
+THEJO,Thejo Engineering Limited,Textiles,small,55.05,0.06,3099.13
+THELEELA,Schloss Bangalore Limited,IT,mid,55.06,0.05,980.72
+THEMISMED,Themis Medicare Limited,Finance,large,32.61,-0.08,1809.15
+THERMAX,Thermax Limited,Textiles,small,41.69,-0.01,3929.77
+THOMASCOOK,Thomas Cook  (India)  Limited,Cement,small,57.72,-0.07,2793.42
+THOMASCOTT,Thomas Scott (India) Limited,Chemicals,mid,44.69,0.09,75.89
+THYROCARE,Thyrocare Technologies Limited,Finance,large,37.8,0.05,3816.9
+TI,Tilaknagar Industries Limited,Finance,large,22.83,-0.09,224.79
+TICL,Twamev Construction and Infrastructure Limited,Energy,mid,47.83,-0.05,3741.38
+TIIL,Technocraft Industries (India) Limited,Cement,mid,38.47,0.09,1052.28
+TIINDIA,Tube Investments of India Limited,Cement,large,13.52,0.03,4792.46
+TIJARIA,Tijaria Polypipes Limited,IT,large,57.13,-0.03,1871.31
+TIL,TIL Limited,Energy,mid,38.72,0.04,1668.31
+TIMESGTY,Times Guaranty Limited,Automobile,mid,33.84,-0.02,787.0
+TIMETECHNO,Time Technoplast Limited,Energy,large,11.04,0.07,1562.74
+TIMKEN,Timken India Limited,Finance,large,37.65,-0.04,4389.42
+TINNARUBR,Tinna Rubber and Infrastructure Limited,Textiles,small,47.78,-0.08,4981.85
+TIPSFILMS,Tips Films Limited,IT,large,48.76,0.1,1873.13
+TIPSMUSIC,Tips Music Limited,Textiles,small,11.66,0.05,2270.62
+TIRUMALCHM,Thirumalai Chemicals Limited,Pharma,large,38.1,-0.03,3624.25
+TIRUPATIFL,Tirupati Forge Limited,Chemicals,large,18.06,0.06,4436.67
+TITAGARH,TITAGARH RAIL SYSTEMS LIMITED,Industrial,mid,48.3,-0.05,2985.57
+TITAN,Titan Company Limited,Pharma,small,26.56,-0.07,1988.05
+TMB,Tamilnad Mercantile Bank Limited,Industrial,mid,20.07,0.0,2092.48
+TNPETRO,Tamilnadu PetroProducts Limited,Industrial,mid,49.68,0.01,3493.31
+TNPL,Tamil Nadu Newsprint & Papers Limited,Energy,small,27.89,-0.05,65.93
+TNTELE,Tamilnadu Telecommunication Limited,Textiles,small,35.91,-0.1,3116.97
+TOKYOPLAST,Tokyo Plast International Limited,Finance,large,48.92,-0.03,1809.69
+TOLINS,Tolins Tyres Limited,Energy,small,7.8,0.0,3981.28
+TORNTPHARM,Torrent Pharmaceuticals Limited,Industrial,small,54.21,0.08,510.3
+TORNTPOWER,Torrent Power Limited,Finance,small,37.74,0.08,2961.6
+TOTAL,Total Transport Systems Limited,Textiles,large,26.32,0.08,2430.82
+TOUCHWOOD,Touchwood Entertainment Limited,Chemicals,mid,54.51,0.06,3229.51
+TPHQ,Teamo Productions HQ Limited,Automobile,large,25.25,0.08,371.03
+TPLPLASTEH,TPL Plastech Limited,Automobile,mid,19.78,0.0,2920.92
+TRACXN,Tracxn Technologies Limited,Energy,large,46.72,-0.1,2829.35
+TRANSRAILL,Transrail Lighting Limited,Finance,small,49.44,0.03,2825.27
+TRANSWORLD,TRANSWORLD SHIPPING LINES LIMITED,Pharma,large,7.11,0.04,3037.26
+TRAVELFOOD,Travel Food Services Limited,Chemicals,mid,20.71,0.03,3398.52
+TREEHOUSE,Tree House Education & Accessories Limited,IT,small,49.39,-0.05,4034.7
+TREJHARA,TREJHARA SOLUTIONS LIMITED,Textiles,small,59.3,0.09,1385.61
+TREL,Transindia Real Estate Limited,Textiles,small,10.03,0.03,4133.99
+TRENT,Trent Limited,Cement,small,17.21,0.03,2516.37
+TRF,TRF Limited,Industrial,large,28.99,0.01,431.44
+TRIDENT,Trident Limited,Energy,small,14.68,-0.02,339.83
+TRIGYN,Trigyn Technologies Limited,Cement,small,58.3,-0.07,1704.48
+TRITURBINE,Triveni Turbine Limited,IT,small,15.34,0.09,3935.24
+TRIVENI,Triveni Engineering & Industries Limited,Finance,mid,13.0,0.09,3553.02
+TRU,TruCap Finance Limited,Textiles,mid,42.28,-0.04,3953.64
+TTKHLTCARE,TTK Healthcare Limited,Textiles,large,58.27,0.07,2610.48
+TTKPRESTIG,TTK Prestige Limited,Energy,mid,38.76,0.04,2228.99
+TTL,T T Limited,IT,small,36.22,0.04,779.89
+TTL-RE,T T Ltd-RE,Automobile,small,16.04,-0.07,1674.55
+TTML,Tata Teleservices (Maharashtra) Limited,Energy,large,42.55,-0.1,2198.4
+TVSELECT,TVS Electronics Limited,Industrial,large,19.41,0.04,488.57
+TVSHLTD,TVS Holdings Limited,Automobile,large,8.7,-0.01,1142.03
+TVSMOTOR,TVS Motor Company Limited,Industrial,mid,43.56,0.05,3011.22
+TVSSCS,TVS Supply Chain Solutions Limited,Energy,large,38.7,0.0,3691.53
+TVSSRICHAK,TVS Srichakra Limited,Energy,small,8.78,0.06,4991.82
+TVTODAY,TV Today Network Limited,Chemicals,large,19.67,-0.06,4668.91
+TVVISION,TV Vision Limited,Automobile,small,43.76,0.04,3230.7
+UBL,United Breweries Limited,IT,large,46.61,-0.02,2135.18
+UCAL,UCAL LIMITED,Energy,small,49.65,-0.09,3199.08
+UCOBANK,UCO Bank,Energy,mid,22.72,-0.0,3938.98
+UDAICEMENT,Udaipur Cement Works Limited,Textiles,small,48.4,-0.06,635.76
+UDS,Updater Services Limited,Automobile,mid,8.9,0.04,2079.03
+UFLEX,UFLEX Limited,Energy,small,56.59,-0.08,4207.02
+UFO,UFO Moviez India Limited,Energy,small,5.79,-0.09,1949.97
+UGARSUGAR,The Ugar Sugar Works Limited,Cement,small,39.38,0.09,2880.77
+UGROCAP,Ugro Capital Limited,IT,small,22.4,-0.08,2959.46
+UJJIVANSFB,Ujjivan Small Finance Bank Limited,Cement,mid,55.3,0.07,963.16
+ULTRACEMCO,UltraTech Cement Limited,Automobile,mid,10.06,0.07,1843.07
+UMAEXPORTS,Uma Exports Limited,Industrial,mid,32.65,0.04,1705.83
+UMESLTD,Usha Martin Education & Solutions Limited,Cement,mid,36.87,-0.0,179.67
+UMIYA-MRO,UMIYA BUILDCON LIMITED,Textiles,small,18.97,0.03,169.75
+UNICHEMLAB,Unichem Laboratories Limited,Chemicals,large,9.44,0.01,4166.9
+UNIDT,United Drilling Tools Limited,Automobile,large,35.84,0.02,1401.7
+UNIECOM,Unicommerce Esolutions Limited,Finance,large,36.77,0.02,2614.49
+UNIENTER,Uniphos Enterprises Limited,Energy,small,45.26,0.05,1528.69
+UNIINFO,Uniinfo Telecom Services Limited,Chemicals,large,53.4,-0.08,4706.36
+UNIMECH,Unimech Aerospace and Manufacturing Limited,Textiles,mid,13.71,0.05,1333.52
+UNIONBANK,Union Bank of India,Automobile,large,34.17,0.05,2176.8
+UNIPARTS,Uniparts India Limited,Chemicals,mid,54.37,0.05,4370.01
+UNITDSPR,United Spirits Limited,Industrial,mid,14.14,0.02,4217.57
+UNITECH,Unitech Limited,Energy,large,26.49,0.05,971.2
+UNITEDPOLY,United Polyfab Gujarat Limited,Chemicals,mid,9.94,0.01,4023.08
+UNITEDTEA,The United Nilgiri Tea Estates Company Limited,Textiles,mid,54.66,0.08,2318.03
+UNIVASTU,Univastu India Limited,Chemicals,small,40.46,0.09,2440.7
+UNIVCABLES,Universal Cables Limited,Pharma,large,49.06,-0.08,710.73
+UNIVPHOTO,Universus Photo Imagings Limited,Textiles,mid,50.55,-0.05,448.98
+UNOMINDA,UNO Minda Limited,Textiles,small,42.91,-0.08,3653.3
+UPL,UPL Limited,Automobile,large,53.5,-0.02,2507.48
+URAVIDEF,Uravi Defence and Technology Limited,IT,mid,57.72,0.04,2212.41
+URJA,Urja Global Limited,Chemicals,large,55.04,-0.03,3661.07
+USHAMART,Usha Martin Limited,Cement,small,30.86,0.02,3839.29
+USK,Udayshivakumar Infra Limited,Automobile,mid,34.26,-0.01,836.6
+UTIAMC,UTI Asset Management Company Limited,Cement,large,47.09,0.04,3070.61
+UTKARSHBNK,Utkarsh Small Finance Bank Limited,Chemicals,large,10.52,0.03,720.0
+UTTAMSUGAR,Uttam Sugar Mills Limited,Finance,small,20.83,0.07,3769.31
+UYFINCORP,U. Y. Fincorp Limited,Automobile,mid,55.75,0.01,3301.93
+V2RETAIL,V2 Retail Limited,Textiles,large,37.15,0.05,4785.24
+VADILALIND,Vadilal Industries Limited,IT,small,24.54,-0.06,391.34
+VAIBHAVGBL,Vaibhav Global Limited,Cement,small,52.47,-0.1,332.42
+VAISHALI,Vaishali Pharma Limited,Finance,mid,28.06,0.02,1446.83
+VAKRANGEE,Vakrangee Limited,Chemicals,small,55.11,0.07,1345.44
+VALIANTLAB,Valiant Laboratories Limited,Automobile,small,31.73,0.08,1272.55
+VALIANTORG,Valiant Organics Limited,Pharma,small,40.41,-0.07,4535.96
+VARDHACRLC,Vardhman Acrylics Limited,Chemicals,mid,48.34,0.07,1285.25
+VARDMNPOLY,Vardhman Polytex Limited,IT,small,30.76,0.09,1396.15
+VARROC,Varroc Engineering Limited,Cement,mid,31.23,0.08,3809.02
+VASCONEQ,Vascon Engineers Limited,Energy,small,29.88,-0.08,2276.21
+VASWANI,Vaswani Industries Limited,Industrial,mid,55.14,0.01,3894.72
+VBL,Varun Beverages Limited,Energy,small,10.93,-0.06,373.56
+VCL,Vaxtex Cotfab Limited,Chemicals,mid,18.95,0.03,2463.48
+VEDL,Vedanta Limited,IT,small,39.79,-0.04,216.39
+VEEDOL,Veedol Corporation Limited,Finance,large,22.17,-0.09,360.13
+VENKEYS,Venky's (India) Limited,Industrial,small,55.09,0.0,4536.87
+VENTIVE,Ventive Hospitality Limited,Energy,large,53.6,0.05,739.26
+VENUSPIPES,Venus Pipes & Tubes Limited,Industrial,mid,58.66,-0.01,2685.48
+VENUSREM,Venus Remedies Limited,Industrial,mid,30.6,0.05,2084.92
+VERANDA,Veranda Learning Solutions Limited,Textiles,small,18.09,0.07,1769.35
+VERTOZ,Vertoz Limited,Chemicals,large,40.75,0.06,4504.18
+VESUVIUS,Vesuvius India Limited,Industrial,mid,21.15,-0.05,158.03
+VETO,Veto Switchgears And Cables Limited,Chemicals,mid,17.97,-0.01,3335.76
+VGUARD,V-Guard Industries Limited,Automobile,large,36.15,0.05,4818.8
+VHL,Vardhman Holdings Limited,Cement,small,38.52,0.05,2822.83
+VHLTD,Viceroy Hotels Limited,Cement,large,17.74,-0.05,4687.27
+VIDHIING,Vidhi Specialty Food Ingredients Limited,Industrial,large,36.87,-0.04,308.68
+VIJAYA,Vijaya Diagnostic Centre Limited,Textiles,large,16.61,0.02,2123.03
+VIJIFIN,Viji Finance Limited,Textiles,small,35.24,0.05,1337.78
+VIKASECO,Vikas EcoTech Limited,Finance,mid,54.72,0.06,3667.56
+VIKASLIFE,Vikas Lifecare Limited,Finance,small,53.12,-0.05,4907.42
+VIMTALABS,Vimta Labs Limited,Industrial,large,42.46,-0.03,1319.82
+VINATIORGA,Vinati Organics Limited,Automobile,mid,14.87,-0.04,3288.16
+VINCOFE,Vintage Coffee And Beverages Limited,Automobile,mid,57.62,0.09,1030.58
+VINDHYATEL,Vindhya Telelinks Limited,Finance,small,24.41,-0.04,2848.38
+VINEETLAB,Vineet Laboratories Limited,Finance,large,37.55,0.06,2346.47
+VINNY,Vinny Overseas Limited,Industrial,large,42.61,-0.09,4861.43
+VINYLINDIA,Vinyl Chemicals (India) Limited,Automobile,mid,18.66,-0.05,3062.21
+VIPCLOTHNG,VIP Clothing Limited,Cement,large,51.24,-0.07,1780.06
+VIPIND,VIP Industries Limited,Automobile,mid,55.04,-0.01,614.77
+VIPULLTD,Vipul Limited,Automobile,large,14.26,-0.05,798.67
+VIRINCHI,Virinchi Limited,Pharma,large,6.68,0.02,1165.32
+VISAKAIND,Visaka Industries Limited,Energy,small,56.33,0.09,1292.28
+VISASTEEL,Visa Steel Limited,IT,mid,51.6,0.1,4260.55
+VISHNU,Vishnu Chemicals Limited,Textiles,small,26.48,0.02,2828.05
+VISHWARAJ,Vishwaraj Sugar Industries Limited,Textiles,large,5.79,0.06,2640.79
+VIVIDHA,Visagar Polytex Limited,IT,mid,5.42,-0.04,618.11
+VLEGOV,VL E-Governance & IT Solutions Limited,Energy,large,20.22,0.04,4307.69
+VLSFINANCE,VLS Finance Limited,Industrial,small,42.65,-0.09,3627.93
+VMART,V-Mart Retail Limited,Industrial,small,11.71,-0.05,384.96
+VMM,Vishal Mega Mart Limited,IT,small,51.16,-0.08,3553.78
+VOLTAMP,Voltamp Transformers Limited,Textiles,mid,57.89,0.07,2740.51
+VOLTAS,Voltas Limited,IT,large,43.24,-0.04,454.54
+VPRPL,Vishnu Prakash R Punglia Limited,Pharma,small,49.94,0.03,2318.59
+VRAJ,Vraj Iron and Steel Limited,Industrial,small,44.65,0.06,2449.25
+VRLLOG,VRL Logistics Limited,Pharma,mid,45.54,0.01,870.58
+VSSL,Vardhman Special Steels Limited,Energy,large,7.31,0.1,4731.21
+VSTIND,VST Industries Limited,IT,small,12.79,0.09,4257.38
+VSTL,Vibhor Steel Tubes Limited,IT,small,15.8,0.09,3361.66
+VSTTILLERS,V.S.T Tillers Tractors Limited,Energy,small,5.71,0.07,2338.36
+VTL,Vardhman Textiles Limited,Cement,large,20.26,-0.06,2088.24
+WAAREEENER,Waaree Energies Limited,Finance,large,30.32,-0.08,3272.32
+WAAREERTL,Waaree Renewable Technologies Limited,Industrial,small,55.67,0.02,2749.89
+WABAG,VA Tech Wabag Limited,Energy,large,59.29,-0.09,358.25
+WALCHANNAG,Walchandnagar Industries Limited,Chemicals,small,58.43,-0.09,2586.89
+WANBURY,Wanbury Limited,Automobile,mid,40.72,0.09,4041.7
+WCIL,Western Carriers (India) Limited,Energy,small,57.52,0.04,2323.24
+WEALTH,Wealth First Portfolio Managers Limited,Energy,small,14.34,0.08,307.19
+WEBELSOLAR,Websol Energy System Limited,Pharma,small,22.08,0.1,3942.08
+WEIZMANIND,Weizmann Limited,Energy,large,58.86,0.07,1046.75
+WEL,Wonder Electricals Limited,Finance,small,11.57,-0.1,1330.17
+WELCORP,Welspun Corp Limited,Pharma,large,39.34,0.06,865.3
+WELENT,Welspun Enterprises Limited,Energy,large,23.38,0.03,1684.56
+WELINV,Welspun Investments and Commercials Limited,Finance,large,17.85,-0.03,3795.92
+WELSPUNLIV,Welspun Living Limited,IT,small,56.44,0.06,2620.96
+WENDT,Wendt (India) Limited,Chemicals,large,44.63,0.07,1064.16
+WESTLIFE,WESTLIFE FOODWORLD LIMITED,Automobile,small,42.17,-0.06,4395.26
+WEWIN,WE WIN LIMITED,Chemicals,small,16.58,-0.09,4403.93
+WHEELS,Wheels India Limited,Energy,small,22.01,-0.04,4359.36
+WHIRLPOOL,Whirlpool of India Limited,IT,small,12.81,0.01,1232.04
+WILLAMAGOR,Williamson Magor & Company Limited,Finance,large,36.34,0.07,2283.63
+WINDLAS,Windlas Biotech Limited,Finance,mid,17.33,0.08,4925.7
+WINDMACHIN,Windsor Machines Limited,Chemicals,mid,57.17,0.08,3871.46
+WINSOME,Winsome Yarns Limited,Textiles,large,12.73,-0.04,184.48
+WIPL,The Western India Plywoods Limited,Cement,mid,50.65,0.02,372.76
+WIPRO,Wipro Limited,Finance,small,24.29,0.1,2346.46
+WOCKPHARMA,Wockhardt Limited,Chemicals,mid,17.41,0.04,4550.64
+WONDERLA,Wonderla Holidays Limited,IT,mid,5.21,0.02,2716.57
+WORTH,Worth Peripherals Limited,Finance,large,30.62,-0.03,2514.17
+WSI,W S Industries (I) Limited,Pharma,mid,23.57,-0.06,572.09
+WSTCSTPAPR,West Coast Paper Mills Limited,Chemicals,large,6.53,0.01,3301.06
+XCHANGING,Xchanging Solutions Limited,Industrial,large,32.13,0.04,4119.41
+XELPMOC,Xelpmoc Design And Tech Limited,Industrial,small,17.58,-0.02,1933.08
+XPROINDIA,Xpro India Limited,Automobile,small,17.21,0.02,3889.28
+XTGLOBAL,Xtglobal Infotech Limited,Pharma,mid,30.16,-0.09,4824.16
+YAARI,Yaari Digital Integrated Services Limited,Industrial,large,40.83,0.01,1058.64
+YASHO,Yasho Industries Limited,Industrial,small,43.21,-0.03,2640.48
+YATHARTH,Yatharth Hospital & Trauma Care Services Limited,Industrial,large,10.33,-0.08,1471.33
+YATRA,Yatra Online Limited,Pharma,mid,54.44,-0.0,3974.63
+YESBANK,Yes Bank Limited,Textiles,large,8.49,0.07,2909.09
+YUKEN,Yuken India Limited,Automobile,mid,53.88,0.04,3191.18
+ZAGGLE,Zaggle Prepaid Ocean Services Limited,Textiles,large,26.5,-0.04,3999.68
+ZEEL,Zee Entertainment Enterprises Limited,IT,mid,35.18,0.06,2010.05
+ZEELEARN,Zee Learn Limited,Finance,large,6.24,0.08,4579.7
+ZEEMEDIA,Zee Media Corporation Limited,Automobile,large,53.19,0.09,2688.49
+ZENITHEXPO,Zenith Exports Limited,Pharma,mid,49.34,-0.04,831.88
+ZENITHSTL,Zenith Steel Pipes & Industries Limited,Pharma,mid,50.12,0.06,3494.7
+ZENSARTECH,Zensar Technologies Limited,Energy,small,54.06,0.01,3976.64
+ZENTEC,Zen Technologies Limited,Cement,small,9.85,0.04,1617.97
+ZFCVINDIA,ZF Commercial Vehicle Control Systems India Limited,Industrial,small,27.26,0.02,4293.04
+ZIMLAB,Zim Laboratories Limited,Cement,small,36.99,0.02,4535.41
+ZODIAC,Zodiac Energy Limited,Finance,mid,46.71,0.08,1420.68
+ZODIACLOTH,Zodiac Clothing Company Limited,Chemicals,small,29.06,0.08,4918.43
+ZOTA,Zota Health Care LImited,Pharma,large,51.57,0.07,746.52
+ZUARI,Zuari Agro Chemicals Limited,Energy,small,32.11,0.08,1049.98
+ZUARIIND,ZUARI INDUSTRIES LIMITED,Industrial,mid,46.18,-0.05,961.91
+ZYDUSLIFE,Zydus Lifesciences Limited,Cement,large,49.18,0.01,4475.25
+ZYDUSWELL,Zydus Wellness Limited,Chemicals,mid,44.96,-0.07,3288.75

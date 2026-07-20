@@ -3,7 +3,7 @@ import traceback
 from flask import Blueprint, request, jsonify, current_app, g
 from flask_cors import cross_origin
 from invest.options_service import OptionsService
-from invest.routes import cache   # reuse the app-initialized cache instance
+from invest.cache import cache   # reuse the app-initialized cache instance
 
 stock_options_bp = Blueprint("stock_options_bp", __name__)
 

@@ -8,7 +8,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from .stock_common import get_yf_symbol
 from decimal import Decimal, ROUND_HALF_UP
 stock_competitor_bp = Blueprint("stock_competitor_bp", __name__)
-from TESTING.stock_headlines import _merge_chart_data, _fetch_hf_sentiment
+from Endpoints.stock_headlines import _merge_chart_data, _fetch_hf_sentiment
 
 COMPETITORS_CACHE = {}
 

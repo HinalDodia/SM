@@ -335,6 +335,9 @@ def bse_filings(symbol):
         results_only  true | false  — genuine Q1-Q4 PDFs only
         limit         integer (optional)
     """
+    today    = datetime.now()
+    year_ago = today - timedelta(days=365)
+
     from_date_str   = request.args.get("from_date", year_ago.strftime("%Y-%m-%d"))
     to_date_str     = request.args.get("to_date",   today.strftime("%Y-%m-%d"))
     category_filter = request.args.get("category",  "").strip()
@@ -546,7 +549,7 @@ def download_filing_pdf(symbol):
         mimetype="text/plain",
     )
 
-@routes_bp.route("/bse-company/<symbol>", methods=["GET"])
+@bse_filings_bp.route("/bse-company/<symbol>", methods=["GET"])
 @cross_origin(supports_credentials=True)
 def bse_company(symbol):
     symbol     = symbol.upper().strip()

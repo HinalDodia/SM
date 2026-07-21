@@ -99,13 +99,13 @@ function AppWrapper() {
 
 
 
-      <Route path="/stock/:symbol" element={<StockDetailPage />} />
-      <Route path="/stock/:symbol/competitors" element={<CompetitorsPage />} />
-      <Route path="/dividend/:symbol" element={<DividendPage />} />
-      <Route path="/chart/:symbol" element={<StockChart />} />
-      <Route path="/earnings/:symbol" element={<EarningsPage />} />
-      <Route path="/financials/:symbol" element={<FinancialsPage />} />
-      <Route path="/news/:symbol" element={<StockDetailPage tab="news" />} />
+      <Route path="/stock-page/:symbol" element={<StockDetailPage />} />
+      <Route path="/stock-competitors/:symbol" element={<CompetitorsPage />} />
+      <Route path="/stock-dividend/:symbol" element={<DividendPage />} />
+      <Route path="/stock-chart/:symbol" element={<StockChart />} />
+      <Route path="/stock-earnings/:symbol" element={<EarningsPage />} />
+      <Route path="/stock-financials/:symbol" element={<FinancialsPage />} />
+      <Route path="/stock-news/:symbol" element={<StockDetailPage tab="news" />} />
       <Route path="/insiders/:symbol" element={<StockDetailPage tab="insiders" />} />
       <Route path="/ownership/:symbol" element={<StockDetailPage tab="ownership" />} />
       <Route path="/trends/:symbol" element={<StockDetailPage tab="trends" />} />

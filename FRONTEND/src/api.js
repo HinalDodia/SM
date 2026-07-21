@@ -100,7 +100,7 @@ export async function fetchStockPage(symbol) {
   return res.json();
 }
 export async function fetchCompetitors(symbol) {
-  const res = await fetch(`${API_BASE_URL}/competitors/${symbol}`, {
+  const res = await fetch(`${API_BASE_URL}/stock-competitors/${symbol}`, {
     headers: authHeaders()
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -108,7 +108,7 @@ export async function fetchCompetitors(symbol) {
 }
 
 export async function fetchDividendSummary(symbol) {
-  const res = await fetch(`${API_BASE_URL}/dividend-summary/${symbol}`, {
+  const res = await fetch(`${API_BASE_URL}/stock-dividend/${symbol}`, {
     headers: authHeaders()
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -116,7 +116,7 @@ export async function fetchDividendSummary(symbol) {
 }
 
 export async function fetchEarnings(symbol) {
-  const res = await fetch(`${API_BASE_URL}/earnings/${symbol}`, {
+  const res = await fetch(`${API_BASE_URL}/stock-earnings/${symbol}`, {
     headers: authHeaders()
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -124,7 +124,7 @@ export async function fetchEarnings(symbol) {
 }
 
 export async function fetchFinancials(symbol) {
-  const res = await fetch(`${API_BASE_URL}/financials/${symbol}`, {
+  const res = await fetch(`${API_BASE_URL}/stock-financials/${symbol}`, {
     headers: authHeaders()
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -133,15 +133,15 @@ export async function fetchFinancials(symbol) {
 
 export async function fetchOptions(symbol, expiry) {
   const url = expiry
-    ? `${API_BASE_URL}/options/${symbol}?expiry=${expiry}`
-    : `${API_BASE_URL}/options/${symbol}`;
+    ? `${API_BASE_URL}/stock-options/${symbol}?expiry=${expiry}`
+    : `${API_BASE_URL}/stock-options/${symbol}`;
   const res = await fetch(url, { headers: authHeaders() });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 }
 
 export async function fetchSecFilings(symbol) {
-  const res = await fetch(`${API_BASE_URL}/sec-filings/${symbol}`, {
+  const res = await fetch(`${API_BASE_URL}/stock-bse-filings/${symbol}`, {
     headers: authHeaders()
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -174,7 +174,7 @@ export async function fetchBseFilings(symbol, params = {}) {
 
 
 export async function fetchShortInterest(symbol) {
-  const res = await fetch(`${API_BASE_URL}/short-interest/${symbol}`, {
+  const res = await fetch(`${API_BASE_URL}/stock-short-interest/${symbol}`, {
     headers: authHeaders()
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -182,7 +182,7 @@ export async function fetchShortInterest(symbol) {
 }
 
 export async function fetchHeadlines(symbol) {
-  const res = await fetch(`${API_BASE_URL}/headlines/${symbol}`, {
+  const res = await fetch(`${API_BASE_URL}/stockheadlines/${symbol}`, {
     headers: authHeaders()
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useParams, NavLink } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import Sidenav from "./Sidenav";
 import { fetchEarnings, fetchStockPage, fetchStockPrice } from "./api";
 import {
   ComposedChart, Area, Line, XAxis, YAxis, Tooltip, ResponsiveContainer,
@@ -18,14 +19,14 @@ const formatLargeNumber = (val, curr = "USD") => {
 
 const EarningsHistoryTable = ({ tableData, companyName, symbol, currency }) => {
   const [rangeMode, setRangeMode] = useState("2 Years");
-  
+
   const today = new Date();
   const twoYearsAgo = new Date(today);
   twoYearsAgo.setFullYear(today.getFullYear() - 2);
-  
+
   const [startDate, setStartDate] = useState(twoYearsAgo.toISOString().slice(0, 10));
   const [endDate, setEndDate] = useState(today.toISOString().slice(0, 10));
-  
+
   useEffect(() => {
     const t = new Date(); const s = new Date(t);
     if (rangeMode === "1 Year") s.setFullYear(t.getFullYear() - 1);
@@ -80,7 +81,7 @@ const EarningsHistoryTable = ({ tableData, companyName, symbol, currency }) => {
           <label style={{ fontSize: 10, fontWeight: 600, color: '#94a3b8', letterSpacing: '0.05em' }}>START DATE</label>
           <input type="date" value={startDate} onChange={(e) => { setStartDate(e.target.value); setRangeMode("Custom Range"); }} style={{ padding: '8px 12px', background: 'rgba(15, 23, 42, 0.6)', border: '1px solid rgba(255,255,255,0.1)', color: '#e2e8f0', borderRadius: 6, outline: 'none', fontSize: 13 }} />
         </div>
-        
+
         <div style={{ display: 'flex', flexDirection: 'column', gap: 6, flex: 1, minWidth: 140 }}>
           <label style={{ fontSize: 10, fontWeight: 600, color: '#94a3b8', letterSpacing: '0.05em' }}>END DATE</label>
           <input type="date" value={endDate} onChange={(e) => { setEndDate(e.target.value); setRangeMode("Custom Range"); }} style={{ padding: '8px 12px', background: 'rgba(15, 23, 42, 0.6)', border: '1px solid rgba(255,255,255,0.1)', color: '#e2e8f0', borderRadius: 6, outline: 'none', fontSize: 13 }} />
@@ -102,12 +103,12 @@ const EarningsHistoryTable = ({ tableData, companyName, symbol, currency }) => {
             <tr>
               <th style={{ textAlign: 'left', padding: '12px 16px', color: '#64748b', fontSize: 11, letterSpacing: '0.05em' }}>DATE</th>
               <th style={{ textAlign: 'left', padding: '12px 16px', color: '#64748b', fontSize: 11, letterSpacing: '0.05em' }}>QUARTER</th>
-              <th style={{ textAlign: 'right', padding: '12px 16px', color: '#64748b', fontSize: 11, letterSpacing: '0.05em' }}>CONSENSUS<br/>ESTIMATE</th>
-              <th style={{ textAlign: 'right', padding: '12px 16px', color: '#64748b', fontSize: 11, letterSpacing: '0.05em' }}>REPORTED<br/>EPS</th>
+              <th style={{ textAlign: 'right', padding: '12px 16px', color: '#64748b', fontSize: 11, letterSpacing: '0.05em' }}>CONSENSUS<br />ESTIMATE</th>
+              <th style={{ textAlign: 'right', padding: '12px 16px', color: '#64748b', fontSize: 11, letterSpacing: '0.05em' }}>REPORTED<br />EPS</th>
               <th style={{ textAlign: 'right', padding: '12px 16px', color: '#64748b', fontSize: 11, letterSpacing: '0.05em' }}>BEAT/MISS</th>
               <th style={{ textAlign: 'right', padding: '12px 16px', color: '#64748b', fontSize: 11, letterSpacing: '0.05em' }}>GAAP EPS</th>
-              <th style={{ textAlign: 'right', padding: '12px 16px', color: '#64748b', fontSize: 11, letterSpacing: '0.05em' }}>REVENUE<br/>ESTIMATE</th>
-              <th style={{ textAlign: 'right', padding: '12px 16px', color: '#64748b', fontSize: 11, letterSpacing: '0.05em' }}>ACTUAL<br/>REVENUE</th>
+              <th style={{ textAlign: 'right', padding: '12px 16px', color: '#64748b', fontSize: 11, letterSpacing: '0.05em' }}>REVENUE<br />ESTIMATE</th>
+              <th style={{ textAlign: 'right', padding: '12px 16px', color: '#64748b', fontSize: 11, letterSpacing: '0.05em' }}>ACTUAL<br />REVENUE</th>
               <th style={{ textAlign: 'center', padding: '12px 16px', color: '#64748b', fontSize: 11, letterSpacing: '0.05em' }}>DETAILS</th>
             </tr>
           </thead>
@@ -182,7 +183,7 @@ const EarningsPage = () => {
         </h1>
         <div style={{ display: "flex", alignItems: "baseline", gap: 14 }}>
           <span style={{ fontSize: 28, fontWeight: 700, color: "#fff" }}>
-            ₹{currentPrice.toLocaleString("en-IN", {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+            ₹{currentPrice.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </span>
           {priceChange != null && priceData?.price != null && (
             <span
@@ -199,25 +200,12 @@ const EarningsPage = () => {
 
       {/* LAYOUT WITH SIDE NAV */}
       <div className="layout">
-        <div className="stock-sidenav">
-          <NavLink to={`/stock/${symbol}`} className="nav-item">STOCK-PAGE</NavLink>
-          <NavLink to={`/chart/${symbol}`} className="nav-item">CHART</NavLink>
-          <NavLink to={`/stock/${symbol}/competitors`} className="nav-item">COMPETITOR</NavLink>
-          <NavLink to={`/dividend/${symbol}`} className="nav-item">DIVIDEND</NavLink>
-          <NavLink to={`/earnings/${symbol}`} className="nav-item active">EARNINGS</NavLink>
-          <NavLink to={`/financials/${symbol}`} className="nav-item">FINANCIALS</NavLink>
-          <NavLink to={`/news/${symbol}`} className="nav-item">HEADLINES</NavLink>
-          <NavLink to={`/options/${symbol}`} className="nav-item">OPTION CHAIN</NavLink>
-          <NavLink to={`/sec/${symbol}`} className="nav-item">SEC FILINGS</NavLink>
-          <NavLink to={`/shortinterest/${symbol}`} className="nav-item">SHORT INTEREST</NavLink>
-          <NavLink to={`/stock/${symbol}`} className="nav-item buy-item">BUY STOCK</NavLink>
-        </div>
-
+        <Sidenav symbol={symbol} />
         {/* BODY */}
         <div className="earnings-content">
 
           {/* SUMMARY HEADING */}
-          <h2 className="section-title" style={{border: 'none', marginBottom: '10px'}}>{companyName} Earnings Summary</h2>
+          <h2 className="section-title" style={{ border: 'none', marginBottom: '10px' }}>{companyName} Earnings Summary</h2>
 
           {/* SUMMARY BOX */}
           <div className="summary-box">
@@ -227,24 +215,24 @@ const EarningsPage = () => {
           {/* 4 METRIC CARDS */}
           <div className="metric-grid">
             <div className="metric-card">
-              <div className="m-label">Latest {summary.quarter}<br/>Earnings Date</div>
-              <div className="m-value" style={{fontSize: '18px', letterSpacing: '-0.5px'}}>{summary.latest_earnings_date}</div>
-              <div className="m-sub" style={{color: '#94a3b8'}}>REPORTED</div>
+              <div className="m-label">Latest {summary.quarter}<br />Earnings Date</div>
+              <div className="m-value" style={{ fontSize: '18px', letterSpacing: '-0.5px' }}>{summary.latest_earnings_date}</div>
+              <div className="m-sub" style={{ color: '#94a3b8' }}>REPORTED</div>
             </div>
             <div className="metric-card">
-              <div className="m-label">Consensus EPS<br/>({summary.latest_earnings_date})</div>
+              <div className="m-label">Consensus EPS<br />({summary.latest_earnings_date})</div>
               <div className="m-value">{summary.consensus_eps}</div>
             </div>
             <div className="metric-card">
-              <div className="m-label">Actual EPS<br/>({summary.latest_earnings_date})</div>
+              <div className="m-label">Actual EPS<br />({summary.latest_earnings_date})</div>
               <div className={`m-value ${summary.beat >= 0 ? 'beat-pos' : 'beat-neg'}`}>{summary.actual_eps}</div>
               <div className={`m-sub ${summary.beat >= 0 ? 'beat-pos' : 'beat-neg'}`}>
                 {summary.beat >= 0 ? `BEAT BY ${summary.beat}` : `MISSED BY ${Math.abs(summary.beat)}`}
               </div>
             </div>
             <div className="metric-card">
-              <div className="m-label">Actual Revenue<br/>({summary.latest_earnings_date})</div>
-              <div className="m-value" style={{fontSize: '18px'}}>{formatLargeNumber(summary.actual_revenue, summary.currency)}</div>
+              <div className="m-label">Actual Revenue<br />({summary.latest_earnings_date})</div>
+              <div className="m-value" style={{ fontSize: '18px' }}>{formatLargeNumber(summary.actual_revenue, summary.currency)}</div>
             </div>
           </div>
 
@@ -260,21 +248,21 @@ const EarningsPage = () => {
           <div className="chart-section">
             <div className="chart-title">{companyName} EPS Estimates &amp; Actuals by Quarter</div>
             <div className="legend">
-              <span className="legend-item"><span className="legend-dot" style={{background: '#60a5fa'}}></span>Actual EPS</span>
-              <span className="legend-item"><span className="legend-dot" style={{background: '#94a3b8', border: '1px dashed #64748b'}}></span>Estimated EPS</span>
+              <span className="legend-item"><span className="legend-dot" style={{ background: '#60a5fa' }}></span>Actual EPS</span>
+              <span className="legend-item"><span className="legend-dot" style={{ background: '#94a3b8', border: '1px dashed #64748b' }}></span>Estimated EPS</span>
             </div>
             <div className="chart-wrap">
               <ResponsiveContainer width="100%" height="100%">
                 <ComposedChart data={eps_estimate_vs_actual_chart} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.05)" />
-                  <XAxis dataKey="quarter" tick={{fill: '#94a3b8', fontSize: 11}} axisLine={false} tickLine={false} />
-                  <YAxis tick={{fill: '#94a3b8', fontSize: 11}} tickFormatter={v => `₹${v}`} axisLine={false} tickLine={false} />
+                  <XAxis dataKey="quarter" tick={{ fill: '#94a3b8', fontSize: 11 }} axisLine={false} tickLine={false} />
+                  <YAxis tick={{ fill: '#94a3b8', fontSize: 11 }} tickFormatter={v => `₹${v}`} axisLine={false} tickLine={false} />
                   <Tooltip
                     contentStyle={{ backgroundColor: "#0f172a", borderColor: "rgba(255,255,255,0.1)", borderRadius: '8px', fontSize: '12px', color: '#f8fafc' }}
                     itemStyle={{ color: '#e2e8f0' }}
                   />
-                  <Line type="monotone" dataKey="estimate_eps" name="Estimated EPS" stroke="#94a3b8" strokeWidth={2} strokeDasharray="5 4" dot={{r: 3, fill: '#94a3b8'}} connectNulls={true} />
-                  <Area type="monotone" dataKey="actual_eps" name="Actual EPS" stroke="#60a5fa" strokeWidth={2.5} fill="rgba(59,130,246,0.15)" dot={{r: 4, fill: '#60a5fa'}} connectNulls={true} />
+                  <Line type="monotone" dataKey="estimate_eps" name="Estimated EPS" stroke="#94a3b8" strokeWidth={2} strokeDasharray="5 4" dot={{ r: 3, fill: '#94a3b8' }} connectNulls={true} />
+                  <Area type="monotone" dataKey="actual_eps" name="Actual EPS" stroke="#60a5fa" strokeWidth={2.5} fill="rgba(59,130,246,0.15)" dot={{ r: 4, fill: '#60a5fa' }} connectNulls={true} />
                 </ComposedChart>
               </ResponsiveContainer>
             </div>
@@ -287,14 +275,14 @@ const EarningsPage = () => {
               <ResponsiveContainer width="100%" height="100%">
                 <ComposedChart data={revenue_chart} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.05)" />
-                  <XAxis dataKey="quarter" tick={{fill: '#94a3b8', fontSize: 11}} axisLine={false} tickLine={false} />
-                  <YAxis tick={{fill: '#94a3b8', fontSize: 11}} tickFormatter={v => formatLargeNumber(v, summary.currency)} axisLine={false} tickLine={false} />
+                  <XAxis dataKey="quarter" tick={{ fill: '#94a3b8', fontSize: 11 }} axisLine={false} tickLine={false} />
+                  <YAxis tick={{ fill: '#94a3b8', fontSize: 11 }} tickFormatter={v => formatLargeNumber(v, summary.currency)} axisLine={false} tickLine={false} />
                   <Tooltip
                     contentStyle={{ backgroundColor: "#0f172a", borderColor: "rgba(255,255,255,0.1)", borderRadius: '8px', fontSize: '12px', color: '#f8fafc' }}
                     itemStyle={{ color: '#e2e8f0' }}
                     formatter={(v) => formatLargeNumber(v, summary.currency)}
                   />
-                  <Area type="monotone" dataKey="revenue" name="Revenue" stroke="#60a5fa" strokeWidth={2.5} fill="rgba(59,130,246,0.15)" dot={{r: 5, fill: '#60a5fa'}} connectNulls={true} />
+                  <Area type="monotone" dataKey="revenue" name="Revenue" stroke="#60a5fa" strokeWidth={2.5} fill="rgba(59,130,246,0.15)" dot={{ r: 5, fill: '#60a5fa' }} connectNulls={true} />
                 </ComposedChart>
               </ResponsiveContainer>
             </div>
@@ -315,7 +303,7 @@ const EarningsPage = () => {
               </thead>
               <tbody>
                 {analyst_estimates_table && analyst_estimates_table.map((row, i) => (
-                  <tr key={i} style={{fontWeight: row.quarter.includes('FY') ? '600' : 'normal', color: row.quarter.includes('FY') ? '#93c5fd' : 'inherit'}}>
+                  <tr key={i} style={{ fontWeight: row.quarter.includes('FY') ? '600' : 'normal', color: row.quarter.includes('FY') ? '#93c5fd' : 'inherit' }}>
                     <td>{row.quarter}</td>
                     <td>{row.num_analysts}</td>
                     <td>{row.low_eps != null ? `₹${row.low_eps}` : '-'}</td>
@@ -328,11 +316,11 @@ const EarningsPage = () => {
           </div>
 
           {/* EARNINGS HISTORY TABLE */}
-          <EarningsHistoryTable 
-            tableData={earnings_history_table} 
-            companyName={companyName} 
-            symbol={symbol} 
-            currency={summary.currency} 
+          <EarningsHistoryTable
+            tableData={earnings_history_table}
+            companyName={companyName}
+            symbol={symbol}
+            currency={summary.currency}
           />
 
         </div>

@@ -12,15 +12,15 @@ function Watchlist({ userid = 1 }) {
   const uid = user?.userid || null;
   const navigate = useNavigate();
   const location = useLocation();
-const authConfig = useMemo(() => {
-  const token = localStorage.getItem("id_token");
-  return {
-    headers: {
-      "X-User-Id": String(uid),
-      "Authorization": `Bearer ${token}` // Critical for Cognito
-    }
-  };
-}, [uid]);
+  const authConfig = useMemo(() => {
+    const token = localStorage.getItem("id_token");
+    return {
+      headers: {
+        "X-User-Id": String(uid),
+        "Authorization": `Bearer ${token}` // Critical for Cognito
+      }
+    };
+  }, [uid]);
   const [searchTerm, setSearchTerm] = useState("");
   const [autocompleteResults, setAutocompleteResults] = useState([]);
   const [trackedStocks, setTrackedStocks] = useState([]);
@@ -60,20 +60,20 @@ const authConfig = useMemo(() => {
         const data = Array.isArray(res.data)
           ? res.data
           : res.data.watchlist || [];
-      const normalized = data.map((it) => ({
-  ...it,
-  symbol: (it.stock_symbol || it.symbol || "")
-    .replace(/\.NS$/i, "")
-    .toUpperCase(),
-  company_name: it.company_name || it.companyname || "",
-  logo_url: it.logoUrl || it.logo_url || null,
-  price: it.price ?? 0,
-  change: it.change ?? 0,
-  change_percent: it.change_percent ?? 0,
-}));
+        const normalized = data.map((it) => ({
+          ...it,
+          symbol: (it.stock_symbol || it.symbol || "")
+            .replace(/\.NS$/i, "")
+            .toUpperCase(),
+          company_name: it.company_name || it.companyname || "",
+          logo_url: it.logoUrl || it.logo_url || null,
+          price: it.price ?? 0,
+          change: it.change ?? 0,
+          change_percent: it.change_percent ?? 0,
+        }));
 
-console.log("WATCHLIST RAW:", data);
-console.log("WATCHLIST NORMALIZED:", normalized);
+        console.log("WATCHLIST RAW:", data);
+        console.log("WATCHLIST NORMALIZED:", normalized);
 
         setTrackedStocks(normalized);
       })
@@ -342,27 +342,27 @@ console.log("WATCHLIST NORMALIZED:", normalized);
                 className="wl-row"
               >
                 {/* Stock */}
-              <div className="wl-cell stock">
-  <img
-    src={stock.logo_url || "/logo-placeholder.svg"}
-    alt={stock.symbol}
-    className="wl-stock-logo"
-    onError={(e) => (e.currentTarget.src = "/logo-placeholder.svg")}
-  />
+                <div className="wl-cell stock">
+                  <img
+                    src={stock.logo_url || "/logo-placeholder.svg"}
+                    alt={stock.symbol}
+                    className="wl-stock-logo"
+                    onError={(e) => (e.currentTarget.src = "/logo-placeholder.svg")}
+                  />
 
-  <div className="stock-meta">
-    {/* ONLY WHITE TEXT — CLICKABLE */}
-    <div
-      className="sym"
-      style={{ cursor: "pointer" }}
-      onClick={() =>
-        window.open(`/stock/${stock.symbol}`, "_blank", "noopener,noreferrer")
-      }
-    >
-      {stock.symbol}
-    </div>
-  </div>
-</div>
+                  <div className="stock-meta">
+                    {/* ONLY WHITE TEXT — CLICKABLE */}
+                    <div
+                      className="sym"
+                      style={{ cursor: "pointer" }}
+                      onClick={() =>
+                        window.open(`/stock-page/${stock.symbol}`, "_blank", "noopener,noreferrer")
+                      }
+                    >
+                      {stock.symbol}
+                    </div>
+                  </div>
+                </div>
 
 
 

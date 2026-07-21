@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useParams, NavLink } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import Sidenav from "./Sidenav";
 import { fetchBseCompany, fetchBseFilings, fetchStockPrice } from "./api";
 import "./StockDetailPage.css";
 import "./SecFilingsPage.css";
@@ -155,20 +156,7 @@ const SecFilingsPage = () => {
 
       {/* LAYOUT */}
       <div className="layout">
-        <div className="stock-sidenav">
-          <NavLink to={`/stock/${symbol}`} className="nav-item">STOCK-PAGE</NavLink>
-          <NavLink to={`/chart/${symbol}`} className="nav-item">CHART</NavLink>
-          <NavLink to={`/stock/${symbol}/competitors`} className="nav-item">COMPETITOR</NavLink>
-          <NavLink to={`/dividend/${symbol}`} className="nav-item">DIVIDEND</NavLink>
-          <NavLink to={`/earnings/${symbol}`} className="nav-item">EARNINGS</NavLink>
-          <NavLink to={`/financials/${symbol}`} className="nav-item">FINANCIALS</NavLink>
-          <NavLink to={`/news/${symbol}`} className="nav-item">HEADLINES</NavLink>
-          <NavLink to={`/options/${symbol}`} className="nav-item">OPTION CHAIN</NavLink>
-          <NavLink to={`/sec/${symbol}`} className="nav-item active">SEC FILINGS</NavLink>
-          <NavLink to={`/shortinterest/${symbol}`} className="nav-item">SHORT INTEREST</NavLink>
-          <NavLink to={`/stock/${symbol}`} className="nav-item buy-item">BUY STOCK</NavLink>
-        </div>
-
+        <Sidenav symbol={symbol} />
         {/* BODY */}
         <div className="filings-content">
 

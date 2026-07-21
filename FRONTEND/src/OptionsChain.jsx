@@ -17,7 +17,7 @@ const OptionsChain = ({ symbol }) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
+
   // Filters
   const [expiry, setExpiry] = useState('');
   const [optionType, setOptionType] = useState('All');
@@ -31,10 +31,10 @@ const OptionsChain = ({ symbol }) => {
     setLoading(true);
     try {
       const token = localStorage.getItem('id_token');
-      const url = targetExpiry 
-        ? `${API_BASE_URL}/options/${symbol}?expiry=${targetExpiry}`
-        : `${API_BASE_URL}/options/${symbol}`;
-        
+      const url = targetExpiry
+        ? `${API_BASE_URL}/stock-options/${symbol}?expiry=${targetExpiry}`
+        : `${API_BASE_URL}/stock-options/${symbol}`;
+
       const response = await axios.get(url, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -69,13 +69,13 @@ const OptionsChain = ({ symbol }) => {
     // Filter by Moneyness (Simplified logic based on underlying value)
     const spot = list[0]?.underlying_value || 0;
     if (moneyness === 'ITM') {
-      list = list.filter(item => 
-        (item.type === 'CALL' && item.strike < spot) || 
+      list = list.filter(item =>
+        (item.type === 'CALL' && item.strike < spot) ||
         (item.type === 'PUT' && item.strike > spot)
       );
     } else if (moneyness === 'OTM') {
-      list = list.filter(item => 
-        (item.type === 'CALL' && item.strike > spot) || 
+      list = list.filter(item =>
+        (item.type === 'CALL' && item.strike > spot) ||
         (item.type === 'PUT' && item.strike < spot)
       );
     }
@@ -99,9 +99,9 @@ const OptionsChain = ({ symbol }) => {
     { accessorKey: 'last_price', header: 'CLOSE PRICE', cell: info => `₹${info.getValue()?.toFixed(2) || '0.00'}` },
     { accessorKey: 'type', header: 'PUT/CALL', cell: info => info.getValue().charAt(0) + info.getValue().slice(1).toLowerCase() },
     { accessorKey: 'volume', header: 'VOLUME', cell: info => info.getValue()?.toLocaleString() || '-' },
-    { 
-      accessorKey: 'open_interest', 
-      header: 'OPEN INTEREST', 
+    {
+      accessorKey: 'open_interest',
+      header: 'OPEN INTEREST',
       cell: info => {
         const val = info.getValue() || 0;
         const chg = info.row.original.change_in_oi || 0;
@@ -115,8 +115,8 @@ const OptionsChain = ({ symbol }) => {
         );
       }
     },
-    { 
-      accessorKey: 'implied_volatility', 
+    {
+      accessorKey: 'implied_volatility',
       header: 'IMPLIED VOLATILITY',
       cell: info => info.getValue() ? `${info.getValue()}%` : '-'
     },
@@ -132,7 +132,7 @@ const OptionsChain = ({ symbol }) => {
 
   const exportCSV = () => {
     const headers = columns.map(c => c.header).join(',');
-    const rows = filteredData.map(row => 
+    const rows = filteredData.map(row =>
       columns.map(c => {
         const val = row[c.accessorKey];
         return typeof val === 'string' ? `"${val}"` : val;
@@ -162,8 +162,8 @@ const OptionsChain = ({ symbol }) => {
         {/* Expiry */}
         <div className="flex flex-col gap-2">
           <label className="text-[10px] font-black text-[#64748b] uppercase tracking-widest">Options Date</label>
-          <select 
-            value={expiry} 
+          <select
+            value={expiry}
             onChange={(e) => { setExpiry(e.target.value); fetchData(e.target.value); }}
             className="bg-[#0f172a] border border-white/10 rounded-lg px-3 py-2 text-sm text-[#e2e8f0] min-w-[140px] outline-none focus:border-[#3b82f6] transition-all cursor-pointer"
           >
@@ -174,8 +174,8 @@ const OptionsChain = ({ symbol }) => {
         {/* Type */}
         <div className="flex flex-col gap-2">
           <label className="text-[10px] font-black text-[#64748b] uppercase tracking-widest">Options Type</label>
-          <select 
-            value={optionType} 
+          <select
+            value={optionType}
             onChange={(e) => setOptionType(e.target.value)}
             className="bg-[#0f172a] border border-white/10 rounded-lg px-3 py-2 text-sm text-[#e2e8f0] min-w-[140px] outline-none focus:border-[#3b82f6] transition-all cursor-pointer"
           >
@@ -188,8 +188,8 @@ const OptionsChain = ({ symbol }) => {
         {/* Moneyness */}
         <div className="flex flex-col gap-2">
           <label className="text-[10px] font-black text-[#64748b] uppercase tracking-widest">Moneyness</label>
-          <select 
-            value={moneyness} 
+          <select
+            value={moneyness}
             onChange={(e) => setMoneyness(e.target.value)}
             className="bg-[#0f172a] border border-white/10 rounded-lg px-3 py-2 text-sm text-[#e2e8f0] min-w-[120px] outline-none focus:border-[#3b82f6] transition-all cursor-pointer"
           >
@@ -202,8 +202,8 @@ const OptionsChain = ({ symbol }) => {
         {/* Volume Filter */}
         <div className="flex flex-col gap-2">
           <label className="text-[10px] font-black text-[#64748b] uppercase tracking-widest">Volume Filter</label>
-          <select 
-            value={volumeFilter} 
+          <select
+            value={volumeFilter}
             onChange={(e) => setVolumeFilter(e.target.value)}
             className="bg-[#0f172a] border border-white/10 rounded-lg px-3 py-2 text-sm text-[#e2e8f0] min-w-[140px] outline-none focus:border-[#3b82f6] transition-all cursor-pointer"
           >
@@ -214,20 +214,20 @@ const OptionsChain = ({ symbol }) => {
 
         {/* Strike Range */}
         <div className="flex items-center gap-2">
-           <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2">
             <label className="text-[10px] font-black text-[#64748b] uppercase tracking-widest">Strike Min</label>
-            <input 
-              type="number" 
-              value={strikeMin} 
+            <input
+              type="number"
+              value={strikeMin}
               onChange={(e) => setStrikeMin(e.target.value)}
               className="bg-[#0f172a] border border-white/10 rounded-lg px-3 py-2 text-sm text-[#e2e8f0] w-[100px] outline-none focus:border-[#3b82f6] transition-all"
             />
           </div>
           <div className="flex flex-col gap-2">
             <label className="text-[10px] font-black text-[#64748b] uppercase tracking-widest">Strike Max</label>
-            <input 
-              type="number" 
-              value={strikeMax} 
+            <input
+              type="number"
+              value={strikeMax}
               onChange={(e) => setStrikeMax(e.target.value)}
               className="bg-[#0f172a] border border-white/10 rounded-lg px-3 py-2 text-sm text-[#e2e8f0] w-[100px] outline-none focus:border-[#3b82f6] transition-all"
             />
@@ -235,7 +235,7 @@ const OptionsChain = ({ symbol }) => {
         </div>
 
         {/* Export */}
-        <button 
+        <button
           onClick={exportCSV}
           className="ml-auto flex items-center gap-2 bg-white/10 hover:bg-[#3b82f6] text-[#e2e8f0] px-5 py-2.5 rounded-xl font-bold text-xs transition-all shadow-lg active:scale-95 border border-white/5"
         >

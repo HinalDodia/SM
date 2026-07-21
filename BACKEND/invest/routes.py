@@ -6085,7 +6085,7 @@ def stock_page(symbol):
         resp = table.get_item(Key={"SYMBOL#<sym>": f"SYMBOL#{symbol}", "SNAPSHOT#<date>": "LATEST"})
         item = resp.get("Item")
         if item and item.get("data"):
-            return jsonify("FROM DYNAMODB",item["data"])
+            return jsonify(item["data"])
     except Exception as e:
         print(f"[DynamoDB] stock-page read failed for {symbol}: {e}")
     return stock_page_fallback(symbol) 

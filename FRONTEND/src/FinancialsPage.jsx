@@ -48,20 +48,23 @@ const FinancialsPage = () => {
     load();
   }, [symbol]);
 
-  // Derived data based on period
+  // Derived data based on period — always returns an array, never undefined
   const currentIncome = useMemo(() => {
     if (!data) return [];
-    return period === "Annual" ? data.income_statement : data.quarterly_income_statement;
+    const rows = period === "Annual" ? data.income_statement : data.quarterly_income_statement;
+    return Array.isArray(rows) ? rows : [];
   }, [data, period]);
 
   const currentBalance = useMemo(() => {
     if (!data) return [];
-    return period === "Annual" ? data.balance_sheet : data.quarterly_balance_sheet;
+    const rows = period === "Annual" ? data.balance_sheet : data.quarterly_balance_sheet;
+    return Array.isArray(rows) ? rows : [];
   }, [data, period]);
 
   const currentCashflow = useMemo(() => {
     if (!data) return [];
-    return period === "Annual" ? data.cashflow_statement : data.quarterly_cashflow_statement;
+    const rows = period === "Annual" ? data.cashflow_statement : data.quarterly_cashflow_statement;
+    return Array.isArray(rows) ? rows : [];
   }, [data, period]);
 
   if (loading) return <div className="loading">Loading Financial Data...</div>;

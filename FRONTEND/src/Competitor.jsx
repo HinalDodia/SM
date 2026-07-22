@@ -20,7 +20,6 @@ const CompetitorsPage = () => {
 
   const [showVolume, setShowVolume] = useState(false);
   const [visibleCompetitors, setVisibleCompetitors] = useState({});
-  const [visibleSentimentComps, setVisibleSentimentComps] = useState({});
   const [show50mda, setShow50mda] = useState(false);
   const [show200mda, setShow200mda] = useState(false);
 
@@ -45,9 +44,6 @@ const CompetitorsPage = () => {
         initVisible[c.symbol] = true;
       });
       setVisibleCompetitors(initVisible);
-
-      // also initialize sentiment visibility
-      setVisibleSentimentComps(initVisible);
     }
   }, [data]);
 
@@ -216,175 +212,8 @@ const CompetitorsPage = () => {
             </div>
           </div>
 
-          {/* 3. MEDIA SENTIMENT OVER TIME */}
-          <div className="card full-width">
-            <h3>Media Sentiment Over Time</h3>
 
-            {/* Sentiment Trend Chart (Matching Reference) */}
-            {data.sentiment_chart && data.sentiment_chart.length > 0 ? (
-              <div style={{ height: "350px", marginBottom: "40px", background: "rgba(255,255,255,0.02)", borderRadius: "12px", padding: "20px", border: "1px solid rgba(255,255,255,0.05)" }}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={data.sentiment_chart} margin={{ top: 10, right: 30, left: 0, bottom: 20 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
-                    <XAxis
-                      dataKey="date"
-                      stroke="#006affff"
-                      tick={{ fontSize: 12 }}
-                      axisLine={false}
-                      tickLine={false}
-                      padding={{ left: 10, right: 10 }}
-                    />
-                    <YAxis
-                      stroke="#ff0000ff"
-                      tick={{ fontSize: 12 }}
-                      axisLine={false}
-                      tickLine={false}
-                      domain={[0.5, 1.5]}
-                      ticks={[0.65, 1.0, 1.35]}
-                      tickFormatter={(v) =>
-                        v >= 1.3 ? "Bullish" : v <= 0.7 ? "Bearish" : "Neutral"
-                      }
-                    />
-                    <Tooltip
-                      contentStyle={{ backgroundColor: "#1e293b", borderColor: "#334155", borderRadius: "8px" }}
-                      itemStyle={{ fontSize: "14px" }}
-                      labelFormatter={(label) => `Week of ${label}`}
-                      formatter={(value, name) => {
-                        const label = value >= 1.15 ? "Bullish" : value <= 0.85 ? "Bearish" : "Neutral";
-                        return [`${label} (${value})`, name];
-                      }}
-                    />
-                    <Legend
-                      layout="vertical"
-                      align="right"
-                      verticalAlign="middle"
-                      iconType="square"
-                      wrapperStyle={{ paddingLeft: "20px" }}
-                    />
-                    {/* Neutral baseline */}
-                    <ReferenceLine y={1.0} stroke="rgba(255,255,255,0.15)" strokeWidth={1} strokeDasharray="4 4" label={{ value: "Neutral", position: "insideLeft", fill: "#64748b", fontSize: 11 }} />
-                    {/* Bullish threshold */}
-                    <ReferenceLine y={1.15} stroke="rgba(16,185,129,0.15)" strokeWidth={1} strokeDasharray="3 3" />
-                    {/* Bearish threshold */}
-                    <ReferenceLine y={0.85} stroke="rgba(239,68,68,0.15)" strokeWidth={1} strokeDasharray="3 3" />
-
-                    {/* Main Stock Line */}
-                    <Line
-                      type="monotone"
-                      dataKey={symbol}
-                      name={symbol}
-                      stroke="#00fb11ff"
-                      strokeWidth={3}
-                      dot={{ r: 4 }}
-                      activeDot={{ r: 6 }}
-                      connectNulls={true}
-                    />
-
-                    {/* Competitor Lines */}
-                    {(Array.isArray(data.competitor_list) ? data.competitor_list : []).filter(c => visibleSentimentComps[c.symbol] !== false).map((c, i) => (
-                      <Line
-                        key={c.symbol}
-                        type="monotone"
-                        dataKey={c.symbol}
-                        name={c.symbol}
-                        stroke={competitorColors[i % competitorColors.length]}
-                        strokeWidth={2}
-                        dot={{ r: 4 }}
-                        connectNulls={true}
-                      />
-                    ))}
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-            ) : (
-              <div style={{ textAlign: "center", padding: "30px", color: "#64748b", background: "rgba(255,255,255,0.02)", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.05)", marginBottom: "40px" }}>
-                Sentiment chart data is currently unavailable. The AI analysis service may be warming up — try refreshing in a moment.
-              </div>
-            )}
-
-            <div className="news-list-container" style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-              {!data.media_sentiment || data.media_sentiment.length === 0 ? (
-                <div style={{ textAlign: "center", padding: "40px", color: "#94a3b8" }}>
-                  No recent news articles found for this company.
-                </div>
-              ) : (
-                data.media_sentiment.map((n, i) => {
-                  // HF uses "link" and "learn"; local pipeline uses "url" and "action"
-                  const articleUrl = n.url || n.link || "#";
-                  const articleAction = n.action || n.learn || "";
-                  const sentColor = n.sentiment === "bullish" ? "#10b981"
-                    : n.sentiment === "bearish" ? "#ef4444"
-                      : "#94a3b8";
-                  const sentBg = n.sentiment === "bullish" ? "rgba(16,185,129,0.2)"
-                    : n.sentiment === "bearish" ? "rgba(239,68,68,0.2)"
-                      : "rgba(100,116,139,0.2)";
-                  const confidencePct = n.confidence != null
-                    ? ` · ${(n.confidence * 100).toFixed(0)}% confidence`
-                    : "";
-
-                  return (
-                    <div key={i} className="news-item-hover-trigger" style={{ position: 'relative', padding: '15px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '8px', cursor: 'pointer' }}>
-
-                      {/* Top row: thumbnail + title + badge */}
-                      <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-                        {n.image && (
-                          <img
-                            src={n.image}
-                            alt=""
-                            style={{ width: '80px', height: '52px', objectFit: 'cover', borderRadius: '6px', flexShrink: 0 }}
-                            onError={e => { e.target.style.display = 'none'; }}
-                          />
-                        )}
-                        <div style={{ flex: 1, minWidth: 0 }}>
-                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '10px' }}>
-                            <a href={articleUrl} target="_blank" rel="noreferrer"
-                              style={{ color: '#e2e8f0', textDecoration: 'none', fontWeight: '500', fontSize: '15px', flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                              {n.title}
-                            </a>
-                            <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexShrink: 0 }}>
-                              <span style={{ padding: "2px 8px", borderRadius: "4px", fontSize: "10px", fontWeight: "bold", background: sentBg, color: sentColor, textTransform: "uppercase" }}>
-                                {n.sentiment || "neutral"}
-                              </span>
-                              <span style={{ fontSize: '12px', color: '#64748b', whiteSpace: 'nowrap' }}>{formatTime(n.time)}</span>
-                            </div>
-                          </div>
-
-                          {/* Publisher + sentiment source */}
-                          {(n.publisher || n.sentiment_source) && (
-                            <div style={{ marginTop: '4px', fontSize: '11px', color: '#475569' }}>
-                              {n.publisher && <span>{n.publisher}</span>}
-                              {n.sentiment_source && <span style={{ marginLeft: '8px', color: '#334155' }}>via {n.sentiment_source}</span>}
-                              {confidencePct && <span style={{ marginLeft: '8px', color: sentColor }}>{confidencePct}</span>}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Expandable details */}
-                      <div className="news-details-hover" style={{ marginTop: '12px', paddingTop: '12px', borderTop: '1px solid rgba(255,255,255,0.05)', fontSize: '13px', color: '#cbd5e1' }}>
-                        {n.summary && (
-                          <div style={{ marginBottom: '8px' }}><strong style={{ color: '#94a3b8' }}>Summary:</strong> {n.summary}</div>
-                        )}
-                        <div style={{ marginBottom: '8px', color: sentColor }}>
-                          <strong style={{ color: '#94a3b8' }}>Sentiment:</strong> {n.sentiment?.toUpperCase()}
-                          {n.confidence != null && <span style={{ marginLeft: '8px', fontSize: '12px', opacity: 0.8 }}>({(n.confidence * 100).toFixed(1)}% confidence)</span>}
-                        </div>
-                        {n.impact && (
-                          <div style={{ marginBottom: '8px' }}><strong style={{ color: '#94a3b8' }}>Impact:</strong> {n.impact}</div>
-                        )}
-                        {articleAction && (
-                          <div style={{ color: '#60a5fa' }}><strong style={{ color: '#94a3b8' }}>Learnings:</strong> {articleAction}</div>
-                        )}
-                      </div>
-
-                    </div>
-                  );
-                })
-              )}
-            </div>
-          </div>
-
-          {/* 4. COMPARISON WITH COMPETITOR CHART */}
+          {/* 3. COMPARISON WITH COMPETITOR CHART */}
           <div className="card full-width">
 
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", marginBottom: "20px", borderBottom: "1px solid rgba(255,255,255,0.05)", paddingBottom: "15px" }}>

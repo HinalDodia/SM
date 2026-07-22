@@ -5070,38 +5070,9 @@
 #     )
  
  
-# @routes_bp.route("/bse-company/<symbol>", methods=["GET"])
-# @cross_origin(supports_credentials=True)
-# def bse_company(symbol):
-#     symbol     = symbol.upper().strip()
-#     scrip_code = get_bse_scrip(symbol)
-#     if not scrip_code:
-#         return jsonify({"error": f"Unknown symbol: {symbol}"}), 404
- 
-#     info   = COMPANY_LIST.get(symbol, {})
-#     result = {
-#         "symbol":     symbol,
-#         "scrip_code": scrip_code,
-#         "name":       info.get("name", ""),
-#         "sector":     info.get("sector", ""),
-#         "industry":   info.get("industry", ""),
-#         "isin":       "",
-#     }
- 
-#     try:
-#         resp = requests.get(
-#             f"{BSE_BASE}/CompanyReach/w?scripcode={scrip_code}",
-#             headers=BSE_HEADERS, timeout=6,
-#         )
-#         row = (resp.json().get("Table") or [{}])[0]
-#         result["isin"] = row.get("ISIN_CODE", "")
-#         if not result["name"]:
-#             result["name"] = row.get("LONGNAME", "")
-#     except Exception:
-#         pass
- 
-#     return jsonify(result)
-# #------------------------------------------------------------------------------------------------------------------------
+# NOTE: bse_company and download_filing_pdf routes are defined below,
+# after routes_bp is created (around line 5428).
+#------------------------------------------------------------------------------------------------------------------------
 # def get_yf_symbol(symbol):
 #     """
 #     Convert NSE symbol to Yahoo Finance symbol
@@ -5420,6 +5391,7 @@ import csv
 import io
 import json
 import boto3
+from decimal import Decimal
 from invest.cache import cache
 import numpy as np
 import pandas as pd
@@ -5436,6 +5408,8 @@ from Endpoints.stock_earnings import earnings_page as stock_earnings_fallback
 from Endpoints.stock_financials import financials_page as financials_page_fallback
 from Endpoints.stock_options import options_chain as options_chain_fallback
 from Endpoints.bse_filings import bse_filings as bse_filings_fallback
+from Endpoints.bse_filings import bse_company as bse_company_fallback
+from Endpoints.bse_filings import download_filing_pdf as download_filing_pdf_fallback
 from Endpoints.stock_Short_interest import short_interest as short_interest_fallback
 
 routes_bp = Blueprint("routes_bp", __name__)
@@ -5443,6 +5417,19 @@ routes_bp = Blueprint("routes_bp", __name__)
 HF_BASE_URL=os.getenv("HF_SPACE_URL")
 HF_TOKEN      = os.getenv("HF_TOKEN")
 HF_HEADERS    = {"Authorization": f"Bearer {HF_TOKEN}"}
+
+# These two routes were originally placed before the Blueprint was defined — moved here.
+@routes_bp.route("/bse-company/<symbol>", methods=["GET"])
+@cross_origin(supports_credentials=True)
+def bse_company(symbol):
+    return bse_company_fallback(symbol)
+
+
+@routes_bp.route("/stock-bse-filings/<symbol>/download", methods=["GET"])
+@cross_origin(supports_credentials=True)
+def download_filing_pdf(symbol):
+    return download_filing_pdf_fallback(symbol)
+
 
 @routes_bp.route("/refresh-sectors")
 def refresh_sectors():
@@ -6076,19 +6063,37 @@ def _is_fresh(fetched_at):
     except Exception:
         return False
 
+
+def _from_dynamo(obj):
+    """Boto3 returns numbers from DynamoDB as Decimal. Flask's jsonify()
+    can't serialize Decimal natively and silently stringifies it instead,
+    which breaks any frontend code expecting a real number (e.g. .toFixed()).
+    Convert Decimal back to int/float before returning the response."""
+    if isinstance(obj, Decimal):
+        return int(obj) if obj % 1 == 0 else float(obj)
+    if isinstance(obj, dict):
+        return {k: _from_dynamo(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [_from_dynamo(i) for i in obj]
+    return obj
+
+
 @routes_bp.route("/stock-page/<symbol>", methods=["GET"])
 @cross_origin(supports_credentials=True)
 def stock_page(symbol):
     symbol = symbol.upper()
     try:
         table = get_dynamo().Table("stock-page")
-        resp = table.get_item(Key={"SYMBOL#<sym>": f"SYMBOL#{symbol}", "SNAPSHOT#<date>": "LATEST"})
-        item = resp.get("Item")
-        if item and item.get("data"):
-            return jsonify(item["data"])
+        today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        yesterday = (datetime.now(timezone.utc) - timedelta(days=1)).strftime("%Y-%m-%d")
+        for d in (today, yesterday):
+            resp = table.get_item(Key={"SYMBOL#<sym>": f"SYMBOL#{symbol}", "SNAPSHOT#<date>": f"SNAPSHOT#{d}"})
+            item = resp.get("Item")
+            if item and item.get("data"):
+                return jsonify(_from_dynamo(item["data"]))
     except Exception as e:
         print(f"[DynamoDB] stock-page read failed for {symbol}: {e}")
-    return stock_page_fallback(symbol) 
+    return stock_page_fallback(symbol)
 
 @routes_bp.route("/stock-chart/<symbol>", methods=["GET"])
 @cross_origin(supports_credentials=True)
@@ -6102,7 +6107,7 @@ def stock_chart(symbol):
         resp = table.get_item(Key={"SYMBOL#<sym>": f"SYMBOL#{symbol}", "CHART#<period>#<interval>": f"CHART#{period}#{interval}"})
         item = resp.get("Item")
         if item and item.get("data"):
-            return jsonify("FROM DYNAMODB",item["data"])
+            return jsonify(_from_dynamo(item["data"]))
     except Exception as e:
         print(f"[DynamoDB] stock-chart read failed for {symbol}: {e}")
     return stock_chart_fallback(symbol)
@@ -6122,7 +6127,7 @@ def stock_earnings(symbol):
             item = resp.get("Item")
 
         if item and item.get("data"):
-            return jsonify("FROM DYNAMODB",item["data"])
+            return jsonify(_from_dynamo(item["data"]))
     except Exception as e:
         print(f"[DynamoDB] stock-earnings read failed for {symbol}: {e}")
     return stock_earnings_fallback(symbol)     
@@ -6142,7 +6147,7 @@ def stock_dividend(symbol):
             item = resp.get("Item")
 
         if item and item.get("data"):
-            return jsonify("FROM DYNAMODB",item["data"])
+            return jsonify(_from_dynamo(item["data"]))
     except Exception as e:
         print(f"[DynamoDB] stock-dividend read failed for {symbol}: {e}")
     return dividend_summary_fallback(symbol)
@@ -6163,7 +6168,7 @@ def stock_bse_filings(symbol):
             item = resp.get("Item")
 
         if item and item.get("data"):
-            return jsonify("FROM DYNAMODB",item["data"])
+            return jsonify(_from_dynamo(item["data"]))
     except Exception as e:
         print(f"[DynamoDB] stock-bse-filings read failed for {symbol}: {e}")
     return bse_filings_fallback(symbol)
@@ -6184,7 +6189,7 @@ def stock_competitors(symbol):
             item = resp.get("Item")
 
         if item and item.get("data"):
-            return jsonify("FROM DYNAMODB",item["data"])
+            return jsonify(_from_dynamo(item["data"]))
     except Exception as e:
         print(f"[DynamoDB] stock-competitors read failed for {symbol}: {e}")
     return competitors_page_fallback(symbol)
@@ -6206,7 +6211,7 @@ def stock_financials(symbol):
             
 
         if item and item.get("data"):
-            return jsonify("FROM DYNAMODB",item["data"])
+            return jsonify(_from_dynamo(item["data"]))
     except Exception as e:
         print(f"[DynamoDB] stock-financials read failed for {symbol}: {e}")
     return financials_page_fallback(symbol)
@@ -6228,7 +6233,7 @@ def stock_headlines(symbol):
             
 
         if item and item.get("data"):
-            return jsonify("FROM DYNAMODB",item["data"])
+            return jsonify(_from_dynamo(item["data"]))
     except Exception as e:
         print(f"[DynamoDB] stock headlines read failed for {symbol}: {e}")
     return headlines_page_fallback(symbol)
@@ -6248,7 +6253,7 @@ def stock_options(symbol):
             
 
         if item and item.get("data"):
-            return jsonify("FROM DYNAMODB",item["data"])
+            return jsonify(_from_dynamo(item["data"]))
     except Exception as e:
         print(f"[DynamoDB] stock-options read failed for {symbol}: {e}")
     return options_chain_fallback(symbol)
@@ -6261,16 +6266,13 @@ def stock_short_interest(symbol):
 
     try:
         table = get_dynamo().Table("stock-short-interest")
-        resp = table.get_item(Key={"SYMBOL#<sym>": f"SYMBOL#{symbol}", "SI#<date>": "LATEST"})
-        item = resp.get("Item")
-
-        if not item:
-            resp = table.get_item(Key={"SYMBOL#<sym>": f"SYMBOL#{symbol}", "SI#<date>": "LATEST"})
+        today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        yesterday = (datetime.now(timezone.utc) - timedelta(days=1)).strftime("%Y-%m-%d")
+        for d in (today, yesterday):
+            resp = table.get_item(Key={"SYMBOL#<sym>": f"SYMBOL#{symbol}", "SI#<date>": f"SI#{d}"})
             item = resp.get("Item")
-            
-
-        if item and item.get("data"):
-            return jsonify("FROM DYNAMODB",item["data"])
+            if item and item.get("data"):
+                return jsonify(_from_dynamo(item["data"]))
     except Exception as e:
         print(f"[DynamoDB] stock-short-interest read failed for {symbol}: {e}")
     return short_interest_fallback(symbol)

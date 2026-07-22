@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Sidenav from "./Sidenav";
 import { fetchBseCompany, fetchBseFilings, fetchStockPrice } from "./api";
+import { API_BASE_URL } from "./config";
 import "./StockDetailPage.css";
 import "./SecFilingsPage.css";
 
@@ -39,7 +40,8 @@ const QuarterBadge = ({ quarter }) => {
   );
 };
 
-const BACKEND = "http://127.0.0.1:5000";
+// Use the central config so this works in both dev and production
+const BACKEND = API_BASE_URL;
 
 const SecFilingsPage = () => {
   const { symbol } = useParams();
@@ -115,6 +117,30 @@ const SecFilingsPage = () => {
   const openPdf = (filing) => {
     if (!filing.download_url) return;
     window.open(`${BACKEND}${filing.download_url}`, "_blank", "noopener,noreferrer");
+  };
+
+  // Download: fetch the PDF blob from our proxy, then trigger save-as.
+  // This avoids the browser blocking the `download` attribute on cross-origin URLs.
+  const downloadPdf = async (filing) => {
+    if (!filing.download_url) return;
+    try {
+      const proxyUrl = `${BACKEND}${filing.download_url}&disposition=attachment`;
+      const res = await fetch(proxyUrl);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const blob = await res.blob();
+      const objUrl = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = objUrl;
+      const filename = filing.download_url.split("file=")[1] || "filing.pdf";
+      link.download = filename.endsWith(".pdf") ? filename : filename + ".pdf";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(objUrl);
+    } catch (err) {
+      // Fallback: open in new tab
+      window.open(`${BACKEND}${filing.download_url}`, "_blank", "noopener,noreferrer");
+    }
   };
 
   // -------------------------------------------------------------------------
@@ -273,17 +299,17 @@ const SecFilingsPage = () => {
                             >
                               View
                             </button>
-                            {/* Download via proxy */}
-                            <a
-                              href={`${BACKEND}${filing.download_url}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              download
-                              style={{ color: "#94a3b8", fontSize: 11, textDecoration: "none" }}
+                            {/* Download — fetches blob from proxy to bypass cross-origin download block */}
+                            <button
+                              onClick={() => downloadPdf(filing)}
+                              style={{
+                                background: "none", border: "none", cursor: "pointer",
+                                color: "#94a3b8", fontSize: 15, padding: 0,
+                              }}
                               title="Download PDF"
                             >
                               ↓
-                            </a>
+                            </button>
                           </div>
                         ) : (
                           <span style={{ color: "#64748b" }}>N/A</span>

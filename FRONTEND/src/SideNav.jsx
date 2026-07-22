@@ -25,7 +25,7 @@ import {
 const NAV_ITEMS = [
     { to: (s) => `/stock-page/${s}`, label: "Overview", icon: LayoutDashboard, end: true },
     { to: (s) => `/stock-chart/${s}`, label: "Price Action", icon: CandlestickChart },
-    { to: (s) => `/stock-competitor/${s}`, label: "Peer Compare", icon: GitCompare },
+    { to: (s) => `/stock-competitors/${s}`, label: "Peer Compare", icon: GitCompare },
     { to: (s) => `/stock-dividend/${s}`, label: "Dividends", icon: Coins },
     { to: (s) => `/stock-earnings/${s}`, label: "Earnings", icon: TrendingUp },
     { to: (s) => `/stock-financials/${s}`, label: "Fundamentals", icon: BookOpen },

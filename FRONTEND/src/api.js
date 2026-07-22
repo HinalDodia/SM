@@ -157,7 +157,7 @@ export async function fetchBseCompany(symbol) {
 }
 
 export async function fetchBseFilings(symbol, params = {}) {
-  const url = new URL(`${API_BASE_URL}/bse-filings/${symbol}`);
+  const url = new URL(`${API_BASE_URL}/stock-bse-filings/${symbol}`);
 
   Object.keys(params).forEach(key => {
     // Only skip null/undefined — allow empty strings, "false", 0, etc.
@@ -182,7 +182,7 @@ export async function fetchShortInterest(symbol) {
 }
 
 export async function fetchHeadlines(symbol) {
-  const res = await fetch(`${API_BASE_URL}/stockheadlines/${symbol}`, {
+  const res = await fetch(`${API_BASE_URL}/stock-headlines/${symbol}`, {
     headers: authHeaders()
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);

@@ -12,22 +12,14 @@ db = SQLAlchemy()
 def create_app():
     app = Flask(__name__)
 
+    # ---- Load .env first so all env vars are available for CORS config etc. ----
+    _here = os.path.dirname(os.path.abspath(__file__))
+    ENV_PATH = os.path.join(_here, "..", ".env")  # BACKEND/.env
+    load_dotenv(ENV_PATH)
+
     @app.route('/favicon.ico')
     def favicon():
         return '', 204
-# This allows your frontend to communicate with the backend
-    CORS(app, resources={r"/*": {"origins": [
-        "http://localhost:3000",
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-        "http://127.0.0.1:3000",
-    ]}}, supports_credentials=True)
-
-    #
-    # ---- Load .env (absolute path, guaranteed to work) ----
-    #
-    ENV_PATH = "D:\Desktop\SM\BACKEND\.env"
-    load_dotenv(ENV_PATH)
 
     # ------------------------------------------------------------------
     # Database Configuration
@@ -95,19 +87,22 @@ def create_app():
 
     db.init_app(app)
 
-    #
-    # ---- CORS ----
-    #
+    # ---- CORS allowed origins ----
+    # Add FRONTEND_URL to your production .env to whitelist your deployed domain.
+    _frontend_url = os.getenv("FRONTEND_URL", "").rstrip("/")
     allowed_origins = [
         "http://localhost:3000",
         "http://localhost:5173",
         "http://127.0.0.1:3000",
         "http://127.0.0.1:5173",
-     ]
+    ]
+    if _frontend_url and _frontend_url not in allowed_origins:
+        allowed_origins.append(_frontend_url)
 
-    
+    # Configure flask-cors with the final origin list
+    CORS(app, resources={r"/*": {"origins": allowed_origins}}, supports_credentials=True)
+
     # ---- Blueprints & Caching ----
-    #
     from .routes import routes_bp, cache
     cache.init_app(app)
 

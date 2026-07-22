@@ -1,9 +1,9 @@
 from invest import create_app
-from flask_cors import CORS
 
 app = create_app()
-# Move CORS here if not in __init__.py, but don't do both.
-CORS(app, resources={r"/*": {"origins": "*"}}) 
+# CORS is configured in create_app() — do NOT add it again here.
+# Duplicate CORS calls override the whitelisted origins with wildcard `*`.
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5000, debug=True)
+

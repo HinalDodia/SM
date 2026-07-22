@@ -1,16 +1,12 @@
 /* Competitor Cards */
 
-.competitor-grid{
-
-display:grid;
-
-grid-template-columns:repeat(5,1fr);
-
-gap:15px;
-
-margin-top:15px;
-
+.competitor-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-top: 15px;
 }
+
 
 
 .competitor-card{

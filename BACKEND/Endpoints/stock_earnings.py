@@ -357,16 +357,17 @@ def earnings_page(symbol):
             earnings_dates is not None
             and not earnings_dates.empty
         ):
-
-            reported = earnings_dates[
-                earnings_dates["Reported EPS"].notna()
-            ]
-
-            latest = (
-                reported.iloc[0]
-                if not reported.empty
-                else earnings_dates.iloc[0]
-            )
+            if "Reported EPS" in earnings_dates.columns:
+                reported = earnings_dates[
+                    earnings_dates["Reported EPS"].notna()
+                ]
+                latest = (
+                    reported.iloc[0]
+                    if not reported.empty
+                    else earnings_dates.iloc[0]
+                )
+            else:
+                latest = earnings_dates.iloc[0]
 
         # ---------------------------------------------------
         # EPS

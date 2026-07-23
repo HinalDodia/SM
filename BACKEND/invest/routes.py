@@ -735,15 +735,17 @@ def stock_earnings(symbol):
   
     try:
         table = get_dynamo().Table("stock-earnings")
-        resp = table.get_item(Key={"SYMBOL#<sym>": f"SYMBOL#{symbol}", "EARNINGS#<date>": f"EARNINGS#{date_type.today().strftime('%Y-%m-%d')}"})
-        item = resp.get("Item")
-
-        if not item:
-            resp = table.get_item(Key={"SYMBOL#<sym>": f"SYMBOL#{symbol}", "EARNINGS#<date>": f"EARNINGS#{(date_type.today()-timedelta(days=2)).strftime('%Y-%m-%d')}"})
+        today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        yesterday = (datetime.now(timezone.utc) - timedelta(days=1)).strftime("%Y-%m-%d")
+        for d in (today, yesterday, "LATEST"):
+            sk = f"EARNINGS#{d}" if d != "LATEST" else "LATEST"
+            resp = table.get_item(Key={"SYMBOL#<sym>": f"SYMBOL#{symbol}", "EARNINGS#<date>": sk})
             item = resp.get("Item")
-
-        if item and item.get("data"):
-            return jsonify(_from_dynamo(item["data"]))
+            if item and item.get("data"):
+                data = _from_dynamo(item["data"])
+                # Skip cached error payloads (stored before fix was applied)
+                if isinstance(data, dict) and not data.get("error") and data.get("success") is not False:
+                    return jsonify(data)
     except Exception as e:
         print(f"[DynamoDB] stock-earnings read failed for {symbol}: {e}")
     return stock_earnings_fallback(symbol)     

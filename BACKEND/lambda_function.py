@@ -1,6 +1,7 @@
-# lambda_function.py — new file, sits next to run.py
 from mangum import Mangum
+from asgiref.wsgi import WsgiToAsgi
 from invest import create_app
 
 app = create_app()
-handler = Mangum(app)
+asgi_app = WsgiToAsgi(app)
+handler = Mangum(asgi_app, lifespan="off")

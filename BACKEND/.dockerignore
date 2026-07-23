@@ -1,0 +1,16 @@
+venv/
+__pycache__/
+**/__pycache__/
+TESTING/
+.env
+invest/insert.py
+invest/run_and_validate.py
+invest/validate_dynamo.py
+invest/create_tables.py
+invest/diagnostic.py
+invest/checker.py
+invest/xyz.py
+invest/Dockerfile
+invest/routes.py.bak2
+Endpoints/test.py
+Endpoints/test2.py

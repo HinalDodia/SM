@@ -10,19 +10,6 @@ export default defineConfig(({ mode }) => {
     plugins: [react()],
     server: {
       port: 5173,
-      // Dev proxy: any request starting with /api is forwarded to the Flask backend.
-      // Frontend code uses VITE_API_URL directly (no /api prefix) — this is only for
-      // edge cases like PDF opens where window.location is the same origin.
-      proxy: {
-        '/stock-bse-filings': {
-          target: backendUrl,
-          changeOrigin: true,
-        },
-        '/bse-company': {
-          target: backendUrl,
-          changeOrigin: true,
-        },
-      },
     },
     build: {
       outDir: 'dist',

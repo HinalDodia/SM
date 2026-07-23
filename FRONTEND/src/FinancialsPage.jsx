@@ -57,14 +57,28 @@ const FinancialsPage = () => {
 
   const currentBalance = useMemo(() => {
     if (!data) return [];
-    const rows = period === "Annual" ? data.balance_sheet : data.quarterly_balance_sheet;
+    let rows = period === "Annual" ? data.balance_sheet : data.quarterly_balance_sheet;
+    if (period === "Quarterly" && (!Array.isArray(rows) || rows.length === 0)) {
+      rows = data.balance_sheet;
+    }
     return Array.isArray(rows) ? rows : [];
+  }, [data, period]);
+
+  const isQuarterlyBalanceFallback = useMemo(() => {
+    return period === "Quarterly" && (!Array.isArray(data?.quarterly_balance_sheet) || data.quarterly_balance_sheet.length === 0);
   }, [data, period]);
 
   const currentCashflow = useMemo(() => {
     if (!data) return [];
-    const rows = period === "Annual" ? data.cashflow_statement : data.quarterly_cashflow_statement;
+    let rows = period === "Annual" ? data.cashflow_statement : data.quarterly_cashflow_statement;
+    if (period === "Quarterly" && (!Array.isArray(rows) || rows.length === 0)) {
+      rows = data.cashflow_statement;
+    }
     return Array.isArray(rows) ? rows : [];
+  }, [data, period]);
+
+  const isQuarterlyCashflowFallback = useMemo(() => {
+    return period === "Quarterly" && (!Array.isArray(data?.quarterly_cashflow_statement) || data.quarterly_cashflow_statement.length === 0);
   }, [data, period]);
 
   if (loading) return <div className="loading">Loading Financial Data...</div>;
@@ -83,7 +97,7 @@ const FinancialsPage = () => {
     return val.toLocaleString(undefined, { maximumFractionDigits: 2 });
   };
 
-  const FinanceTable = ({ title, statementData, type }) => {
+  const FinanceTable = ({ title, statementData, type, isFallback }) => {
     if (!statementData || statementData.length === 0) return null;
 
     // Identify rows dynamically from the first period object
@@ -95,10 +109,19 @@ const FinancialsPage = () => {
       return key.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
     };
 
+    const displayPeriodLabel = isFallback ? "Annual" : period;
+
     return (
       <div className="table-container animate-in fade-in slide-in-from-bottom duration-500">
         <div className="table-header-box">
-          <h3 className="chart-title-sm">{title} ({period})</h3>
+          <h3 className="chart-title-sm">
+            {title} ({displayPeriodLabel})
+            {isFallback && (
+              <span style={{ fontSize: 11, fontWeight: 500, marginLeft: 8, color: "#fb923c" }}>
+                (Quarterly not reported; showing Annual)
+              </span>
+            )}
+          </h3>
           <button className="action-btn btn-outline" onClick={() => { }}>
             <Download size={14} /> EXPORT
           </button>
@@ -109,7 +132,7 @@ const FinancialsPage = () => {
               <tr>
                 <th>Fiscal Period</th>
                 {statementData.map((d, i) => (
-                  <th key={i}>{d.year || d.quarter}</th>
+                  <th key={i}>{period === "Quarterly" && !isFallback ? (d.quarter || d.year) : (d.year || d.quarter)}</th>
                 ))}
               </tr>
             </thead>
@@ -219,7 +242,10 @@ const FinancialsPage = () => {
             </div>
             <div className="metric-card">
               <div className="m-label">Free Cash Flow</div>
-              <div className="m-value">{currentCashflow[currentCashflow.length - 1]?.free_cash_flow_display || '—'}</div>
+              <div className="m-value">
+                {currentCashflow[currentCashflow.length - 1]?.free_cashflow_display ||
+                 currentCashflow[currentCashflow.length - 1]?.free_cash_flow_display || '—'}
+              </div>
               <div className="m-trend pos"><ShieldCheck size={14} /> Stable</div>
               <div className="m-insight">Strong liquidity</div>
             </div>
@@ -286,8 +312,8 @@ const FinancialsPage = () => {
 
           {/* TABLES */}
           <FinanceTable title="Income Statement" statementData={currentIncome} type="income" />
-          <FinanceTable title="Balance Sheet" statementData={currentBalance} type="balance" />
-          <FinanceTable title="Cash Flow Statement" statementData={currentCashflow} type="cashflow" />
+          <FinanceTable title="Balance Sheet" statementData={currentBalance} type="balance" isFallback={isQuarterlyBalanceFallback} />
+          <FinanceTable title="Cash Flow Statement" statementData={currentCashflow} type="cashflow" isFallback={isQuarterlyCashflowFallback} />
 
           {/* RATIOS GRID */}
           <h2 className="section-title" style={{ marginTop: 60 }}>Valuation &amp; Operating Ratios</h2>

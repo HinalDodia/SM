@@ -18,7 +18,12 @@ export default function Navbar() {
   return (
     <nav className="app-navbar">
       <div className="nav-left">
-        <Link to="/" className="brand">FINWISE</Link>
+        <Link to="/" className="brand">
+          <div className="brand-logo-box">
+            <img src="/LOGO.png" alt="FINWISE" className="brand-logo-img" />
+          </div>
+          <span>FINWISE</span>
+        </Link>
       </div>
 
       <div className="nav-right">

@@ -67,8 +67,15 @@ const SecFilingsPage = () => {
     "Compliance", "General",
   ];
 
+  const defaultFromDate = React.useMemo(() => {
+    const d = new Date();
+    d.setFullYear(d.getFullYear() - 1);
+    return toISODate(d);
+  }, []);
+  const defaultToDate = React.useMemo(() => toISODate(new Date()), []);
+
   // -------------------------------------------------------------------------
-  // Fetch filings whenever filters change
+  // Fetch filings — uses DynamoDB (Primary) unless custom dates are picked
   // -------------------------------------------------------------------------
   useEffect(() => {
     const loadData = async () => {
@@ -76,14 +83,12 @@ const SecFilingsPage = () => {
       setError(null);
 
       try {
-        const params = {
-          // For "Results" category: use results_only=true (strict quarterly filter)
-          // For all other categories: pass category directly for backend filtering
-          category: category === "Results" ? "" : category,
-          from_date: fromDate,
-          to_date: toDate,
-          results_only: category === "Results" ? "true" : "false",
-        };
+        const params = {};
+        // Only pass custom date params if user selected a custom date range
+        if (fromDate !== defaultFromDate || toDate !== defaultToDate) {
+          params.from_date = fromDate;
+          params.to_date = toDate;
+        }
 
         const [company, filings, price] = await Promise.all([
           fetchBseCompany(symbol).catch(() => null),
@@ -101,7 +106,27 @@ const SecFilingsPage = () => {
       }
     };
     loadData();
-  }, [symbol, category, fromDate, toDate]);
+  }, [symbol, fromDate, toDate, defaultFromDate, defaultToDate]);
+
+  // Instant client-side category filter — no 13-second backend re-fetch delay!
+  const filteredFilings = React.useMemo(() => {
+    if (!filingsData || !filingsData.filings) return [];
+    if (!category) return filingsData.filings;
+    const catLow = category.toLowerCase();
+    return filingsData.filings.filter((f) => {
+      if (category === "Results") {
+        return f.is_result || f.quarter || (f.category && f.category.toLowerCase() === "results");
+      }
+      if (category === "Board") {
+        return (
+          (f.category && f.category.toLowerCase() === "board") ||
+          (f.category_raw && f.category_raw.toLowerCase().includes("board")) ||
+          (f.description && f.description.toLowerCase().includes("board"))
+        );
+      }
+      return f.category && f.category.toLowerCase() === catLow;
+    });
+  }, [filingsData, category]);
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -241,7 +266,7 @@ const SecFilingsPage = () => {
             {/* Count */}
             {filingsData && (
               <p style={{ fontSize: 12, color: "#64748b", marginBottom: 12 }}>
-                Showing {filingsData.filings?.length ?? 0} filing(s) from {fromDate} to {toDate}
+                Showing {filteredFilings.length} filing(s) from {fromDate} to {toDate}
                 {category ? ` · ${category}` : ""}
                 {category === "Results" && (
                   <span style={{ marginLeft: 6, color: "#34d399" }}>· Quarterly results only</span>
@@ -261,13 +286,13 @@ const SecFilingsPage = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {(!filingsData || !filingsData.filings || filingsData.filings.length === 0) ? (
+                  {filteredFilings.length === 0 ? (
                     <tr>
                       <td colSpan="4" style={{ textAlign: "center", padding: 24, color: "#64748b" }}>
                         No filings found
                       </td>
                     </tr>
-                  ) : filingsData.filings.map((filing, i) => (
+                  ) : filteredFilings.map((filing, i) => (
                     <tr
                       key={i}
                       style={{

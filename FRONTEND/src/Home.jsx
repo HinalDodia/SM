@@ -10,7 +10,35 @@ function Home() {
     <div className="home-root">
       {/* Hero Section */}
       <header className="home-hero">
-        <h1 className="home-title">FinWise</h1>
+        <h1 className="home-title" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "14px" }}>
+          <div
+            style={{
+              width: "76px",
+              height: "65px",
+              borderRadius: "14px",
+              background: "#ffffff",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              overflow: "hidden",
+              boxShadow: "0 4px 16px rgba(0,0,0,0.3)",
+              flexShrink: 0,
+              padding: "0 6px"
+            }}
+          >
+            <img
+              src="/LOGO.png"
+              alt="FinWise Logo"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "contain",
+                transform: "scale(2) translate(-1px, 4px)"
+              }}
+            />
+          </div>
+          <span>FinWise</span>
+        </h1>
         <p className="home-subtitle">
           Smarter investing starts here — track, learn, and grow your portfolio.
         </p>

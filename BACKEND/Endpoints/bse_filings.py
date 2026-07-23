@@ -1,7 +1,7 @@
 import os
 from flask import Blueprint, request, jsonify, Response, redirect as flask_redirect
 from flask_cors import cross_origin
-import requests, re
+import requests, re, time
 from datetime import datetime, timedelta
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -103,9 +103,10 @@ COMPANY_LIST = load_company_list()
 # ---------------------------------------------------------------------------
 
 _CATEGORY_MAP: list[tuple[list[str], str]] = [
+    (["board meeting", "outcome of board", "board"], "Board"),
     (["financial result", "quarterly result", "half year", "annual result",
       "standalone result", "consolidated result", "unaudited result",
-      "audited result", "board meeting", "outcome of board"], "Results"),
+      "audited result"], "Results"),
     (["dividend", "interim dividend", "final dividend"], "Dividend"),
     (["agm", "annual general", "postal ballot", "egm",
       "extraordinary general"], "AGM"),
@@ -167,23 +168,36 @@ _HARD_EXCLUDE_HEADLINES = [
 ]
 
 
-def is_quarterly_result(raw_category: str, headline: str) -> bool:
-    h = headline.lower().strip()
-    sub = raw_category.lower().strip()
+_RESULT_KEYWORDS = [
+    "result",
+    "results",
+    "financial result",
+    "financial results",
+    "quarterly",
+    "un-audited",
+    "unaudited",
+    "audited",
+    "standalone",
+    "consolidated",
+    "half year",
+    "annual result",
+    "quarter ended",
+]
 
-    # Step 1 — exclude by CATEGORY first (most reliable, BSE's own taxonomy)
+
+def is_quarterly_result(raw_category: str, headline: str) -> bool:
+    h = (headline or "").lower().strip()
+    sub = (raw_category or "").lower().strip()
+
+    # Step 1 — exclude hard non-result items
     if any(kw in sub for kw in _HARD_EXCLUDE_CATEGORIES):
         return False
-
-    # Step 2 — exclude by headline
     if any(kw in h for kw in _HARD_EXCLUDE_HEADLINES):
         return False
 
-    # Step 3 — accept only if it's actually the results document
-    if any(wl in sub for wl in _RESULT_SUBCATEGORY_WHITELIST):
-        return True
-
-    return False
+    # Step 2 — check both subcategory and headline for result keywords
+    combined = f"{sub} {h}"
+    return any(kw in combined for kw in _RESULT_KEYWORDS)
 
 
 # ---------------------------------------------------------------------------
@@ -191,22 +205,27 @@ def is_quarterly_result(raw_category: str, headline: str) -> bool:
 # ---------------------------------------------------------------------------
 
 _QTR_PATTERNS = [
-    (re.compile(r"\bQ([1-4])\b",                        re.I), lambda m: f"Q{m.group(1)}"),
-    (re.compile(r"\b(first|1st)\s+quarter\b",           re.I), lambda m: "Q1"),
-    (re.compile(r"\b(second|2nd)\s+quarter\b",          re.I), lambda m: "Q2"),
-    (re.compile(r"\b(third|3rd)\s+quarter\b",           re.I), lambda m: "Q3"),
-    (re.compile(r"\b(fourth|4th|last)\s+quarter\b",     re.I), lambda m: "Q4"),
-    (re.compile(r"\b(apr|may|jun)\b",                   re.I), lambda m: "Q1"),
-    (re.compile(r"\b(jul|aug|sep)\b",                   re.I), lambda m: "Q2"),
-    (re.compile(r"\b(oct|nov|dec)\b",                   re.I), lambda m: "Q3"),
-    (re.compile(r"\b(jan|feb|mar)\b",                   re.I), lambda m: "Q4"),
+    (re.compile(r"\bQ([1-4])\b", re.I), lambda m: f"Q{m.group(1)}"),
+    (re.compile(r"\b(first|1st)\s+quarter\b", re.I), lambda m: "Q1"),
+    (re.compile(r"\b(second|2nd)\s+quarter\b", re.I), lambda m: "Q2"),
+    (re.compile(r"\b(third|3rd)\s+quarter\b", re.I), lambda m: "Q3"),
+    (re.compile(r"\b(fourth|4th|last)\s+quarter\b", re.I), lambda m: "Q4"),
+    (re.compile(r"ended\s+.*?(june|jun|30-06|30/06|06/30)", re.I), lambda m: "Q1"),
+    (re.compile(r"ended\s+.*?(september|sept|sep|30-09|30/09|09/30)", re.I), lambda m: "Q2"),
+    (re.compile(r"ended\s+.*?(december|dec|31-12|31/12|12/31)", re.I), lambda m: "Q3"),
+    (re.compile(r"ended\s+.*?(march|mar|31-03|31/03|03/31)", re.I), lambda m: "Q4"),
 ]
 
+# Submission month fallback (Indian FY):
+# Jul(7), Aug(8) -> Q1 (ended June)
+# Oct(10), Nov(11) -> Q2 (ended Sept)
+# Jan(1), Feb(2) -> Q3 (ended Dec)
+# Apr(4), May(5) -> Q4 (ended Mar)
 _MONTH_QTR = {
-    1: "Q4", 2: "Q4", 3: "Q4",
-    4: "Q1", 5: "Q1", 6: "Q1",
-    7: "Q2", 8: "Q2", 9: "Q2",
-    10: "Q3", 11: "Q3", 12: "Q3",
+    1: "Q3", 2: "Q3", 3: "Q4",
+    4: "Q4", 5: "Q4", 6: "Q1",
+    7: "Q1", 8: "Q1", 9: "Q2",
+    10: "Q2", 11: "Q2", 12: "Q3",
 }
 
 
@@ -322,17 +341,21 @@ def bse_filings(symbol):
             f"&strType=C"
             f"&subcategory=-1"
         )
-        try:
-            resp = requests.get(url, headers=BSE_HEADERS, timeout=12)
-            resp.raise_for_status()
-            return resp.json().get("Table") or []
-        except Exception:
-            return []
+        for attempt in range(3):
+            try:
+                resp = requests.get(url, headers=BSE_HEADERS, timeout=15)
+                if resp.status_code == 200:
+                    res_json = resp.json()
+                    if isinstance(res_json, dict):
+                        return res_json.get("Table") or []
+            except Exception:
+                time.sleep(0.3)
+        return []
 
     all_rows = []
-    with ThreadPoolExecutor(max_workers=6) as pool:
+    with ThreadPoolExecutor(max_workers=3) as pool:
         futures = [pool.submit(fetch_chunk, s, e) for s, e in chunks]
-        for future in as_completed(futures, timeout=30):
+        for future in as_completed(futures):
             try:
                 all_rows.extend(future.result())
             except Exception:
@@ -363,7 +386,7 @@ def bse_filings(symbol):
         )
 
         is_result = is_quarterly_result(raw_category, headline)
-        quarter   = detect_quarter(headline, date_raw) if is_result else None
+        quarter   = detect_quarter(headline, date_raw) if (is_result or mapped_cat == "Results") else None
 
         filings.append({
             "date":         date_raw,
@@ -395,8 +418,7 @@ def bse_filings(symbol):
         "filings":      filings,
     })
 
-
-@bse_filings_bp.route("/bse-filings/<symbol>/download", methods=["GET"])
+@bse_filings_bp.route("/stock-bse-filings/<symbol>/download", methods=["GET"])
 @cross_origin(supports_credentials=True)
 def download_filing_pdf(symbol):
     attach  = request.args.get("file", "").strip()
@@ -433,9 +455,17 @@ def download_filing_pdf(symbol):
 
             r.raise_for_status()
 
-            content_type = r.headers.get("Content-Type", "")
-            if "pdf" not in content_type.lower():
+            content_type = r.headers.get("Content-Type", "").lower()
+            valid_types = ("pdf", "octet-stream", "binary", "download", "stream")
+            is_valid_type = any(vt in content_type for vt in valid_types) or not content_type
+
+            if not is_valid_type:
                 last_error = f"Non-PDF content '{content_type}' at {url}"
+                continue
+
+            content_bytes = r.content
+            if b"<!doctype" in content_bytes[:512].lower() or b"<html" in content_bytes[:512].lower():
+                last_error = f"HTML error response at {url}"
                 continue
 
             filename = url.split("/")[-1] or "filing.pdf"
@@ -461,7 +491,7 @@ def download_filing_pdf(symbol):
             }
 
             return Response(
-                r.iter_content(chunk_size=8192),
+                content_bytes,
                 status=200,
                 headers=resp_headers,
             )
@@ -469,12 +499,6 @@ def download_filing_pdf(symbol):
         except requests.exceptions.RequestException as e:
             last_error = str(e)
             continue
-
-    if attach:
-        return flask_redirect(
-            f"https://www.bseindia.com/xml-data/corpfiling/AttachLive/{attach}",
-            code=302,
-        )
 
     return Response(
         f"PDF not available. BSE error: {last_error}",

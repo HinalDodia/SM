@@ -886,11 +886,6 @@ def stock_headlines(symbol):
         resp = table.get_item(Key={"SYMBOL#<sym>": f"SYMBOL#{symbol}", "HEADLINES#<date>": "LATEST"})
         item = resp.get("Item")
 
-        if not item:
-            resp = table.get_item(Key={"SYMBOL#<sym>": f"SYMBOL#{symbol}", "HEADLINES#<date>": "LATEST"})
-            item = resp.get("Item")
-            
-
         if item and item.get("data"):
             return jsonify(_from_dynamo(item["data"]))
     except Exception as e:
@@ -904,12 +899,7 @@ def stock_options(symbol):
     try:
         table = get_dynamo().Table("stock-options")
         resp = table.get_item(Key={"SYMBOL#<sym>": f"SYMBOL#{symbol}", "OPTIONS#<date>": "LATEST"})
-        item = resp.get("Item")
-
-        if not item:
-            resp = table.get_item(Key={"SYMBOL#<sym>": f"SYMBOL#{symbol}", "OPTIONS#<date>": "LATEST"})
-            item = resp.get("Item")
-            
+        item = resp.get("Item")  
 
         if item and item.get("data"):
             return jsonify(_from_dynamo(item["data"]))

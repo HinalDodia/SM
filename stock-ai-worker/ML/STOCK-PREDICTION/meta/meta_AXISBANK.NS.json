@@ -1,0 +1,15 @@
+{
+  "ticker": "AXISBANK.NS",
+  "model_accuracy": 97.0,
+  "test_mape": 0.030043,
+  "test_set_size": 380,
+  "epochs_trained": 10,
+  "features": [
+    "Close",
+    "Volume",
+    "SMA_20",
+    "RSI_14",
+    "MACD"
+  ],
+  "trained_at": "2026-08-02T11:12:04.271897+00:00"
+}

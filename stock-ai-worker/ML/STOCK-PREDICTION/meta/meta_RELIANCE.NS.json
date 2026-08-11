@@ -1,0 +1,15 @@
+{
+  "ticker": "RELIANCE.NS",
+  "model_accuracy": 96.75,
+  "test_mape": 0.032529,
+  "test_set_size": 380,
+  "epochs_trained": 6,
+  "features": [
+    "Close",
+    "Volume",
+    "SMA_20",
+    "RSI_14",
+    "MACD"
+  ],
+  "trained_at": "2026-08-02T11:10:24.923973+00:00"
+}

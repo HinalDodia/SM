@@ -17,6 +17,7 @@ import EarningsPage from './EarningsPage.jsx';
 import FinancialsPage from './FinancialsPage.jsx';
 import SecFilingsPage from './SecFilingsPage.jsx';
 import ShortInterest from './ShortInterest.jsx';
+import Markets from './Markets.jsx';
 
 function AppWrapper() {
 
@@ -87,11 +88,16 @@ function AppWrapper() {
         path="/dashboard"
         element={<Dashboard />}
       />
+      <Route
+        path="/dashboard/:userid"
+        element={<Dashboard />}
+      />
 
       <Route path='/learnings' element={
         <Learnings />
       }
       />
+      <Route path='/markets' element={<Markets />} />
       <Route path='/stockprediction' element={
         <StockPrediction />
       }

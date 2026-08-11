@@ -27,6 +27,7 @@ export default function Navbar() {
       </div>
 
       <div className="nav-right">
+        <Link to="/markets" className="nav-link">Markets</Link>
         <Link to="/watchlist" className="nav-link">Watchlist</Link>
         <Link to="/portfolio" className="nav-link">Portfolio</Link>
         <Link to="/learnings" className="nav-link">Learnings</Link>

@@ -288,24 +288,59 @@ const FinancialsPage = () => {
                 <PieChart size={18} color="#94a3b8" />
               </div>
               <div style={{ width: '100%', height: 300 }}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={income_chart}>
-                    <defs>
-                      <linearGradient id="colorInc" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.3} />
-                        <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
-                      </linearGradient>
-                    </defs>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.05)" />
-                    <XAxis dataKey="year" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 11 }} />
-                    <YAxis hide />
-                    <Tooltip
-                      contentStyle={{ backgroundColor: '#0f172a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px' }}
-                    />
-                    <Area type="monotone" dataKey="operating_income" stroke="#8b5cf6" fillOpacity={1} fill="url(#colorInc)" />
-                    <Area type="monotone" dataKey="gross_profit" stroke="#3b82f6" fill="transparent" strokeDasharray="5 5" />
-                  </AreaChart>
-                </ResponsiveContainer>
+                {income_chart && income_chart.length > 0 ? (
+                  <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={income_chart}>
+                      <defs>
+                        <linearGradient id="colorInc" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.3} />
+                          <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
+                        </linearGradient>
+                        <linearGradient id="colorGross" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.15} />
+                          <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.05)" />
+                      <XAxis dataKey="year" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 11 }} />
+                      <YAxis hide />
+                      <Tooltip
+                        contentStyle={{ backgroundColor: '#0f172a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px' }}
+                      />
+                      <Legend iconType="circle" wrapperStyle={{ fontSize: 11, color: '#94a3b8' }} />
+                      <Area
+                        type="monotone"
+                        dataKey="operating_income"
+                        name="Operating Income"
+                        stroke="#8b5cf6"
+                        fillOpacity={1}
+                        fill="url(#colorInc)"
+                        connectNulls={true}
+                      />
+                      <Area
+                        type="monotone"
+                        dataKey="gross_profit"
+                        name="Gross Profit"
+                        stroke="#3b82f6"
+                        fill="url(#colorGross)"
+                        strokeDasharray="5 5"
+                        connectNulls={true}
+                      />
+                      <Area
+                        type="monotone"
+                        dataKey="net_income"
+                        name="Net Income"
+                        stroke="#10b981"
+                        fill="transparent"
+                        connectNulls={true}
+                      />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                ) : (
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#64748b', fontSize: 14 }}>
+                    No profitability data available
+                  </div>
+                )}
               </div>
             </div>
           </div>

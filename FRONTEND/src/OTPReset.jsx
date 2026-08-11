@@ -3,7 +3,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import './forgot.css';
-const API_BASE = 'http://127.0.0.1:5000';
+import { API_URL } from './config';
 
 const OTPReset = () => {
   const [email, setEmail] = useState('');
@@ -20,7 +20,7 @@ const OTPReset = () => {
     }
     try {
       setLoading(true);
-      const res = await axios.post(`${API_BASE}/auth/send-otp`, { email }, {
+      const res = await axios.post(`${API_URL}/auth/send-otp`, { email }, {
         headers: { 'Content-Type': 'application/json' }
       });
       if (res.data?.status === 'success') {
@@ -44,7 +44,7 @@ const OTPReset = () => {
     }
     try {
       setLoading(true);
-      const res = await axios.post(`${API_BASE}/auth/verify-otp`, { email, otp }, {
+      const res = await axios.post(`${API_URL}/auth/verify-otp`, { email, otp }, {
         headers: { 'Content-Type': 'application/json' }
       });
       if (res.data?.status === 'success') {
@@ -68,7 +68,7 @@ const OTPReset = () => {
     }
     try {
       setLoading(true);
-      const res = await axios.post(`${API_BASE}/auth/reset-password`, { email, otp, newPassword }, {
+      const res = await axios.post(`${API_URL}/auth/reset-password`, { email, otp, newPassword }, {
         headers: { 'Content-Type': 'application/json' }
       });
       if (res.data?.status === 'success') {

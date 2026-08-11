@@ -70,6 +70,7 @@ def competitors_page(symbol):
         analysis = sorted([
             {
                 "symbol":       c["symbol"],
+                "name":         c["name"],
                 "marketCap":    competitor_infos[c["symbol"]].get("marketCap"),
                 "pe":           competitor_infos[c["symbol"]].get("trailingPE"),
                 "profitMargin": competitor_infos[c["symbol"]].get("profitMargins"),

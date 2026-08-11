@@ -561,137 +561,56 @@ def stock_meta_route(symbol):
 @routes_bp.route("/predict-stock/<symbol>", methods=["GET", "OPTIONS"])
 @cross_origin(supports_credentials=True)
 def predict_stock(symbol):
+    """
+    Clean proxy to the HF stock-ai-worker's /predict/{symbol} endpoint.
+    No calculation happens here — every field in the response (historical_chart,
+    forecast_chart, technical_indicators, trend_probability, risk_score,
+    ai_signal, model_accuracy, etc.) comes directly from the trained model on HF.
+    """
+    if request.method == "OPTIONS":
+        return jsonify({"status": "ok"}), 200
+
     search_symbol = symbol.upper()
 
     try:
-        # 1. Fetch Data (350 days to ensure 200-Day MA has enough buffer)
-        yf_symbol = get_yf_symbol(search_symbol)
-        df = yf.download(yf_symbol, period="350d", auto_adjust=True, progress=False)
-        if df.empty:
-            return jsonify({"error": "Symbol not found"}), 404
+        hf_res = requests.get(f"{HF_BASE_URL}/predict/{search_symbol}", timeout=120)
+        hf_data = hf_res.json()
 
-        # 2. Extract Close Prices & Handle Multi-column yfinance bug
-        close_series = df['Close']
-        if isinstance(close_series, pd.DataFrame):
-            close_series = close_series.iloc[:, 0]
-        close_values = close_series.values.flatten()
+        if hf_res.status_code != 200 or hf_data.get("error"):
+            return jsonify({
+                "error": hf_data.get("error", "Prediction unavailable"),
+                "status": hf_res.status_code
+            }), hf_res.status_code if hf_res.status_code != 200 else 502
 
-        def _col(name):
-            col = df[name]
-            if isinstance(col, pd.DataFrame):
-                col = col.iloc[:, 0]
-            return col
+        historical = hf_data.get("historical_chart", [])
+        forecast = hf_data.get("forecast_chart", [])
 
-        # 3. Technical Indicators (tail 100 for charts)
-        ma100_series = close_series.rolling(window=100).mean().ffill().bfill().tail(100)
-        ma200_series = close_series.rolling(window=200).mean().ffill().bfill().tail(100)
-        ma100_list = [x if pd.notnull(x) else None for x in ma100_series.tolist()]
-        ma200_list = [x if pd.notnull(x) else None for x in ma200_series.tolist()]
-        actual_list = close_series.tail(100).tolist()
+        hist_dates = [h.get("date") for h in historical]
+        hist_closes = [h.get("close") for h in historical]
+        fore_dates = [f.get("date") for f in forecast]
+        fore_preds = [f.get("predicted_price") for f in forecast]
 
-        # 4. Volume (last 100 days)
-        vol_series = df['Volume']
-        if isinstance(vol_series, pd.DataFrame):
-            vol_series = vol_series.iloc[:, 0]
-        volume_list = [int(v) if pd.notnull(v) else 0 for v in vol_series.tail(100).tolist()]
+        if historical and forecast:
+            dates = hist_dates + fore_dates
+            actual = hist_closes + [None] * len(forecast)
+            predictions = [None] * (len(historical) - 1) + [hist_closes[-1]] + fore_preds
+        else:
+            dates, actual, predictions = [], [], []
 
-        # 5. RSI-14
-        delta = close_series.diff()
-        gain  = delta.clip(lower=0).rolling(14).mean()
-        loss  = (-delta.clip(upper=0)).rolling(14).mean()
-        rs    = gain / loss.replace(0, np.nan)
-        rsi_series = (100 - 100 / (1 + rs))
-        current_rsi = float(rsi_series.iloc[-1]) if pd.notnull(rsi_series.iloc[-1]) else 50.0
-        rsi_list = [round(float(v), 2) if pd.notnull(v) else None for v in rsi_series.tail(100).tolist()]
-
-        # 6. 52-week high / low & day OHLC
-        week52_high = round(float(close_series.max()), 2)
-        week52_low  = round(float(close_series.min()), 2)
-
-        day_open   = round(float(_col('Open').iloc[-1]),  2) if 'Open'  in df.columns else None
-        day_high   = round(float(_col('High').iloc[-1]),  2) if 'High'  in df.columns else None
-        day_low    = round(float(_col('Low').iloc[-1]),   2) if 'Low'   in df.columns else None
-        prev_close = round(float(close_values[-2]), 2) if len(close_values) >= 2 else None
-        change_pct = round(((close_values[-1] - close_values[-2]) / close_values[-2]) * 100, 2) \
-                     if len(close_values) >= 2 else 0.0
-
-        # 7. Support & Resistance (pivot-point method, last 20 days)
-        recent_close = close_series.tail(20).values.flatten()
-        recent_high  = _col('High').tail(20).values.flatten() if 'High' in df.columns else recent_close
-        recent_low   = _col('Low').tail(20).values.flatten()  if 'Low'  in df.columns else recent_close
-        pivot = float(np.nanmean(recent_close))
-        r1 = round(pivot + (float(np.nanmax(recent_high)) - float(np.nanmin(recent_low))) * 0.382, 2)
-        r2 = round(pivot + (float(np.nanmax(recent_high)) - float(np.nanmin(recent_low))) * 0.618, 2)
-        s1 = round(pivot - (float(np.nanmax(recent_high)) - float(np.nanmin(recent_low))) * 0.382, 2)
-        s2 = round(pivot - (float(np.nanmax(recent_high)) - float(np.nanmin(recent_low))) * 0.618, 2)
-        support_resistance = {
-            "pivot": round(pivot, 2),
-            "resistance": [r1, r2],
-            "support":    [s1, s2],
-        }
-
-        # 8. Generate Historical Prediction Offset (visual overlay)
-        historical_predictions = []
-        start_idx = len(close_values) - 100
-        for i in range(start_idx, len(close_values)):
-            variation = (np.sin(i) * 0.015)
-            historical_predictions.append(float(close_values[i] * (1 + variation)))
-
-        # 9. Historical Accuracy — avg % error of historical_predictions vs actual (last 20 days)
-        errors = []
-        for pred, act in zip(historical_predictions[-20:], close_values[-20:]):
-            if act != 0:
-                errors.append(abs((pred - act) / act) * 100)
-        hist_accuracy = round(100 - float(np.mean(errors)), 1) if errors else None
-
-        # 10. Call Hugging Face for LSTM Inference
-        tomorrow_pred = float(close_values[-1])  # Fallback
-        try:
-            hf_res  = requests.get(f"{HF_BASE_URL}/predict/{symbol.upper()}", timeout=120)
-            hf_data = hf_res.json()
-            if hf_res.status_code == 200 and hf_data.get("success"):
-                tomorrow_pred = float(hf_data.get("predicted_price", close_values[-1]))
-            else:
-                print(f"[predict] HF error for {symbol}: {hf_data}")
-        except Exception as hf_err:
-            print(f"[predict] HF connection error for {symbol}: {hf_err}")
-            tomorrow_pred = float(close_values[-1]) * 1.01
-
-        # 11. Confidence Score (0-100)
-        # Factors: RSI distance from neutral, MA alignment, prediction magnitude
-        rsi_score    = max(0, 50 - abs(current_rsi - 50))         # 0-50, max when RSI=50
-        ma_now       = float(np.nanmean(close_values[-5:]))
-        ma_trend     = ma_now - float(np.nanmean(close_values[-20:-5]))
-        ma_score     = min(25, abs(ma_trend) / max(1, ma_now) * 2500)  # 0-25
-        pred_diff    = abs(tomorrow_pred - float(close_values[-1])) / max(1, float(close_values[-1])) * 100
-        mag_score    = max(0, 25 - pred_diff * 5)                  # 0-25, less if huge swing
-        confidence   = round(min(100, rsi_score + ma_score + mag_score), 1)
-
-        # 12. Final Payload
-        return jsonify({
-            "symbol":             symbol.upper(),
-            "dates":              df.tail(100).index.strftime('%Y-%m-%d').tolist() + ["Tomorrow"],
-            "actual":             actual_list + [None],
-            "predictions":        historical_predictions + [tomorrow_pred],
-            "ma100":              ma100_list,
-            "ma200":              ma200_list,
-            "volume":             volume_list,
-            "rsi":                rsi_list,
-            "current_price":      round(float(close_values[-1]), 2),
-            "predicted_price":    round(tomorrow_pred, 2),
-            "verdict":            "Upward" if tomorrow_pred > float(close_values[-1]) else "Downward",
-            "week52_high":        week52_high,
-            "week52_low":         week52_low,
-            "day_open":           day_open,
-            "day_high":           day_high,
-            "day_low":            day_low,
-            "prev_close":         prev_close,
-            "change_pct":         change_pct,
-            "support_resistance": support_resistance,
-            "confidence":         confidence,
-            "hist_accuracy":      hist_accuracy,
+        hf_data.update({
+            "confidence": hf_data.get("confidence_score", 0),
+            "change_pct": hf_data.get("predicted_change_percent", 0),
+            "dates": dates,
+            "actual": actual,
+            "predictions": predictions,
         })
 
+        return jsonify(hf_data), 200
+
+    except requests.exceptions.Timeout:
+        return jsonify({"error": "Model service took too long to respond"}), 504
+    except requests.exceptions.RequestException as e:
+        return jsonify({"error": f"Model service connection error: {str(e)}"}), 502
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

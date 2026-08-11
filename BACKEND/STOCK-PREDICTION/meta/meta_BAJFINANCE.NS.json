@@ -1,0 +1,15 @@
+{
+  "ticker": "BAJFINANCE.NS",
+  "model_accuracy": 95.45,
+  "test_mape": 0.045549,
+  "test_set_size": 380,
+  "epochs_trained": 7,
+  "features": [
+    "Close",
+    "Volume",
+    "SMA_20",
+    "RSI_14",
+    "MACD"
+  ],
+  "trained_at": "2026-08-02T11:12:29.364412+00:00"
+}

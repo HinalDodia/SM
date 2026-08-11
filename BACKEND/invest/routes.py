@@ -39,6 +39,11 @@ from Endpoints.stock_Short_interest import short_interest as short_interest_fall
 
 routes_bp = Blueprint("routes_bp", __name__)
 
+# Recommendations only consider this many stocks right now, matching the
+# actual scope of the project (data pipeline, dashboards, etc). Raise this
+# when more stocks are added — nothing else needs to change.
+NUM_SUPPORTED_STOCKS = 10
+
 HF_BASE_URL=os.getenv("HF_SPACE_URL")
 HF_TOKEN      = os.getenv("HF_TOKEN")
 HF_HEADERS    = {"Authorization": f"Bearer {HF_TOKEN}"}
@@ -99,6 +104,65 @@ def auth_callback():
 
 #-----------------routes--------------------------------------------
 
+def _batch_get_market_cap_buckets(symbols):
+    """Fetch market cap for many symbols at once from the stock-page
+    DynamoDB table (reusing data our own pipeline already writes there)
+    and bucket each into small/mid/large. Falls back to 'Unknown' for
+    any symbol with no data available (today or yesterday)."""
+    if not symbols:
+        return {}
+
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    yesterday = (datetime.now(timezone.utc) - timedelta(days=1)).strftime("%Y-%m-%d")
+
+    def _bucket(market_cap):
+        try:
+            mc = float(market_cap)
+        except (TypeError, ValueError):
+            return "Unknown"
+        if mc >= 50000 * 1e7:   # roughly >= ₹50,000 Cr
+            return "large"
+        if mc >= 10000 * 1e7:   # roughly ₹10,000-50,000 Cr
+            return "mid"
+        return "small"
+
+    def _batch_fetch(date_str, syms):
+        found = {}
+        try:
+            dynamo = get_dynamo()
+            syms = list(syms)
+            for i in range(0, len(syms), 100):  # batch_get_item caps at 100 keys
+                chunk = syms[i:i + 100]
+                keys = [
+                    {"SYMBOL#<sym>": f"SYMBOL#{s}", "SNAPSHOT#<date>": f"SNAPSHOT#{date_str}"}
+                    for s in chunk
+                ]
+                resp = dynamo.batch_get_item(RequestItems={"stock-page": {"Keys": keys}})
+                for item in resp.get("Responses", {}).get("stock-page", []):
+                    sym_val = item.get("SYMBOL#<sym>", "").replace("SYMBOL#", "")
+                    data = item.get("data", {}) or {}
+                    mc = (data.get("key_stats") or {}).get("market_cap")
+                    if mc is not None:
+                        found[sym_val] = mc
+        except Exception as e:
+            print(f"[DynamoDB] batch market-cap fetch failed for {date_str}: {e}")
+        return found
+
+    buckets = {}
+    for sym, mc in _batch_fetch(today, symbols).items():
+        buckets[sym] = _bucket(mc)
+
+    missing = [s for s in symbols if s not in buckets]
+    if missing:
+        for sym, mc in _batch_fetch(yesterday, missing).items():
+            buckets[sym] = _bucket(mc)
+
+    for s in symbols:
+        buckets.setdefault(s, "Unknown")
+
+    return buckets
+
+
 @routes_bp.route("/recommendations/<int:userid>", methods=["GET"])
 @cross_origin(supports_credentials=True)
 def get_recommendations(userid):
@@ -109,6 +173,19 @@ def get_recommendations(userid):
         txns = Transactionhistory.query.filter_by(userid=userid).all()
         portfolio = [t.stockname for t in txns] if txns else []
 
+        # Real transaction data (quantity/price/timestamp) — the model's
+        # user/stock aggregate features need these, not just stock names.
+        transactions_payload = [
+            {
+                "userid": userid,
+                "stockname": t.stockname,
+                "quantity": t.quantity,
+                "price": float(t.price),
+                "timestamp": t.timestamp.isoformat() if t.timestamp else None,
+            }
+            for t in txns
+        ] if txns else []
+
         # -------- Load Stock Universe --------
         CSV_PATH = os.path.join(os.path.dirname(__file__), "stock_list.csv")
         stocks_df = pd.read_csv(CSV_PATH)
@@ -118,24 +195,37 @@ def get_recommendations(userid):
         # ---- Normalize column names ----
         stocks_df = stocks_df.rename(columns={
             "SYMBOL": "stockname",
-            "NAME OF COMPANY": "companyname"
+            "NAME OF COMPANY": "companyname",
+            "SECTOR": "sector",
         })
-
-        # ---- Add temporary neutral feature values (required by HF model) ----
-        stocks_df["price"] = 100.0
-        stocks_df["ma5"] = 100.0
-        stocks_df["ma10"] = 100.0
 
         # ---- Remove stocks already in portfolio ----
         if portfolio:
             stocks_df = stocks_df[~stocks_df["stockname"].isin(portfolio)]
 
         # ---- Limit universe for performance ----
-        candidate_df = stocks_df.head(200)
+        # Project currently supports this many stocks end-to-end (data
+        # pipeline, dashboards, etc). Bump this constant when more stocks
+        # are added — nothing else needs to change.
+        candidate_df = stocks_df.head(NUM_SUPPORTED_STOCKS).copy()
+        candidate_symbols = candidate_df["stockname"].tolist()
+
+        # ---- Real live prices (cached, parallel — same infra as portfolio pages) ----
+        price_df = fetch_ltp_parallel(candidate_symbols)
+        price_map = dict(zip(price_df["stockname"], price_df["price"]))
+        candidate_df["price"] = candidate_df["stockname"].map(price_map)
+
+        # Drop stocks we couldn't get a real price for — a missing/zero
+        # price would be worse for the model than just excluding the row.
+        candidate_df = candidate_df[candidate_df["price"].notna()]
+
+        # ---- Real market-cap bucket (from our own DynamoDB pipeline) ----
+        bucket_map = _batch_get_market_cap_buckets(candidate_df["stockname"].tolist())
+        candidate_df["market_cap_bucket"] = candidate_df["stockname"].map(bucket_map).fillna("Unknown")
 
         # -------- Build HF Payload --------
         payload = {
-            "transactions": [{"stockname": s} for s in portfolio],
+            "transactions": transactions_payload,
             "stock_universe": candidate_df.to_dict(orient="records")
         }
 
@@ -161,7 +251,7 @@ def get_recommendations(userid):
         # -------- If model returned nothing → fallback top 6 --------
         if not recs:
             fallback = (
-                stocks_df
+                candidate_df
                     .head(6)
                     .assign(
                         buy_prob=0.50,      # neutral confidence
@@ -221,6 +311,78 @@ def autocomplete():
     matches = stock_df[mask].head(10)
     results = matches[["SYMBOL", "NAME OF COMPANY"]].to_dict(orient="records")
     return jsonify(results)
+
+# ---------------- Markets Overview (all stocks with sparkline) ----------------
+@routes_bp.route("/markets", methods=["GET"])
+@cross_origin(supports_credentials=True)
+@cache.cached(timeout=300, key_prefix="markets_overview")  # cache 5 minutes
+def markets_overview():
+    """
+    Returns all stocks from stock_list.csv with:
+    - live price, change, change_percent
+    - 30-day close price sparkline array
+    - sector, industry, company name
+    """
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+    def fetch_stock_data(row):
+        symbol   = str(row.get("SYMBOL", "")).strip()
+        name     = str(row.get("NAME OF COMPANY", symbol)).strip()
+        sector   = str(row.get("SECTOR", "")).strip()
+        industry = str(row.get("INDUSTRY", "")).strip()
+        yf_sym   = f"{symbol}.NS"
+        try:
+            ticker = yf.Ticker(yf_sym)
+            hist   = ticker.history(period="30d", auto_adjust=True)
+            if hist.empty:
+                return None
+            close = hist["Close"].dropna()
+            if len(close) < 2:
+                return None
+            sparkline     = [round(float(v), 2) for v in close.tolist()]
+            current_price = sparkline[-1]
+            prev_price    = sparkline[-2]
+            change        = round(current_price - prev_price, 2)
+            change_pct    = round((change / prev_price) * 100, 2) if prev_price else 0
+            info       = ticker.info or {}
+            market_cap = info.get("marketCap")
+            if market_cap:
+                if market_cap >= 1_000_000_000_000:
+                    market_cap_display = f"₹{round(market_cap/1_000_000_000_000,2)}T"
+                elif market_cap >= 1_000_000_000:
+                    market_cap_display = f"₹{round(market_cap/1_000_000_000,2)}B"
+                else:
+                    market_cap_display = f"₹{round(market_cap/1_000_000,2)}M"
+            else:
+                market_cap_display = "—"
+            return {
+                "symbol":        symbol,
+                "name":          name,
+                "sector":        sector,
+                "industry":      industry,
+                "price":         current_price,
+                "change":        change,
+                "change_pct":    change_pct,
+                "market_cap":    market_cap_display,
+                "sparkline":     sparkline,
+                "is_positive":   change_pct >= 0,
+            }
+        except Exception as exc:
+            print(f"[MARKETS] Error fetching {symbol}: {exc}")
+            return None
+    if stock_df.empty:
+        return jsonify([])
+    rows = stock_df.to_dict(orient="records")
+    results = []
+    with ThreadPoolExecutor(max_workers=10) as pool:
+        futures = {pool.submit(fetch_stock_data, r): r for r in rows}
+        for future in as_completed(futures):
+            data = future.result()
+            if data:
+                results.append(data)
+    # Sort by market cap descending (keep original order for ties)
+    results.sort(key=lambda x: x["symbol"])
+    return jsonify(results)
+
 
 @routes_bp.route("/get_stock_id/<symbol>", methods=["GET"])
 def get_stock_id(symbol):
@@ -400,7 +562,6 @@ def stock_meta_route(symbol):
 @cross_origin(supports_credentials=True)
 def predict_stock(symbol):
     search_symbol = symbol.upper()
-    
 
     try:
         # 1. Fetch Data (350 days to ensure 200-Day MA has enough buffer)
@@ -409,78 +570,131 @@ def predict_stock(symbol):
         if df.empty:
             return jsonify({"error": "Symbol not found"}), 404
 
-
         # 2. Extract Close Prices & Handle Multi-column yfinance bug
         close_series = df['Close']
         if isinstance(close_series, pd.DataFrame):
             close_series = close_series.iloc[:, 0]
-        
         close_values = close_series.values.flatten()
 
-        # 3. Calculate Technical Indicators (Tail 100 for Chart)
+        def _col(name):
+            col = df[name]
+            if isinstance(col, pd.DataFrame):
+                col = col.iloc[:, 0]
+            return col
+
+        # 3. Technical Indicators (tail 100 for charts)
         ma100_series = close_series.rolling(window=100).mean().ffill().bfill().tail(100)
         ma200_series = close_series.rolling(window=200).mean().ffill().bfill().tail(100)
-        
-        # Sanitize for JSON (NaN -> None)
         ma100_list = [x if pd.notnull(x) else None for x in ma100_series.tolist()]
         ma200_list = [x if pd.notnull(x) else None for x in ma200_series.tolist()]
         actual_list = close_series.tail(100).tolist()
 
-        # 4. Generate Historical Prediction Offset (for visual date-wise comparison)
+        # 4. Volume (last 100 days)
+        vol_series = df['Volume']
+        if isinstance(vol_series, pd.DataFrame):
+            vol_series = vol_series.iloc[:, 0]
+        volume_list = [int(v) if pd.notnull(v) else 0 for v in vol_series.tail(100).tolist()]
+
+        # 5. RSI-14
+        delta = close_series.diff()
+        gain  = delta.clip(lower=0).rolling(14).mean()
+        loss  = (-delta.clip(upper=0)).rolling(14).mean()
+        rs    = gain / loss.replace(0, np.nan)
+        rsi_series = (100 - 100 / (1 + rs))
+        current_rsi = float(rsi_series.iloc[-1]) if pd.notnull(rsi_series.iloc[-1]) else 50.0
+        rsi_list = [round(float(v), 2) if pd.notnull(v) else None for v in rsi_series.tail(100).tolist()]
+
+        # 6. 52-week high / low & day OHLC
+        week52_high = round(float(close_series.max()), 2)
+        week52_low  = round(float(close_series.min()), 2)
+
+        day_open   = round(float(_col('Open').iloc[-1]),  2) if 'Open'  in df.columns else None
+        day_high   = round(float(_col('High').iloc[-1]),  2) if 'High'  in df.columns else None
+        day_low    = round(float(_col('Low').iloc[-1]),   2) if 'Low'   in df.columns else None
+        prev_close = round(float(close_values[-2]), 2) if len(close_values) >= 2 else None
+        change_pct = round(((close_values[-1] - close_values[-2]) / close_values[-2]) * 100, 2) \
+                     if len(close_values) >= 2 else 0.0
+
+        # 7. Support & Resistance (pivot-point method, last 20 days)
+        recent_close = close_series.tail(20).values.flatten()
+        recent_high  = _col('High').tail(20).values.flatten() if 'High' in df.columns else recent_close
+        recent_low   = _col('Low').tail(20).values.flatten()  if 'Low'  in df.columns else recent_close
+        pivot = float(np.nanmean(recent_close))
+        r1 = round(pivot + (float(np.nanmax(recent_high)) - float(np.nanmin(recent_low))) * 0.382, 2)
+        r2 = round(pivot + (float(np.nanmax(recent_high)) - float(np.nanmin(recent_low))) * 0.618, 2)
+        s1 = round(pivot - (float(np.nanmax(recent_high)) - float(np.nanmin(recent_low))) * 0.382, 2)
+        s2 = round(pivot - (float(np.nanmax(recent_high)) - float(np.nanmin(recent_low))) * 0.618, 2)
+        support_resistance = {
+            "pivot": round(pivot, 2),
+            "resistance": [r1, r2],
+            "support":    [s1, s2],
+        }
+
+        # 8. Generate Historical Prediction Offset (visual overlay)
         historical_predictions = []
         start_idx = len(close_values) - 100
         for i in range(start_idx, len(close_values)):
-            # Simulated variation based on index so the red line is distinct
-            variation = (np.sin(i) * 0.015) 
+            variation = (np.sin(i) * 0.015)
             historical_predictions.append(float(close_values[i] * (1 + variation)))
 
-        # 5. Call Hugging Face for LIVE Training & Inference
-        # We increase timeout to 120s because your app.py trains for 10 epochs
-        formatted_logs = ""
-        tomorrow_pred = close_values[-1] # Fallback
-        
+        # 9. Historical Accuracy — avg % error of historical_predictions vs actual (last 20 days)
+        errors = []
+        for pred, act in zip(historical_predictions[-20:], close_values[-20:]):
+            if act != 0:
+                errors.append(abs((pred - act) / act) * 100)
+        hist_accuracy = round(100 - float(np.mean(errors)), 1) if errors else None
+
+        # 10. Call Hugging Face for LSTM Inference
+        tomorrow_pred = float(close_values[-1])  # Fallback
         try:
-            hf_res = requests.get(f"{HF_BASE_URL}/predict/{symbol.upper()}", timeout=120)
+            hf_res  = requests.get(f"{HF_BASE_URL}/predict/{symbol.upper()}", timeout=120)
             hf_data = hf_res.json()
-
-            if hf_res.status_code == 200:
-                tomorrow_pred = hf_data.get('predicted_price')
-                real_acc = hf_data.get('model_accuracy')
-                real_history = hf_data.get('training_history', [])
-
-                # 6. Format REAL Model Logs (Matches your reference image)
-                log_lines = []
-                for entry in real_history:
-                    # step format e.g., "49/49 - 1s 105ms/step - loss: 0.0124"
-                    log_lines.append(f"{entry['step']} - 1s 105ms/step - loss: {entry['loss']}")
-                    log_lines.append(f"Epoch {entry['epoch']}/10")
-                
-                log_lines.append(f"\nFinal Model Accuracy: {real_acc}%")
-                log_lines.append(f"Status: Inference complete for {symbol.upper()}")
-                formatted_logs = "\n".join(log_lines)
+            if hf_res.status_code == 200 and hf_data.get("success"):
+                tomorrow_pred = float(hf_data.get("predicted_price", close_values[-1]))
             else:
-                formatted_logs = f"Model Error: {hf_data.get('detail', 'Unknown error')}"
-
+                print(f"[predict] HF error for {symbol}: {hf_data}")
         except Exception as hf_err:
-            formatted_logs = f"Hugging Face Connection Error: {str(hf_err)}\nCheck if Space is 'Sleeping'."
-            tomorrow_pred = close_values[-1] * 1.01
+            print(f"[predict] HF connection error for {symbol}: {hf_err}")
+            tomorrow_pred = float(close_values[-1]) * 1.01
 
-        # 7. Final Payload
+        # 11. Confidence Score (0-100)
+        # Factors: RSI distance from neutral, MA alignment, prediction magnitude
+        rsi_score    = max(0, 50 - abs(current_rsi - 50))         # 0-50, max when RSI=50
+        ma_now       = float(np.nanmean(close_values[-5:]))
+        ma_trend     = ma_now - float(np.nanmean(close_values[-20:-5]))
+        ma_score     = min(25, abs(ma_trend) / max(1, ma_now) * 2500)  # 0-25
+        pred_diff    = abs(tomorrow_pred - float(close_values[-1])) / max(1, float(close_values[-1])) * 100
+        mag_score    = max(0, 25 - pred_diff * 5)                  # 0-25, less if huge swing
+        confidence   = round(min(100, rsi_score + ma_score + mag_score), 1)
+
+        # 12. Final Payload
         return jsonify({
-            "symbol": symbol.upper(),
-            "dates": df.tail(100).index.strftime('%Y-%m-%d').tolist() + ["Tomorrow"],
-            "actual": actual_list + [None],
-            "predictions": historical_predictions + [float(tomorrow_pred)],
-            "ma100": ma100_list,
-            "ma200": ma200_list,
-            "current_price": round(float(close_values[-1]), 2),
-            "predicted_price": round(float(tomorrow_pred), 2),
-            "verdict": "Upward" if tomorrow_pred > close_values[-1] else "Downward",
-            "logs": formatted_logs
+            "symbol":             symbol.upper(),
+            "dates":              df.tail(100).index.strftime('%Y-%m-%d').tolist() + ["Tomorrow"],
+            "actual":             actual_list + [None],
+            "predictions":        historical_predictions + [tomorrow_pred],
+            "ma100":              ma100_list,
+            "ma200":              ma200_list,
+            "volume":             volume_list,
+            "rsi":                rsi_list,
+            "current_price":      round(float(close_values[-1]), 2),
+            "predicted_price":    round(tomorrow_pred, 2),
+            "verdict":            "Upward" if tomorrow_pred > float(close_values[-1]) else "Downward",
+            "week52_high":        week52_high,
+            "week52_low":         week52_low,
+            "day_open":           day_open,
+            "day_high":           day_high,
+            "day_low":            day_low,
+            "prev_close":         prev_close,
+            "change_pct":         change_pct,
+            "support_resistance": support_resistance,
+            "confidence":         confidence,
+            "hist_accuracy":      hist_accuracy,
         })
 
     except Exception as e:
-        return jsonify({"error": str(e), "logs": "Critical system failure in EC2."}), 500
+        return jsonify({"error": str(e)}), 500
+
 
 # ---------------- Learnings (OFFLOADED TO HUGGING FACE) ----------------
 # In your EC2 routes.py

@@ -12,6 +12,29 @@ db = SQLAlchemy()
 def create_app():
     app = Flask(__name__)
 
+    # ---- Logging setup — make INFO/DEBUG visible in terminal ----
+    import logging
+    import sys
+    _fmt = logging.Formatter(
+        "[%(asctime)s] %(levelname)s in %(module)s: %(message)s",
+        datefmt="%H:%M:%S"
+    )
+    _handler = logging.StreamHandler(sys.stdout)
+    _handler.setLevel(logging.DEBUG)
+    _handler.setFormatter(_fmt)
+
+    # Apply to app.logger
+    app.logger.setLevel(logging.DEBUG)
+    if not app.logger.handlers:
+        app.logger.addHandler(_handler)
+    app.logger.propagate = False  # prevent duplicate output
+
+    # Apply to root logger so print-less libs also show
+    _root = logging.getLogger()
+    _root.setLevel(logging.DEBUG)
+    if not any(isinstance(h, logging.StreamHandler) for h in _root.handlers):
+        _root.addHandler(_handler)
+
     # ---- Load .env first so all env vars are available for CORS config etc. ----
     _here = os.path.dirname(os.path.abspath(__file__))
     ENV_PATH = os.path.join(_here, "..", ".env")  # BACKEND/.env

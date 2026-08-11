@@ -3,6 +3,9 @@ from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
 import re, random, os
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 from .models import Users, db
 
@@ -15,6 +18,68 @@ EMAIL_RE = re.compile(r"^[^\s@]+@[^\s@]+\.[^\s@]+$")
 def _gen_otp(n: int = 6) -> str:
     return "".join(str(random.randint(0, 9)) for _ in range(n))
 
+
+def _send_otp_email(to_email: str, otp: str) -> bool:
+    """
+    Send OTP via Gmail SMTP using credentials from env vars.
+    Requires MAIL_USER and MAIL_PASSWORD (Gmail App Password) in .env
+    Returns True on success, False on failure.
+    """
+    mail_user = os.getenv("MAIL_USER", "")
+    mail_password = os.getenv("MAIL_PASSWORD", "")
+
+    if not mail_user.strip() or not mail_password.strip():
+        print(f"[EMAIL] MAIL_USER or MAIL_PASSWORD is empty in .env — OTP for {to_email}: {otp}")
+        return False
+
+    try:
+        # Build HTML email
+        msg = MIMEMultipart("alternative")
+        msg["Subject"] = "Your FINWISE5 OTP Code"
+        msg["From"]    = f"FINWISE <{mail_user}>"
+        msg["To"]      = to_email
+
+        html_body = f"""
+        <html>
+          <body style="font-family:Arial,sans-serif;background:#0f172a;color:#e2e8f0;margin:0;padding:0;">
+            <div style="max-width:480px;margin:40px auto;background:#1e293b;border-radius:12px;padding:36px;border:1px solid #334155;">
+              <h2 style="color:#38bdf8;margin-top:0;">🔐 Password Reset OTP</h2>
+              <p style="font-size:15px;color:#94a3b8;">
+                You requested a password reset for your <strong>FINWISE</strong> account.
+                Use the OTP below — it expires in <strong>10 minutes</strong>.
+              </p>
+              <div style="text-align:center;margin:32px 0;">
+                <span style="font-size:42px;font-weight:900;letter-spacing:12px;color:#38bdf8;
+                             background:#0f172a;padding:18px 28px;border-radius:10px;
+                             border:2px dashed #38bdf8;display:inline-block;">
+                  {otp}
+                </span>
+              </div>
+              <p style="font-size:13px;color:#64748b;">
+                If you did not request this, you can safely ignore this email.
+              </p>
+              <hr style="border-color:#334155;margin:24px 0;" />
+              <p style="font-size:12px;color:#475569;margin:0;">FINWISE &mdash; AI-Powered Stock Analysis</p>
+            </div>
+          </body>
+        </html>
+        """
+
+        msg.attach(MIMEText(html_body, "html"))
+
+        with smtplib.SMTP("smtp.gmail.com", 587, timeout=10) as server:
+            server.ehlo()
+            server.starttls()
+            # Strip spaces — Gmail App Passwords work with or without spaces
+            server.login(mail_user.strip(), mail_password.replace(" ", ""))
+            server.sendmail(mail_user.strip(), to_email, msg.as_string())
+
+        print(f"[EMAIL] ✅ OTP email sent successfully to {to_email}")
+        return True
+
+    except Exception as exc:
+        print(f"[EMAIL] ❌ Failed to send OTP to {to_email}: {exc}")
+        return False
 
 
 def require_user(f):
@@ -136,10 +201,18 @@ def send_otp():
     user.otp_ts = datetime.utcnow()
     db.session.commit()
 
-    # In production, send via email provider. For dev, log it.
-    current_app.logger.info(f"[DEV OTP] email={email} otp={otp}")
+    print(f"[OTP] Generated OTP for {email} — attempting email delivery...")
 
-    return jsonify({"status": "success", "message": "OTP sent to email (dev: check server logs)"}), 200
+    # Try sending via email; fallback to console log if SMTP not configured
+    email_sent = _send_otp_email(email, otp)
+
+    if email_sent:
+        print(f"[OTP] ✅ Email delivered to {email}")
+        return jsonify({"status": "success", "message": "OTP sent to your email address"}), 200
+    else:
+        # SMTP not configured — print OTP to console so dev testing still works
+        print(f"[OTP] ⚠️  Email failed. DEV FALLBACK — OTP for {email}: {otp}")
+        return jsonify({"status": "success", "message": "OTP generated (check server console)"}), 200
 
 
 @auth_bp.route("/auth/verify-otp", methods=["POST"])

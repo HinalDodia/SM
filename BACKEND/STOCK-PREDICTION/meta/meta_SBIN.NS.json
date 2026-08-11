@@ -1,0 +1,15 @@
+{
+  "ticker": "SBIN.NS",
+  "model_accuracy": 97.34,
+  "test_mape": 0.026614,
+  "test_set_size": 380,
+  "epochs_trained": 7,
+  "features": [
+    "Close",
+    "Volume",
+    "SMA_20",
+    "RSI_14",
+    "MACD"
+  ],
+  "trained_at": "2026-08-02T11:11:43.065377+00:00"
+}

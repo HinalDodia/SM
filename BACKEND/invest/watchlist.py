@@ -90,53 +90,65 @@ def remove_from_watchlist(userid, stock_id):
 
         db.session.delete(entry)
         db.session.commit()
-        # This returns a Response object
         return jsonify({'message': 'Stock removed from watchlist successfully'}), 200
     except Exception as e:
         db.session.rollback()
         return jsonify({'error': f'Failed to remove stock: {str(e)}'}), 500
 
-    except Exception as e:
-        return jsonify({'error': f'Failed to remove stock: {str(e)}'}), 500
-
 def buy_from_watchlist():
-    data = request.get_json()
+    data = request.get_json() or {}
     user_id = data.get('userid')
     symbol = data.get('symbol')
     quantity = data.get('quantity')
 
-    if not all([user_id, symbol, quantity]):
-        return jsonify({'error': 'Missing data'}), 400
+    # --- Input validation (consistent with portfolio.buy) ---
+    if not user_id or not symbol:
+        return jsonify({'error': 'Missing userid or symbol'}), 400
+    try:
+        quantity = int(quantity)
+    except (TypeError, ValueError):
+        return jsonify({'error': 'quantity must be a positive integer'}), 400
+    if quantity <= 0:
+        return jsonify({'error': 'quantity must be a positive integer'}), 400
 
     try:
-        user = Users.query.get(user_id)
-        if not user:
-            return jsonify({'error': 'User not found'}), 404
-
         clean_symbol = str(symbol).strip().upper()
 
         stock = Stock.query.filter(Stock.stock_symbol.ilike(clean_symbol)).first()
-
         if not stock:
             return jsonify({'error': f'Stock symbol {clean_symbol} not found in database'}), 404
 
-        # NASDAQ ticker
-        ticker = yf.Ticker(clean_symbol.upper()+ ".NS")
-
+        # Fetch live price server-side (consistent with portfolio.buy)
+        ticker = yf.Ticker(clean_symbol + ".NS")
         info = ticker.info or {}
         live_price = info.get("regularMarketPrice") or info.get("previousClose")
 
         if live_price is None:
-            return jsonify({'error': 'Could not fetch live price'}), 500
+            return jsonify({'error': 'Could not fetch live price — please try again later'}), 503
 
         live_price = Decimal(str(live_price))
-        quantity = int(quantity)
         total_cost = live_price * quantity
+
+        # --- Lock Users row before read-modify-write (Fix 4 consistency) ---
+        user = (
+            Users.query
+            .with_for_update()
+            .filter_by(userid=user_id)
+            .first()
+        )
+        if not user:
+            return jsonify({'error': 'User not found'}), 404
 
         if user.money < total_cost:
             return jsonify({'error': 'Insufficient funds'}), 400
 
-        portfolio_entry = Portfolio.query.filter_by(userid=user_id, stock_id=stock.stock_id).first()
+        # --- Lock Portfolio row before read-modify-write (Fix 4 consistency) ---
+        portfolio_entry = (
+            Portfolio.query
+            .with_for_update()
+            .filter_by(userid=user_id, stock_id=stock.stock_id)
+            .first()
+        )
 
         if portfolio_entry:
             prev_total_qty = portfolio_entry.totalquantity or 0
@@ -159,7 +171,6 @@ def buy_from_watchlist():
                 totalinvested=total_cost,
                 averagebuyprice=live_price
             )
-
             db.session.add(portfolio_entry)
             db.session.flush()
 
@@ -173,7 +184,6 @@ def buy_from_watchlist():
             pricepershare=live_price,
             buydate=datetime.utcnow()
         )
-
         db.session.add(fifo)
 
         txn = Transactionhistory(
@@ -186,7 +196,6 @@ def buy_from_watchlist():
             transactiontype="BUY",
             timestamp=datetime.utcnow()
         )
-
         db.session.add(txn)
 
         watch = Watchlist.query.filter_by(user_id=user_id, stock_id=stock.stock_id).first()

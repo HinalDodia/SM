@@ -1,11 +1,12 @@
 from flask import Blueprint, request, jsonify, current_app, g
 from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import re, random, os
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+import jwt as pyjwt
 
 from .models import Users, db
 
@@ -13,6 +14,28 @@ from .models import Users, db
 auth_bp = Blueprint("auth_bp", __name__)
 
 EMAIL_RE = re.compile(r"^[^\s@]+@[^\s@]+\.[^\s@]+$")
+
+_JWT_ALGO = "HS256"
+_JWT_TTL_HOURS = 24
+
+def _secret_key() -> str:
+    """Return the app SECRET_KEY, falling back to the env var."""
+    try:
+        key = current_app.config.get("SECRET_KEY") or os.getenv("SECRET_KEY", "")
+    except RuntimeError:
+        key = os.getenv("SECRET_KEY", "")
+    if not key:
+        raise RuntimeError("SECRET_KEY is not set — cannot issue JWT tokens.")
+    return key
+
+def _issue_jwt(userid: int) -> str:
+    """Sign and return a JWT containing the user's ID and a 24-hour expiry."""
+    payload = {
+        "sub": userid,
+        "exp": datetime.now(timezone.utc) + timedelta(hours=_JWT_TTL_HOURS),
+        "iat": datetime.now(timezone.utc),
+    }
+    return pyjwt.encode(payload, _secret_key(), algorithm=_JWT_ALGO)
 
 
 def _gen_otp(n: int = 6) -> str:
@@ -83,27 +106,37 @@ def _send_otp_email(to_email: str, otp: str) -> bool:
 
 
 def require_user(f):
-    """Decorator: ensures valid token is present before entering a route."""
+    """Decorator: verifies a signed JWT before entering a route.
+    Sets g.current_userid from the verified token payload.
+    """
     @wraps(f)
     def wrapper(*args, **kwargs):
         if request.method == "OPTIONS":
             return "", 200
 
         auth_header = request.headers.get("Authorization", "")
-        if auth_header.startswith("Bearer "):
-            token = auth_header.split(" ")[1]
-            if token.startswith("local_") or token.startswith("dev_"):
-                try:
-                    user_id = int(token.split("_")[1])
-                    user = Users.query.get(user_id)
-                    if user:
-                        g.current_user = user
-                        g.current_userid = user.userid
-                        return f(*args, **kwargs)
-                except Exception:
-                    pass
+        if not auth_header.startswith("Bearer "):
+            return jsonify({"status": "fail", "message": "authentication required"}), 401
 
-        return jsonify({"status": "fail", "message": "authentication required"}), 401
+        token = auth_header.split(" ", 1)[1].strip()
+        try:
+            payload = pyjwt.decode(token, _secret_key(), algorithms=[_JWT_ALGO])
+        except pyjwt.ExpiredSignatureError:
+            return jsonify({"status": "fail", "message": "token expired, please log in again"}), 401
+        except pyjwt.InvalidTokenError:
+            return jsonify({"status": "fail", "message": "invalid token"}), 401
+
+        user_id = payload.get("sub")
+        if not user_id:
+            return jsonify({"status": "fail", "message": "invalid token payload"}), 401
+
+        user = Users.query.get(int(user_id))
+        if not user:
+            return jsonify({"status": "fail", "message": "user not found"}), 401
+
+        g.current_user = user
+        g.current_userid = user.userid
+        return f(*args, **kwargs)
     return wrapper
 
 
@@ -155,6 +188,7 @@ def login():
     return jsonify({
         "status": "success",
         "message": "login successful",
+        "id_token": _issue_jwt(user.userid),
         "user": {"userid": user.userid, "name": user.name, "email": user.email}
     }), 200
 
@@ -181,6 +215,7 @@ def dev_login():
     return jsonify({
         "status": "success",
         "message": "dev login successful",
+        "id_token": _issue_jwt(user.userid),
         "user": {"userid": user.userid, "name": user.name, "email": user.email}
     }), 200
 
@@ -311,6 +346,7 @@ def google_login():
         return jsonify({
             "status": "success",
             "message": "google login successful",
+            "id_token": _issue_jwt(user.userid),
             "user": {"userid": user.userid, "name": user.name, "email": user.email}
         }), 200
     except Exception as e:

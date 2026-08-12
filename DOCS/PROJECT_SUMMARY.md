@@ -23,7 +23,7 @@ SM/
 │   │   ├── auth.py         # Email/password + Google OAuth + OTP auth
 │   │   ├── Agent.py        # ARIA AI agent (AWS Bedrock Nova Micro)
 │   │   ├── System_prompt.py# ARIA system prompt builder
-│   │   ├── portfolio.py    # Portfolio P&L, FIFO lot tracking, sector backfill
+│   │   ├── portfolio.py    # Portfolio P&L, FIFO lot tracking (active), sector backfill
 │   │   ├── watchlist.py    # Watchlist CRUD
 │   │   ├── dashboard.py    # Dashboard data aggregation
 │   │   ├── options_service.py  # Proxy client for the Node.js options microservice
@@ -132,7 +132,7 @@ SM/
 | `watchlist` | User ↔ stock many-to-many |
 | `portfolio` | Aggregated holdings: qty, average buy price, total invested, sector |
 | `transactionhistory` | All buy/sell events |
-| `fifolot` | FIFO lot tracking for accurate cost-basis P&L |
+| `fifolot` | FIFO lot tracking for accurate cost-basis P&L — one row per purchase lot, consumed oldest-first on each sell |
 | `stockhistory` | Historical close prices per user |
 | `useractivity` | Gamification event log |
 | `stockdata` | Raw OHLCV snapshots |
@@ -292,7 +292,7 @@ insert.py (run daily / on-demand)
 ## Current Development State
 
 ### Active / Completed
-- ✅ Full trading simulation (buy, sell, FIFO P&L, wallet)
+- ✅ Full trading simulation (buy, sell, FIFO P&L with lot tracking, wallet)
 - ✅ Real-time stock data via yfinance & NSE/BSE APIs
 - ✅ OHLC candlestick charts with DMA50/200 overlays
 - ✅ Comprehensive stock research pages (financials, earnings, dividends, competitors, options, short interest, SEC/BSE filings)

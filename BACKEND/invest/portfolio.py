@@ -12,6 +12,15 @@ from .models import (
     Useractivity, Stockhistory, Stockdata, Milestones, UserMilestones, db
 )
 
+# --------------- Custom Trade Exceptions ---------------
+class PriceMismatchError(ValueError):
+    """Client-submitted price deviates >1% from the current live price."""
+    pass
+
+class ServiceUnavailableError(Exception):
+    """Live price could not be fetched; trade cannot be safely priced."""
+    pass
+
 # ---------------- LTP Cache ----------------
 LTP_CACHE = {}
 CACHE_TTL = 300  # seconds
@@ -363,16 +372,113 @@ def backfill_sectors(userid: int | None = None) -> dict:
         db.session.rollback()
         return {"updated": 0, "total_checked": 0, "error": str(e)}
 
-# ---------------- Buy / Sell Logic (WITH FIXES) ----------------
+# ---------------- Buy / Sell Logic ----------------
+
+# ---- FIFO lot helpers (Fix 3) ----
+
+def fifo_buy(userid: int, portfolioid: int, companyname: str,
+             qty: int, price_per_share: Decimal, buy_date) -> None:
+    """Create one FIFOLot record for a purchase.
+    Must be called *inside* an open transaction, before commit.
+    """
+    lot = FIFOLot(
+        userid=userid,
+        portfolioid=portfolioid,
+        companyname=companyname,
+        quantityremaining=qty,
+        pricepershare=price_per_share,
+        buydate=buy_date,
+    )
+    db.session.add(lot)
+
+
+def fifo_sell(userid: int, portfolioid: int, qty_to_sell: int) -> Decimal:
+    """Consume FIFOLot rows in chronological (oldest-first) order.
+
+    Reduces `quantityremaining` on each lot until `qty_to_sell` is satisfied.
+    Deletes lots that are fully consumed.
+
+    Returns the total FIFO cost basis of the shares sold
+    (sum of price_per_share * qty_consumed for each lot consumed).
+
+    Raises ValueError if there are not enough lots to cover the sale
+    (should not happen if portfolio.totalquantity is already validated, but
+    acts as a safety net for data inconsistency).
+    """
+    lots = (
+        FIFOLot.query
+        .filter_by(userid=userid, portfolioid=portfolioid)
+        .filter(FIFOLot.quantityremaining > 0)
+        .order_by(FIFOLot.buydate.asc(), FIFOLot.lotid.asc())
+        .with_for_update()
+        .all()
+    )
+
+    remaining_to_sell = qty_to_sell
+    total_cost_basis = Decimal("0")
+
+    for lot in lots:
+        if remaining_to_sell <= 0:
+            break
+
+        take = min(lot.quantityremaining, remaining_to_sell)
+        total_cost_basis += Decimal(str(lot.pricepershare)) * take
+        lot.quantityremaining -= take
+        remaining_to_sell -= take
+
+        if lot.quantityremaining == 0:
+            db.session.delete(lot)
+
+    if remaining_to_sell > 0:
+        raise ValueError(
+            f"FIFO lot shortage: {remaining_to_sell} share(s) of portfolioid "
+            f"{portfolioid} could not be matched to a lot. "
+            "Database may be inconsistent."
+        )
+
+    return total_cost_basis
+
 
 def buy(userid, stockname, qty, price, companyname):
-    user = userfromdb(userid)
+    # --- Fix 4: Input validation ---
+    if not isinstance(qty, int) or qty <= 0:
+        raise ValueError(f"qty must be a positive integer, got: {qty!r}")
+    try:
+        price = float(price)
+    except (TypeError, ValueError):
+        raise ValueError(f"price must be a positive number, got: {price!r}")
+    if price <= 0:
+        raise ValueError(f"price must be positive, got: {price}")
+
+    # --- Fix 4: Lock the Users row for the duration of this transaction ---
+    user = (
+        Users.query
+        .with_for_update()
+        .filter_by(userid=userid)
+        .first()
+    )
     if not user: raise ValueError("User not found")
 
-    total_cost = Decimal(qty) * Decimal(price)
+    # --- Fix 1: Server-side price verification ---
+    live_price, _, _ = _get_live_price_for_symbol(stockname)
+    if live_price is None:
+        raise ServiceUnavailableError(
+            f"Live price unavailable for {stockname}. Trade rejected — please try again later."
+        )
+    client_price = float(price)
+    if live_price != 0 and abs(client_price - live_price) / live_price > 0.01:
+        raise PriceMismatchError("Price mismatch, please refresh and try again")
+
+    total_cost = Decimal(str(qty)) * Decimal(str(price))
     if Decimal(user.money) < total_cost: raise ValueError("Insufficient funds")
 
-    fromdb = get_stock_entry(userid, stockname)
+    # --- Fix 4: Lock the Portfolio row if it exists ---
+    fromdb = (
+        Portfolio.query
+        .with_for_update()
+        .filter_by(userid=userid, stockname=stockname)
+        .first()
+    )
     if fromdb:
         fromdb.totalquantity += qty
         fromdb.totalinvested = Decimal(fromdb.totalinvested or 0) + total_cost
@@ -381,7 +487,7 @@ def buy(userid, stockname, qty, price, companyname):
         if fromdb.sector in [None, "", "Other", "Unknown"]:
             refreshed_sector = get_sector_from_api(stockname)
             if refreshed_sector not in ["Unknown", "Other"]:
-                fromdb.sector = refreshed_sector    
+                fromdb.sector = refreshed_sector
     else:
         stock_sector = get_sector_from_api(stockname)
 
@@ -396,7 +502,7 @@ def buy(userid, stockname, qty, price, companyname):
             companyname=companyname,
             totalquantity=qty,
             totalinvested=total_cost,
-            averagebuyprice=Decimal(price),
+            averagebuyprice=Decimal(str(price)),
             sector=stock_sector or "Unknown"
         )
         db.session.add(new_entry)
@@ -405,9 +511,10 @@ def buy(userid, stockname, qty, price, companyname):
 
     user.money = Decimal(user.money) - total_cost
     db.session.add(user)
-    
-    # Assuming fifo_buy is defined and works as intended
-    # fifo_buy(userid, portfolioid, companyname, qty, Decimal(price), datetime.now())
+
+    # Wire FIFO lot tracking (Fix 3)
+    fifo_buy(userid, portfolioid, companyname, qty, Decimal(str(price)), datetime.now())
+
     db.session.add(Transactionhistory(
         portfolioid=portfolioid, userid=userid, stockname=stockname,
         companyname=companyname, quantity=qty, price=price,
@@ -417,28 +524,59 @@ def buy(userid, stockname, qty, price, companyname):
     return {"status": "ok", "action": "buy", "qty": qty, "stock": stockname}
 
 def sell(userid, stockname, companyname, qty, price):
-    fromdb = get_stock_entry(userid, stockname)
+    # --- Fix 4: Input validation ---
+    if not isinstance(qty, int) or qty <= 0:
+        raise ValueError(f"qty must be a positive integer, got: {qty!r}")
+    try:
+        price = float(price)
+    except (TypeError, ValueError):
+        raise ValueError(f"price must be a positive number, got: {price!r}")
+    if price <= 0:
+        raise ValueError(f"price must be positive, got: {price}")
+
+    # --- Fix 4: Lock the Portfolio row first, then validate quantity ---
+    fromdb = (
+        Portfolio.query
+        .with_for_update()
+        .filter_by(userid=userid, stockname=stockname)
+        .first()
+    )
     if not fromdb or qty > fromdb.totalquantity:
         raise ValueError("Not enough shares to sell")
-    
-    # Assuming fifo_sell is defined and returns the cost of sold shares
-    # fifo_cost = fifo_sell(userid, fromdb.portfolioid, companyname, qty, Decimal(price))
-    # Simplified cost calculation for now
-    fifo_cost = Decimal(fromdb.averagebuyprice) * Decimal(qty)
+
+    # --- Fix 1: Server-side price verification ---
+    live_price, _, _ = _get_live_price_for_symbol(stockname)
+    if live_price is None:
+        raise ServiceUnavailableError(
+            f"Live price unavailable for {stockname}. Trade rejected — please try again later."
+        )
+    client_price = float(price)
+    if live_price != 0 and abs(client_price - live_price) / live_price > 0.01:
+        raise PriceMismatchError("Price mismatch, please refresh and try again")
+
+    # FIFO cost basis for the shares sold (Fix 3)
+    fifo_cost = fifo_sell(userid, fromdb.portfolioid, qty)
 
     fromdb.totalquantity -= qty
     fromdb.totalinvested = Decimal(fromdb.totalinvested or 0) - fifo_cost
-    
+
     if fromdb.totalquantity > 0:
         fromdb.averagebuyprice = fromdb.totalinvested / fromdb.totalquantity
     else:
         fromdb.averagebuyprice = Decimal(0)
         fromdb.totalinvested = Decimal(0)
 
-    user = userfromdb(userid)
-    user.money = Decimal(user.money) + (Decimal(qty) * Decimal(price))
+    # --- Fix 4: Lock the Users row before crediting proceeds ---
+    user = (
+        Users.query
+        .with_for_update()
+        .filter_by(userid=userid)
+        .first()
+    )
+    if not user: raise ValueError("User not found")
+    user.money = Decimal(user.money) + (Decimal(qty) * Decimal(str(price)))
     db.session.add(user)
-    
+
     db.session.add(Transactionhistory(
         portfolioid=fromdb.portfolioid, userid=userid, stockname=stockname,
         companyname=companyname, quantity=qty, price=price,

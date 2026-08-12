@@ -408,6 +408,8 @@ def get_price(symbol):
 @cognito_auth_required
 @cross_origin(supports_credentials=True)
 def get_wallet_route(userid):
+    if g.current_userid != userid:
+        return jsonify({"error": "Forbidden"}), 403
     try:
         user = Users.query.get(userid)
         if not user:
@@ -431,6 +433,8 @@ def add_to_watchlist_route():
 @cognito_auth_required
 @cross_origin(supports_credentials=True)
 def get_watchlist_route(userid):
+    if g.current_userid != userid:
+        return jsonify({"error": "Forbidden"}), 403
     try:
         response = watchlist.get_watchlist(userid)
 
@@ -464,8 +468,9 @@ def get_watchlist_route(userid):
 @cognito_auth_required
 @cross_origin(supports_credentials=True)
 def remove_from_watchlist_route(userid, stock_id):
+    if g.current_userid != userid:
+        return jsonify({"error": "Forbidden"}), 403
     try:
-        # Directly return the response from watchlist.py
         return watchlist.remove_from_watchlist(userid, stock_id)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -474,10 +479,12 @@ def remove_from_watchlist_route(userid, stock_id):
 @cognito_auth_required
 @cross_origin(supports_credentials=True)
 def buy_from_watchlist_route():
+    data = request.get_json() or {}
+    body_userid = data.get("userid")
+    if body_userid is not None and g.current_userid != int(body_userid):
+        return jsonify({"error": "Forbidden"}), 403
     try:
-        # Simply return the result directly. 
-        # watchlist.buy_from_watchlist() already returns a jsonify() response.
-        return watchlist.buy_from_watchlist() 
+        return watchlist.buy_from_watchlist()
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -486,6 +493,8 @@ def buy_from_watchlist_route():
 @cognito_auth_required
 @cross_origin(supports_credentials=True)
 def get_portfolio(userid):
+    if g.current_userid != userid:
+        return jsonify({"error": "Forbidden"}), 403
     try:
         holdings = portfolio_module.gettingfromdb(userid)
 
@@ -508,8 +517,11 @@ def get_portfolio(userid):
 @routes_bp.route("/buy", methods=["POST"])
 @cognito_auth_required
 def buystock():
+    data = request.get_json() or {}
+    body_userid = data.get("userid")
+    if body_userid is not None and g.current_userid != int(body_userid):
+        return jsonify({"error": "Forbidden"}), 403
     try:
-        data = request.get_json() or {}
         result = portfolio_module.buy(
             userid=int(data["userid"]),
             stockname=data["stockname"],
@@ -518,14 +530,21 @@ def buystock():
             companyname=data["companyname"]
         )
         return jsonify(result)
+    except portfolio_module.PriceMismatchError as e:
+        return jsonify({"error": str(e)}), 400
+    except portfolio_module.ServiceUnavailableError as e:
+        return jsonify({"error": str(e)}), 503
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 @routes_bp.route("/sell", methods=["POST"])
 @cognito_auth_required
 def sell_stock():
+    data = request.get_json() or {}
+    body_userid = data.get("userid")
+    if body_userid is not None and g.current_userid != int(body_userid):
+        return jsonify({"error": "Forbidden"}), 403
     try:
-        data = request.get_json() or {}
         result = portfolio_module.sell(
             userid=int(data["userid"]),
             stockname=data["stockname"],
@@ -534,6 +553,10 @@ def sell_stock():
             price=float(data["price"])
         )
         return jsonify(result)
+    except portfolio_module.PriceMismatchError as e:
+        return jsonify({"error": str(e)}), 400
+    except portfolio_module.ServiceUnavailableError as e:
+        return jsonify({"error": str(e)}), 503
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

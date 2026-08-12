@@ -40,7 +40,7 @@ export default function Login() {
         const user = res.data.user;
         setUser(user);
         localStorage.setItem("user", JSON.stringify(user));
-        localStorage.setItem("id_token", `local_${user.userid}`);
+        localStorage.setItem("id_token", res.data.id_token);
         navigate(`/dashboard/${user.userid}`, { replace: true });
       } else {
         toast.error(res.data?.message || "Login failed.");
@@ -66,7 +66,7 @@ export default function Login() {
         const user = res.data.user;
         setUser(user);
         localStorage.setItem("user", JSON.stringify(user));
-        localStorage.setItem("id_token", `dev_${user.userid}`);
+        localStorage.setItem("id_token", res.data.id_token);
         navigate(`/dashboard/${user.userid}`, { replace: true });
       } else {
         toast.error(res.data?.message || "Dev login failed.");

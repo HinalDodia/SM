@@ -22,7 +22,7 @@ const LS_KEY = "sp_prediction_cache_v4";
 const CACHE_TTL = 10 * 60 * 1000; // 10 minutes
 
 function saveCache(data) {
-  try { localStorage.setItem(LS_KEY, JSON.stringify({ ts: Date.now(), data })); } catch {}
+  try { localStorage.setItem(LS_KEY, JSON.stringify({ ts: Date.now(), data })); } catch { }
 }
 function loadCache() {
   try {
@@ -31,7 +31,7 @@ function loadCache() {
     const { ts, data } = JSON.parse(raw);
     if (Date.now() - ts < CACHE_TTL) return data;
     localStorage.removeItem(LS_KEY);
-  } catch {}
+  } catch { }
   return null;
 }
 
@@ -336,7 +336,7 @@ function NewsStrip({ articles }) {
         const source = a.source ?? a.publisher ?? "";
         const label = a.sentiment?.label ?? a.sentiment ?? a.label ?? "";
         const color = label === "bullish" || label === "positive" ? "#26E07F" : label === "bearish" || label === "negative" ? "#ef4444" : "#f59e0b";
-        const text  = label === "bullish" || label === "positive" ? "Bullish" : label === "bearish" || label === "negative" ? "Bearish" : "Neutral";
+        const text = label === "bullish" || label === "positive" ? "Bullish" : label === "bearish" || label === "negative" ? "Bearish" : "Neutral";
         return (
           <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10, padding: "9px 0", borderBottom: i < articles.length - 1 ? "1px solid rgba(148,163,184,0.07)" : "none" }}>
             <div style={{ flex: 1, minWidth: 0 }}>
@@ -429,30 +429,49 @@ export default function StockPrediction() {
   const { user } = useContext(UserContext);
 
   /* ── State ── */
-  const [symbol, setSymbol]         = useState("");
-  const [loading, setLoading]       = useState(false);
-  const [hasResult, setHasResult]   = useState(false);
-  const [error, setError]           = useState("");
-  const [meta, setMeta]             = useState(null);
-  const [news, setNews]             = useState([]);
+  const [symbol, setSymbol] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [hasResult, setHasResult] = useState(false);
+  const [error, setError] = useState("");
+  const [meta, setMeta] = useState(null);
+  const [news, setNews] = useState([]);
   const [competitors, setCompetitors] = useState([]);
   const [watchlistDone, setWatchlistDone] = useState(false);
   const [watchlistLoading, setWatchlistLoading] = useState(false);
-  const [history, setHistory]       = useState([]);
+  const [history, setHistory] = useState([]);
 
   /* Charts Data */
-  const [mainChartData, setMainChartData]   = useState(null);
-  const [bandChartData, setBandChartData]   = useState(null);
-  const [smaChartData, setSmaChartData]     = useState(null);
-  const [macdChartData, setMacdChartData]   = useState(null);
-  const [mcHistData, setMcHistData]         = useState(null);
+  const [mainChartData, setMainChartData] = useState(null);
+  const [bandChartData, setBandChartData] = useState(null);
+  const [smaChartData, setSmaChartData] = useState(null);
+  const [macdChartData, setMacdChartData] = useState(null);
+  const [mcHistData, setMcHistData] = useState(null);
 
   /* ── Process raw API data into Chart.js datasets ── */
   const processRawData = useCallback((data) => {
     if (!data) return;
-    const { dates, actual, predictions, support_resistance, historical_chart, forecast_chart } = data;
+    const { support_resistance, historical_chart, forecast_chart } = data;
 
     const sr = support_resistance;
+
+    /* 1. Main Line Chart (Actual + Predicted) — built from historical_chart
+       (real past closes) + forecast_chart (model's future predictions),
+       since the API no longer sends flat dates/actual/predictions arrays. */
+    const histDates = (historical_chart || []).map(h => h.date);
+    const histCloses = (historical_chart || []).map(h => h.close);
+    const foreDates = (forecast_chart || []).map(f => f.date);
+    const forePreds = (forecast_chart || []).map(f => f.predicted_price);
+
+    const dates = [...histDates, ...foreDates];
+    const actual = [...histCloses, ...Array(foreDates.length).fill(null)];
+    // "predictions" line stays null through the historical range, then
+    // starts at the last real close (so the dashed line visually connects
+    // rather than jumping in from nowhere) and continues through the forecast.
+    const predictions = [
+      ...Array(Math.max(histDates.length - 1, 0)).fill(null),
+      ...(histCloses.length ? [histCloses[histCloses.length - 1]] : []),
+      ...forePreds,
+    ];
 
     /* 1. Main Line Chart (Actual + Predicted) */
     const annotations = {};
@@ -462,9 +481,9 @@ export default function StockPrediction() {
       };
       if (sr.resistance?.[0]) addLine("r1", sr.resistance[0], "#ef4444", "R1");
       if (sr.resistance?.[1]) addLine("r2", sr.resistance[1], "#f9826055", "R2");
-      if (sr.support?.[0])    addLine("s1", sr.support[0],    "#26E07F", "S1");
-      if (sr.support?.[1])    addLine("s2", sr.support[1],    "#26E07F55", "S2");
-      if (sr.pivot)           addLine("pv", sr.pivot,         "#54C5FF",  "Pivot");
+      if (sr.support?.[0]) addLine("s1", sr.support[0], "#26E07F", "S1");
+      if (sr.support?.[1]) addLine("s2", sr.support[1], "#26E07F55", "S2");
+      if (sr.pivot) addLine("pv", sr.pivot, "#54C5FF", "Pivot");
     }
 
     if (dates?.length) {
@@ -472,7 +491,7 @@ export default function StockPrediction() {
         labels: dates,
         datasets: [
           { label: "Predicted Price", data: predictions || [], borderColor: "#ef4444", borderDash: [5, 5], borderWidth: 2, tension: 0.3, spanGaps: true, order: 2, fill: false },
-          { label: "Actual Price",    data: actual || [],      borderColor: "#54C5FF", borderWidth: 2.5,   backgroundColor: "rgba(84,197,255,0.05)", tension: 0.3, spanGaps: false, order: 1, fill: true },
+          { label: "Actual Price", data: actual || [], borderColor: "#54C5FF", borderWidth: 2.5, backgroundColor: "rgba(84,197,255,0.05)", tension: 0.3, spanGaps: false, order: 1, fill: true },
         ],
         _annotations: annotations,
       });
@@ -482,15 +501,15 @@ export default function StockPrediction() {
     if (forecast_chart?.length) {
       const fDates = forecast_chart.map(f => `Day ${f.day} (${(f.date || "").slice(5)})`);
       const fPreds = forecast_chart.map(f => f.predicted_price);
-      const fHigh  = forecast_chart.map(f => f.high);
-      const fLow   = forecast_chart.map(f => f.low);
+      const fHigh = forecast_chart.map(f => f.high);
+      const fLow = forecast_chart.map(f => f.low);
 
       setBandChartData({
         labels: fDates,
         datasets: [
           { label: "Upper 90% Bound", data: fHigh, borderColor: "rgba(124,140,255,0.4)", borderDash: [3, 3], borderWidth: 1.5, fill: "+1", backgroundColor: "rgba(124,140,255,0.1)", tension: 0.3 },
-          { label: "Lower 10% Bound", data: fLow,  borderColor: "rgba(124,140,255,0.4)", borderDash: [3, 3], borderWidth: 1.5, fill: false, tension: 0.3 },
-          { label: "Mean Forecast",   data: fPreds, borderColor: "#7C8CFF", borderWidth: 2.5, tension: 0.3 },
+          { label: "Lower 10% Bound", data: fLow, borderColor: "rgba(124,140,255,0.4)", borderDash: [3, 3], borderWidth: 1.5, fill: false, tension: 0.3 },
+          { label: "Mean Forecast", data: fPreds, borderColor: "#7C8CFF", borderWidth: 2.5, tension: 0.3 },
         ],
       });
 
@@ -530,16 +549,16 @@ export default function StockPrediction() {
 
     /* 6. Price vs SMA20 & 7. MACD Chart */
     if (historical_chart?.length) {
-      const hDates  = historical_chart.map(h => h.date);
+      const hDates = historical_chart.map(h => h.date);
       const hCloses = historical_chart.map(h => h.close);
-      const hSma20  = historical_chart.map(h => h.sma_20);
-      const hMacd   = historical_chart.map(h => h.macd);
+      const hSma20 = historical_chart.map(h => h.sma_20);
+      const hMacd = historical_chart.map(h => h.macd);
 
       setSmaChartData({
         labels: hDates,
         datasets: [
           { label: "Close Price", data: hCloses, borderColor: "#54C5FF", borderWidth: 2, tension: 0.2 },
-          { label: "20-Day SMA",  data: hSma20,  borderColor: "#f59e0b", borderWidth: 1.8, borderDash: [4, 4], tension: 0.2 },
+          { label: "20-Day SMA", data: hSma20, borderColor: "#f59e0b", borderWidth: 1.8, borderDash: [4, 4], tension: 0.2 },
         ],
       });
 
@@ -571,7 +590,7 @@ export default function StockPrediction() {
       setHistory(h ?? []);
       setHasResult(true);
     } else {
-      try { localStorage.removeItem(LS_KEY); } catch {}
+      try { localStorage.removeItem(LS_KEY); } catch { }
     }
   }, [processRawData]);
 
@@ -714,9 +733,9 @@ export default function StockPrediction() {
             {/* ── Row 1: Stat pills ── */}
             <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.42 }}
               style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(175px,1fr))", gap: 11, marginBottom: 18 }}>
-              <StatPill label="Current Price"   value={`₹${meta.current_price?.toLocaleString("en-IN")}`} sub="Last close"         accent="#54C5FF" icon={<IndianRupee size={10} />} />
-              <StatPill label="Predicted Price"  value={`₹${meta.predicted_price?.toLocaleString("en-IN")}`} sub="LSTM next-day"   accent="#7C8CFF" icon={<Target size={10} />} />
-              <StatPill label="Change"           value={`${meta.changeAmt >= 0 ? "+" : ""}${meta.changeAmt}`} sub={`${meta.changePct >= 0 ? "+" : ""}${meta.changePct}% vs prev`} accent={vc} icon={<VI size={10} />} />
+              <StatPill label="Current Price" value={`₹${meta.current_price?.toLocaleString("en-IN")}`} sub="Last close" accent="#54C5FF" icon={<IndianRupee size={10} />} />
+              <StatPill label="Predicted Price" value={`₹${meta.predicted_price?.toLocaleString("en-IN")}`} sub="LSTM next-day" accent="#7C8CFF" icon={<Target size={10} />} />
+              <StatPill label="Change" value={`${meta.changeAmt >= 0 ? "+" : ""}${meta.changeAmt}`} sub={`${meta.changePct >= 0 ? "+" : ""}${meta.changePct}% vs prev`} accent={vc} icon={<VI size={10} />} />
               <div style={{ background: `${vc}0d`, border: `1px solid ${vc}20`, borderRadius: 12, padding: "13px 16px", display: "flex", flexDirection: "column", gap: 3 }}>
                 <div style={{ fontSize: 10, color: "#64748b", textTransform: "uppercase", letterSpacing: 1 }}>Verdict</div>
                 <div style={{ fontSize: 19, fontWeight: 700, color: vc, display: "flex", alignItems: "center", gap: 7 }}><VI size={17} />{meta.verdict}</div>

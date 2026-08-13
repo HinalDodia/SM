@@ -159,6 +159,29 @@ export default function Dashboard() {
     return () => clearInterval(interval);
   }, [uid]);
 
+  const handleFullExport = async () => {
+    try {
+      const token = localStorage.getItem("id_token");
+      const res = await axios.get(`${API_URL}/dashboard/${uid}/export`, {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : "",
+          "X-User-Id": String(uid),
+        },
+        responseType: "blob",
+      });
+      const url = window.URL.createObjectURL(new Blob([res.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `dashboard_export_${uid}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Full export failed:", err);
+    }
+  };
+
   // ----------- AUTH GUARD -----------
   if (!uid) {
     return <LoginPrompt message="Sign in to view your dashboard and analytics." />;
@@ -189,13 +212,7 @@ export default function Dashboard() {
             <FiDownload /> Quick Export
           </button>
 
-          <button
-            className="export-btn"
-            onClick={() => {
-              const token = localStorage.getItem("id_token");
-              window.open(`${API_URL}/dashboard/${uid}/export?token=${token}`);
-            }}
-          >
+          <button className="export-btn" onClick={handleFullExport}>
             <FiDownload /> Full Export
           </button>
         </div>

@@ -121,7 +121,7 @@ def test_sell_price_over_threshold_rejected():
 
 # ── Test 1d: unavailable live price is rejected ───────────────────────────────
 def test_buy_live_price_unavailable_rejected():
-    print("\n[Test 1d] buy() when live price unavailable -- should raise ServiceUnavailableError")
+    print("\n[Test 1d] buy() when live price unavailable or <= 0 -- should raise ServiceUnavailableError")
 
     class FakeUser:
         money = Decimal("99999999")
@@ -132,6 +132,17 @@ def test_buy_live_price_unavailable_rejected():
          patch.object(portfolio_module, "userfromdb", return_value=FakeUser()):
         assert_raises(
             "buy with live_price=None",
+            ServiceUnavailableError,
+            portfolio_module.buy,
+            userid=1, stockname="TEST", qty=1,
+            price=LIVE_PRICE, companyname="Test Co"
+        )
+
+    with patch.object(portfolio_module, "_get_live_price_for_symbol",
+                      return_value=(0.0, 0.0, 0.0)), \
+         patch.object(portfolio_module, "userfromdb", return_value=FakeUser()):
+        assert_raises(
+            "buy with live_price=0.0",
             ServiceUnavailableError,
             portfolio_module.buy,
             userid=1, stockname="TEST", qty=1,

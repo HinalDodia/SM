@@ -461,12 +461,12 @@ def buy(userid, stockname, qty, price, companyname):
 
     # --- Fix 1: Server-side price verification ---
     live_price, _, _ = _get_live_price_for_symbol(stockname)
-    if live_price is None:
+    if live_price is None or live_price <= 0:
         raise ServiceUnavailableError(
             f"Live price unavailable for {stockname}. Trade rejected — please try again later."
         )
     client_price = float(price)
-    if live_price != 0 and abs(client_price - live_price) / live_price > 0.01:
+    if abs(client_price - live_price) / live_price > 0.01:
         raise PriceMismatchError("Price mismatch, please refresh and try again")
 
     total_cost = Decimal(str(qty)) * Decimal(str(price))
@@ -546,12 +546,12 @@ def sell(userid, stockname, companyname, qty, price):
 
     # --- Fix 1: Server-side price verification ---
     live_price, _, _ = _get_live_price_for_symbol(stockname)
-    if live_price is None:
+    if live_price is None or live_price <= 0:
         raise ServiceUnavailableError(
             f"Live price unavailable for {stockname}. Trade rejected — please try again later."
         )
     client_price = float(price)
-    if live_price != 0 and abs(client_price - live_price) / live_price > 0.01:
+    if abs(client_price - live_price) / live_price > 0.01:
         raise PriceMismatchError("Price mismatch, please refresh and try again")
 
     # FIFO cost basis for the shares sold (Fix 3)

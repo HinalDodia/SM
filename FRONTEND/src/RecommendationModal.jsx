@@ -8,10 +8,17 @@ export default function RecommendationModal({ onClose, userId }) {
   useEffect(() => {
     const fetchRecommendations = async () => {
       try {
+        const token = localStorage.getItem("id_token");
         const res = await axios.get(
-  `${API_URL}/recommendations/${userId}`,
-  { withCredentials: true }
-);
+          `${API_URL}/recommendations/${userId}`,
+          {
+            headers: {
+              Authorization: token ? `Bearer ${token}` : "",
+              "X-User-Id": String(userId)
+            },
+            withCredentials: true
+          }
+        );
         setRecommendations(res.data.recommendations || []);
 
       } catch (err) {

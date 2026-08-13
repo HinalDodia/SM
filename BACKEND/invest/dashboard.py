@@ -1,17 +1,15 @@
-
-from flask import Blueprint, jsonify, current_app
-
-dashboard_bp = Blueprint("dashboard", __name__)
-from flask import Blueprint, jsonify, current_app
+from flask import Blueprint, jsonify, current_app, g
 from .portfolio import get_dashboard_data
-from .auth import require_user as cognito_auth_required
+from .auth import require_user as auth_required
 
 # Create a Blueprint for dashboard-related routes
 dashboard_bp = Blueprint("dashboard", __name__)
 
 @dashboard_bp.route("/dashboard/<int:userid>", methods=["GET"])
-@cognito_auth_required
+@auth_required
 def dashboard_route(userid):
+    if g.current_userid != userid:
+        return jsonify({"error": "Forbidden"}), 403
     try:
         data = get_dashboard_data(userid)
         if "error" in data:

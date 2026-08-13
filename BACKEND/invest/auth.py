@@ -114,11 +114,15 @@ def require_user(f):
         if request.method == "OPTIONS":
             return "", 200
 
+        token = None
         auth_header = request.headers.get("Authorization", "")
-        if not auth_header.startswith("Bearer "):
-            return jsonify({"status": "fail", "message": "authentication required"}), 401
+        if auth_header.startswith("Bearer "):
+            token = auth_header.split(" ", 1)[1].strip()
+        else:
+            token = request.args.get("token") or request.args.get("id_token")
 
-        token = auth_header.split(" ", 1)[1].strip()
+        if not token:
+            return jsonify({"status": "fail", "message": "authentication required"}), 401
         try:
             payload = pyjwt.decode(token, _secret_key(), algorithms=[_JWT_ALGO])
         except pyjwt.ExpiredSignatureError:

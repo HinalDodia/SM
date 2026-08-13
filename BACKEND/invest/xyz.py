@@ -16,7 +16,7 @@ from flask import Blueprint, request, jsonify, Response, current_app, g, redirec
 from .models import Users, Stock, Transactionhistory
 from . import watchlist, portfolio as portfolio_module
 from .portfolio import get_dashboard_data, _get_live_price_for_symbol, fetch_ltp_parallel
-from .auth import require_user as cognito_auth_required
+from .auth import require_user as auth_required
 from .options_service import OptionsService
 from .Endpoints.stock_common import get_yf_symbol
 import yfinance as yf
@@ -232,7 +232,7 @@ def get_price(symbol):
 
 # ---------------- Wallet ----------------
 @routes_bp.route("/get_wallet/<int:userid>", methods=["GET"])
-@cognito_auth_required
+@auth_required
 @cross_origin(supports_credentials=True)
 def get_wallet_route(userid):
     try:
@@ -245,7 +245,7 @@ def get_wallet_route(userid):
 
 # ---------------- Watchlist Routes ----------------
 @routes_bp.route("/add_to_watchlist", methods=["POST"])
-@cognito_auth_required
+@auth_required
 @cross_origin(supports_credentials=True)
 def add_to_watchlist_route():
     try:
@@ -255,7 +255,7 @@ def add_to_watchlist_route():
 
 # --- Updated Watchlist Route ---
 @routes_bp.route("/get_watchlist/<int:userid>", methods=["GET"])
-@cognito_auth_required
+@auth_required
 @cross_origin(supports_credentials=True)
 def get_watchlist_route(userid):
     try:
@@ -288,7 +288,7 @@ def get_watchlist_route(userid):
 
 # In routes.py
 @routes_bp.route("/remove_from_watchlist/<int:userid>/<int:stock_id>", methods=["DELETE"])
-@cognito_auth_required
+@auth_required
 @cross_origin(supports_credentials=True)
 def remove_from_watchlist_route(userid, stock_id):
     try:
@@ -298,7 +298,7 @@ def remove_from_watchlist_route(userid, stock_id):
         return jsonify({"error": str(e)}), 500
 
 @routes_bp.route("/buy_from_watchlist", methods=["POST"])
-@cognito_auth_required
+@auth_required
 @cross_origin(supports_credentials=True)
 def buy_from_watchlist_route():
     try:
@@ -310,7 +310,7 @@ def buy_from_watchlist_route():
 
 #--- Updated Portfolio Route ---
 @routes_bp.route("/portfolio/<int:userid>", methods=["GET"])
-@cognito_auth_required
+@auth_required
 @cross_origin(supports_credentials=True)
 def get_portfolio(userid):
     try:
@@ -333,7 +333,7 @@ def get_portfolio(userid):
 
 
 @routes_bp.route("/buy", methods=["POST"])
-@cognito_auth_required
+@auth_required
 def buystock():
     try:
         data = request.get_json() or {}
@@ -349,7 +349,7 @@ def buystock():
         return jsonify({"error": str(e)}), 500
 
 @routes_bp.route("/sell", methods=["POST"])
-@cognito_auth_required
+@auth_required
 def sell_stock():
     try:
         data = request.get_json() or {}

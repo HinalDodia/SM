@@ -40,6 +40,11 @@ def create_app():
     ENV_PATH = os.path.join(_here, "..", ".env")  # BACKEND/.env
     load_dotenv(ENV_PATH)
 
+    secret_key = os.getenv("SECRET_KEY")
+    if not secret_key:
+        raise RuntimeError("SECRET_KEY is missing from environment variables (.env) — cannot start application.")
+    app.config["SECRET_KEY"] = secret_key
+
     @app.route('/favicon.ico')
     def favicon():
         return '', 204

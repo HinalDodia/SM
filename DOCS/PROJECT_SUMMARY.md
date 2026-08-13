@@ -307,7 +307,7 @@ insert.py (run daily / on-demand)
 
 ### Known Configuration Notes
 - **Database:** Currently configured for **local MySQL** (`localhost:3306/investment`). AWS RDS config is preserved but commented out in `__init__.py` — switch by uncommenting the RDS block.
-- **Auth tokens:** Production should use real JWT; dev uses `local_<userid>` / `dev_<userid>` bearer tokens.
+- **Auth tokens:** Uses signed HS256 JWT tokens issued on login, verified by `require_user` decorator.
 - **HuggingFace Space:** May need a wake-up call if the space is sleeping (cold start up to ~60s).
 - **`insert.py`** imports `options_service` as a local (non-package) module — must be run from the `invest/` directory.
 
@@ -320,7 +320,7 @@ insert.py (run daily / on-demand)
 cd BACKEND
 python -m venv venv && venv\Scripts\activate
 pip install -r invest/requirements.txt
-# Ensure .env is populated (DB_HOST, DB_USER, DB_PASSWORD, AWS_*, HF_SPACE_URL, GNEWS_API_KEY, NEWSAPI_KEY)
+# Ensure .env is populated (SECRET_KEY, DB_HOST, DB_USER, DB_PASSWORD, AWS_*, HF_SPACE_URL, GNEWS_API_KEY, NEWSAPI_KEY)
 python run.py          # Flask on http://localhost:5000
 ```
 

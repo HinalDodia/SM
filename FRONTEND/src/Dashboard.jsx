@@ -191,7 +191,10 @@ export default function Dashboard() {
 
           <button
             className="export-btn"
-            onClick={() => window.open(`${API_URL}/dashboard/${uid}/export`)}
+            onClick={() => {
+              const token = localStorage.getItem("id_token");
+              window.open(`${API_URL}/dashboard/${uid}/export?token=${token}`);
+            }}
           >
             <FiDownload /> Full Export
           </button>

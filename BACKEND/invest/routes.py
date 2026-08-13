@@ -6,7 +6,7 @@ from flask import Blueprint, request, jsonify, Response, current_app, g, redirec
 from .models import Users, Stock, Transactionhistory
 from . import watchlist, portfolio as portfolio_module
 from .portfolio import get_dashboard_data, _get_live_price_for_symbol, fetch_ltp_parallel
-from .auth import require_user as cognito_auth_required
+from .auth import require_user as auth_required
 from .options_service import OptionsService
 import yfinance as yf
 from datetime import datetime, timedelta,timezone, date as date_type
@@ -63,14 +63,20 @@ def auth_callback():
     if not code:
         return jsonify({"error": "Missing code"}), 400
 
+    oauth_client_id = os.getenv("OAUTH_CLIENT_ID", "")
+    oauth_client_secret = os.getenv("OAUTH_CLIENT_SECRET", "")
+    oauth_redirect_uri = os.getenv("OAUTH_REDIRECT_URI", "")
+    oauth_token_url = os.getenv("OAUTH_TOKEN_URL", "")
+    oauth_userinfo_url = os.getenv("OAUTH_USERINFO_URL", "")
+
     auth_header = base64.b64encode(
-        f"{COGNITO_CLIENT_ID}:{COGNITO_CLIENT_SECRET}".encode()
+        f"{oauth_client_id}:{oauth_client_secret}".encode()
     ).decode()
 
     data = {
         "grant_type": "authorization_code",
         "code": code,
-        "redirect_uri": COGNITO_REDIRECT_URI
+        "redirect_uri": oauth_redirect_uri
     }
 
     headers = {
@@ -78,7 +84,7 @@ def auth_callback():
         "Authorization": f"Basic {auth_header}"
     }
 
-    token_res = requests.post(COGNITO_TOKEN_URL, data=data, headers=headers)
+    token_res = requests.post(oauth_token_url, data=data, headers=headers)
 
     tokens = token_res.json()
     id_token = tokens.get("id_token")
@@ -88,7 +94,7 @@ def auth_callback():
 
     # Get user profile
     userinfo_res = requests.get(
-        COGNITO_USERINFO_URL,
+        oauth_userinfo_url,
         headers={"Authorization": f"Bearer {tokens['access_token']}"}
     )
 
@@ -164,8 +170,11 @@ def _batch_get_market_cap_buckets(symbols):
 
 
 @routes_bp.route("/recommendations/<int:userid>", methods=["GET"])
+@auth_required
 @cross_origin(supports_credentials=True)
 def get_recommendations(userid):
+    if g.current_userid != userid:
+        return jsonify({"error": "Forbidden"}), 403
     start = time.time()
 
     try:
@@ -405,7 +414,7 @@ def get_price(symbol):
 
 # ---------------- Wallet ----------------
 @routes_bp.route("/get_wallet/<int:userid>", methods=["GET"])
-@cognito_auth_required
+@auth_required
 @cross_origin(supports_credentials=True)
 def get_wallet_route(userid):
     if g.current_userid != userid:
@@ -420,9 +429,13 @@ def get_wallet_route(userid):
 
 # ---------------- Watchlist Routes ----------------
 @routes_bp.route("/add_to_watchlist", methods=["POST"])
-@cognito_auth_required
+@auth_required
 @cross_origin(supports_credentials=True)
 def add_to_watchlist_route():
+    data = request.get_json() or {}
+    body_userid = data.get("userid")
+    if body_userid is not None and g.current_userid != int(body_userid):
+        return jsonify({"error": "Forbidden"}), 403
     try:
         return watchlist.add_to_watchlist() # Direct return, no extra wrapping
     except Exception as e:
@@ -430,7 +443,7 @@ def add_to_watchlist_route():
 
 # --- Updated Watchlist Route ---
 @routes_bp.route("/get_watchlist/<int:userid>", methods=["GET"])
-@cognito_auth_required
+@auth_required
 @cross_origin(supports_credentials=True)
 def get_watchlist_route(userid):
     if g.current_userid != userid:
@@ -465,7 +478,7 @@ def get_watchlist_route(userid):
 
 # In routes.py
 @routes_bp.route("/remove_from_watchlist/<int:userid>/<int:stock_id>", methods=["DELETE"])
-@cognito_auth_required
+@auth_required
 @cross_origin(supports_credentials=True)
 def remove_from_watchlist_route(userid, stock_id):
     if g.current_userid != userid:
@@ -476,7 +489,7 @@ def remove_from_watchlist_route(userid, stock_id):
         return jsonify({"error": str(e)}), 500
 
 @routes_bp.route("/buy_from_watchlist", methods=["POST"])
-@cognito_auth_required
+@auth_required
 @cross_origin(supports_credentials=True)
 def buy_from_watchlist_route():
     data = request.get_json() or {}
@@ -490,7 +503,7 @@ def buy_from_watchlist_route():
 
 #--- Updated Portfolio Route ---
 @routes_bp.route("/portfolio/<int:userid>", methods=["GET"])
-@cognito_auth_required
+@auth_required
 @cross_origin(supports_credentials=True)
 def get_portfolio(userid):
     if g.current_userid != userid:
@@ -515,7 +528,7 @@ def get_portfolio(userid):
 
 
 @routes_bp.route("/buy", methods=["POST"])
-@cognito_auth_required
+@auth_required
 def buystock():
     data = request.get_json() or {}
     body_userid = data.get("userid")
@@ -538,7 +551,7 @@ def buystock():
         return jsonify({"error": str(e)}), 500
 
 @routes_bp.route("/sell", methods=["POST"])
-@cognito_auth_required
+@auth_required
 def sell_stock():
     data = request.get_json() or {}
     body_userid = data.get("userid")
@@ -671,7 +684,10 @@ def get_learnings_news():
 
 # ---------------- Transactions ----------------
 @routes_bp.route("/transactions/<int:userid>", methods=["GET"])
+@auth_required
 def get_transactions(userid):
+    if g.current_userid != userid:
+        return jsonify({"error": "Forbidden"}), 403
     try:
         txns = Transactionhistory.query.filter_by(userid=userid).all()
         if not txns: return jsonify([])
@@ -689,7 +705,10 @@ def get_transactions(userid):
         return jsonify({"error": str(e)}), 500
 
 @routes_bp.route("/dashboard/<int:userid>/export", methods=["GET"])
+@auth_required
 def export_dashboard_csv(userid):
+    if g.current_userid != userid:
+        return jsonify({"error": "Forbidden"}), 403
     data = get_dashboard_data(userid)
     if "error" in data: return jsonify(data), 404
 

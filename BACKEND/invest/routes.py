@@ -1111,6 +1111,17 @@ def stock_short_interest(symbol):
     return short_interest_fallback(symbol)
 
 
+def _sanitize_json(obj):
+    from decimal import Decimal
+    if isinstance(obj, dict):
+        return {k: _sanitize_json(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [_sanitize_json(v) for v in obj]
+    elif isinstance(obj, Decimal):
+        return float(obj)
+    return obj
+
+
 @routes_bp.route("/analyzer/profile/<int:userid>", methods=["GET"])
 @auth_required
 @cross_origin(supports_credentials=True)
@@ -1186,13 +1197,38 @@ def get_analyzer_recommendations(userid):
         "max_per_trade_pct": float(profile_row.max_per_trade_pct),
         "experience_level": profile_row.experience_level,
     }
- 
+
+    today_start = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
+    existing_recs = (
+        db.session.query(Recommendation, Stock.stock_symbol)
+        .join(Stock, Recommendation.stock_id == Stock.stock_id)
+        .filter(Recommendation.userid == userid, Recommendation.created_at >= today_start)
+        .all()
+    )
+    cached_by_symbol = {}
+    for rec, sym in existing_recs:
+        cached_by_symbol[sym] = rec
+
     results = []
     for symbol in TRACKED_SYMBOLS:
+        if symbol in cached_by_symbol:
+            rec = cached_by_symbol[symbol]
+            snapshot = rec.raw_data_snapshot or {}
+            reasons = snapshot.get("reasons") if isinstance(snapshot, dict) else []
+            results.append({
+                "symbol": symbol,
+                "action": rec.action,
+                "score": float(rec.score) if rec.score is not None else 0.0,
+                "suggested_amount": float(rec.suggested_amount) if rec.suggested_amount is not None else 0.0,
+                "reasons": reasons or ["Cached recommendation from today's analysis"],
+                "explanation": rec.explanation,
+            })
+            continue
+
         market = market_data.get_scoring_inputs(symbol)
         result = scoring.score_stock(profile, market)
         amount = scoring.suggested_amount(profile, result.action)
- 
+
         try:
             explanation = explainer.explain(
                 profile, symbol, result.action, result.score, result.reasons
@@ -1201,9 +1237,10 @@ def get_analyzer_recommendations(userid):
             # Claude API not configured / failed — still return the
             # data-grounded recommendation, just without prose explanation.
             explanation = None
- 
+
         stock_row = Stock.query.filter_by(stock_symbol=symbol).first()
         if stock_row:
+            sanitized_snapshot = _sanitize_json({**market, "reasons": result.reasons})
             rec = Recommendation(
                 userid=userid,
                 stock_id=stock_row.stock_id,
@@ -1211,10 +1248,10 @@ def get_analyzer_recommendations(userid):
                 suggested_amount=amount,
                 score=result.score,
                 explanation=explanation,
-                raw_data_snapshot=market,
+                raw_data_snapshot=sanitized_snapshot,
             )
             db.session.add(rec)
- 
+
         results.append({
             "symbol": symbol,
             "action": result.action,
@@ -1226,4 +1263,3 @@ def get_analyzer_recommendations(userid):
  
     db.session.commit()
     return jsonify({"recommendations": results})
- 

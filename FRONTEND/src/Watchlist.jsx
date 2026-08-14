@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback, useContext, useMemo } from "re
 import axios from "axios";
 import "./Watchlist.css";
 import RecommendationModal from "./RecommendationModal";
-import OnboardingModal from "./OnboardingModal";
 import { UserContext } from "./UserContext";
 import { useNavigate, useLocation } from "react-router-dom";
 import { API_URL } from "./config";
@@ -35,9 +34,6 @@ function Watchlist({ userid = 1 }) {
   const [purchasedStock, setPurchasedStock] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [showErrorModal, setShowErrorModal] = useState(false);
-
-  const [recsMap, setRecsMap] = useState({});
-  const [showOnboarding, setShowOnboarding] = useState(false);
 
   // ---------------- fetchers ----------------
   const fetchWallet = useCallback(() => {
@@ -84,35 +80,15 @@ function Watchlist({ userid = 1 }) {
       });
   }, [uid, authConfig]);
 
-  const fetchAiRecommendations = useCallback(async () => {
-    if (!uid) return;
-    try {
-      const res = await axios.get(`${API_URL}/analyzer/recommendations/${uid}`, authConfig);
-      if (res.data && Array.isArray(res.data.recommendations)) {
-        const map = {};
-        res.data.recommendations.forEach((r) => {
-          map[r.symbol] = r;
-        });
-        setRecsMap(map);
-      }
-    } catch (err) {
-      if (err.response?.status === 400 || err.response?.data?.error?.includes("profile")) {
-        setShowOnboarding(true);
-      }
-    }
-  }, [uid, authConfig]);
-
   useEffect(() => {
     if (!uid) {
       setTrackedStocks([]);
       setWallet(0);
-      setRecsMap({});
       return;
     }
     fetchWallet();
     fetchWatchlist();
-    fetchAiRecommendations();
-  }, [uid, fetchWallet, fetchWatchlist, fetchAiRecommendations]);
+  }, [uid, fetchWallet, fetchWatchlist]);
 
   // ---------------- autocomplete ----------------
   useEffect(() => {
@@ -351,19 +327,12 @@ function Watchlist({ userid = 1 }) {
           <span>Stock</span>
           <span>Price</span>
           <span>Change</span>
-          <span>AI Rating &amp; Signal</span>
           <span>Action</span>
         </div>
 
         <div className="wl-table-body">
           {trackedStocks.map((stock) => {
             const up = (stock.change || 0) >= 0;
-            const sym = (stock.symbol || "").toUpperCase();
-            const reco = recsMap[sym];
-            const action = (reco?.action || "").toUpperCase();
-            const score = reco?.score;
-            const isBuy = action === "BUY";
-            const isSell = action === "SELL";
 
             return (
               <div
@@ -403,36 +372,6 @@ function Watchlist({ userid = 1 }) {
                   >
                     {stock.change} ({stock.change_percent}%)
                   </span>
-                </div>
-
-                {/* AI Rating & Signal */}
-                <div className="wl-cell">
-                  {reco ? (
-                    <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-                      <span
-                        style={{
-                          display: "inline-block",
-                          padding: "3px 10px",
-                          borderRadius: 12,
-                          fontSize: 12,
-                          fontWeight: 700,
-                          backgroundColor: isBuy ? "rgba(34, 197, 94, 0.15)" : isSell ? "rgba(239, 68, 68, 0.15)" : "rgba(245, 158, 11, 0.15)",
-                          color: isBuy ? "#4ade80" : isSell ? "#f87171" : "#fbbf24",
-                          border: `1px solid ${isBuy ? "rgba(34, 197, 94, 0.3)" : isSell ? "rgba(239, 68, 68, 0.3)" : "rgba(245, 158, 11, 0.3)"}`,
-                          width: "fit-content",
-                        }}
-                      >
-                        AI: {action} ({score}/10)
-                      </span>
-                      {isBuy && reco.suggested_amount > 0 && (
-                        <span style={{ fontSize: 11, color: "#94a3b8" }}>
-                          Suggested: ₹{Number(reco.suggested_amount).toLocaleString("en-IN")}
-                        </span>
-                      )}
-                    </div>
-                  ) : (
-                    <span style={{ fontSize: 12, color: "#64748b" }}>Analyzing...</span>
-                  )}
                 </div>
 
                 {/* Action */}
@@ -576,13 +515,6 @@ function Watchlist({ userid = 1 }) {
           </div>
         </div>
       )}
-
-      {/* Onboarding / Profile Prompt for New Users */}
-      <OnboardingModal
-        isOpen={showOnboarding}
-        onClose={() => setShowOnboarding(false)}
-        userId={uid}
-      />
     </div>
   );
 }

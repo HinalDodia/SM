@@ -204,32 +204,3 @@ export async function fetchStockChart(symbol, period = "1y", interval = "1d") {
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 }
-
-// ─── Stock Analyzer APIs ──────────────────────────────────────────────────────
-
-export async function fetchAnalyzerProfile(userId) {
-  const res = await fetch(`${API_BASE_URL}/analyzer/profile/${userId}`, {
-    headers: authHeaders()
-  });
-  return res.json();
-}
-
-export async function saveAnalyzerProfile(data) {
-  const res = await fetch(`${API_BASE_URL}/analyzer/profile`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      ...authHeaders()
-    },
-    body: JSON.stringify(data),
-  });
-  return res.json();
-}
-
-export async function fetchRecommendations(userId) {
-  const res = await fetch(`${API_BASE_URL}/analyzer/recommendations/${userId}`, {
-    headers: authHeaders()
-  });
-  return res.json();
-}
-

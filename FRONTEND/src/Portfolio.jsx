@@ -47,10 +47,6 @@ export default function Portfolio({ userid = 1 }) {
   const [showReco, setShowReco] = useState(false);
   // Note: Do NOT early-return before hooks; render login prompt conditionally instead.
 
-  const [recsMap, setRecsMap] = useState({});
-  const [recsLoading, setRecsLoading] = useState(false);
-  const [recsStatus, setRecsStatus] = useState("idle");
-
   // ✅ Correct backend endpoints
   const PORTFOLIO_ENDPOINT = uid ? `${API_URL}/portfolio/${uid}` : null;
   const WALLET_ENDPOINT = uid ? `${API_URL}/get_wallet/${uid}` : null;
@@ -59,7 +55,7 @@ export default function Portfolio({ userid = 1 }) {
     return {
       headers: {
         "X-User-Id": String(uid),
-        "Authorization": `Bearer ${token}`,
+        "Authorization": `Bearer ${token}`, // Added this
         "Content-Type": "application/json"
       }
     };
@@ -84,50 +80,6 @@ export default function Portfolio({ userid = 1 }) {
   useEffect(() => {
     fetchPortfolioAndWallet();
   }, [fetchPortfolioAndWallet]);
-
-  // Separate, independent useEffect for AI recommendations in Portfolio
-  useEffect(() => {
-    if (!uid) {
-      setRecsMap({});
-      setRecsStatus("idle");
-      return;
-    }
-
-    let isMounted = true;
-    setRecsLoading(true);
-    setRecsStatus("loading");
-
-    axios
-      .get(`${API_URL}/analyzer/recommendations/${uid}`, authConfig)
-      .then((res) => {
-        if (!isMounted) return;
-        if (res.data && Array.isArray(res.data.recommendations)) {
-          const map = {};
-          res.data.recommendations.forEach((r) => {
-            map[r.symbol] = r;
-          });
-          setRecsMap(map);
-          setRecsStatus("success");
-        } else {
-          setRecsStatus("error");
-        }
-      })
-      .catch((err) => {
-        if (!isMounted) return;
-        if (err.response?.status === 400 || err.response?.data?.error?.includes("profile")) {
-          setRecsStatus("profile_missing");
-        } else {
-          setRecsStatus("error");
-        }
-      })
-      .finally(() => {
-        if (isMounted) setRecsLoading(false);
-      });
-
-    return () => {
-      isMounted = false;
-    };
-  }, [uid, authConfig]);
 
   const filteredPortfolio = useMemo(() => {
     return (portfolio || []).filter((h) => h.totalquantity > 0);
@@ -328,7 +280,6 @@ export default function Portfolio({ userid = 1 }) {
                   <div>Profit or Loss</div>
                   <div>Percentage</div>
                   <div>Now Value</div>
-                  <div>AI Advice</div>
                   <div>Action</div>
                 </div>
 
@@ -339,13 +290,6 @@ export default function Portfolio({ userid = 1 }) {
                 )}
 
                 {filteredPortfolio.map((holding, idx) => {
-                  const sym = (holding.stockname || "").toUpperCase();
-                  const reco = recsMap[sym];
-                  const rawAction = (reco?.action || "").toUpperCase();
-                  const isBuy = rawAction === "BUY";
-                  const isSell = rawAction === "SELL";
-                  const displayAction = isBuy ? "BUY MORE" : isSell ? "SELL" : "HOLD";
-
                   return (
                     <div
                       key={`${holding.stockname}-${idx}`}
@@ -381,32 +325,6 @@ export default function Portfolio({ userid = 1 }) {
                         {holding.percentage.toFixed(2)}%
                       </div>
                       <div>{formatCurrency(holding.nowvalue)}</div>
-                      <div>
-                        {recsLoading ? (
-                          <span style={{ fontSize: 12, color: "#94a3b8" }}>⚡ Loading AI...</span>
-                        ) : recsStatus === "profile_missing" ? (
-                          <span style={{ fontSize: 11, color: "#f59e0b" }}>Set up profile in Account Settings</span>
-                        ) : recsStatus === "error" ? (
-                          <span style={{ fontSize: 11, color: "#64748b" }}>Unavailable</span>
-                        ) : reco ? (
-                          <span
-                            style={{
-                              display: "inline-block",
-                              padding: "3px 10px",
-                              borderRadius: 12,
-                              fontSize: 12,
-                              fontWeight: 700,
-                              backgroundColor: isBuy ? "rgba(34, 197, 94, 0.15)" : isSell ? "rgba(239, 68, 68, 0.15)" : "rgba(245, 158, 11, 0.15)",
-                              color: isBuy ? "#4ade80" : isSell ? "#f87171" : "#fbbf24",
-                              border: `1px solid ${isBuy ? "rgba(34, 197, 94, 0.3)" : isSell ? "rgba(239, 68, 68, 0.3)" : "rgba(245, 158, 11, 0.3)"}`,
-                            }}
-                          >
-                            {displayAction}
-                          </span>
-                        ) : (
-                          <span style={{ fontSize: 11, color: "#64748b" }}>No Advice</span>
-                        )}
-                      </div>
                       <div className="row-actions">
                         <button
                           onClick={() => openModal("buy", holding)}

@@ -7,22 +7,9 @@ consumer of data you already collect.
 Reused from insert.py: get_dynamo(), TABLES dict, AWS_REGION/boto3 setup.
 """
 
-import os
-import boto3
-
-_dynamo = None
-
-def get_dynamo():
-    global _dynamo
-    if _dynamo is None:
-        _dynamo = boto3.resource("dynamodb", region_name=os.getenv("AWS_REGION", "ap-south-1"))
-    return _dynamo
-
-TABLES = {
-    "stock-page": "stock-page",
-    "stock-chart": "stock-chart",
-    "stock-financials": "stock-financials",
-}
+from .insert import get_dynamo, TABLES  # adjust import path to wherever
+                                          # insert.py actually lives relative
+                                          # to this new module
 
 
 def _get_latest_price(symbol: str) -> float | None:
@@ -45,12 +32,13 @@ def _get_ratios(symbol: str) -> dict:
     ratios = data.get("ratios", {})
 
     # revenue_growth lives per-year inside income_statement, not in `ratios`.
-    # income_statement is ordered chronologically (oldest first, latest last).
-    # Therefore, income_statement[-1] is the most recent year.
+    # ASSUMPTION: income_statement[0] is the most recent year — verify this
+    # against how financials_page() actually orders the list before relying
+    # on it for scoring.
     revenue_growth = None
     income_statement = data.get("income_statement") or []
     if income_statement:
-        revenue_growth = income_statement[-1].get("revenue_growth")
+        revenue_growth = income_statement[0].get("revenue_growth")
 
     return {
         "pe_ratio": ratios.get("pe_ratio"),

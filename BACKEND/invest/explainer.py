@@ -13,20 +13,13 @@ Setup needed (not yet done anywhere in this repo):
 """
 
 import os
-try:
-    from anthropic import Anthropic
-except ImportError:
-    Anthropic = None
+from anthropic import Anthropic
 
 _client = None
 
 
-def _get_client():
+def _get_client() -> Anthropic:
     global _client
-    if Anthropic is None:
-        raise RuntimeError(
-            "anthropic package is not installed. Please run `pip install anthropic`."
-        )
     if _client is None:
         api_key = os.getenv("ANTHROPIC_API_KEY")
         if not api_key:
@@ -72,7 +65,9 @@ def explain(profile: dict, symbol: str, action: str, score: float, reasons: list
 
     client = _get_client()
     response = client.messages.create(
-        model="claude-3-5-sonnet-20241022",
+        # claude-sonnet-5 as of writing — check docs.claude.com for the
+        # current recommended model ID before deploying, this changes over time
+        model="claude-sonnet-5",
         max_tokens=300,
         system=_SYSTEM_PROMPT,
         messages=[{"role": "user", "content": user_message}],

@@ -35,10 +35,6 @@ function Watchlist({ userid = 1 }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [showErrorModal, setShowErrorModal] = useState(false);
 
-  const [recsMap, setRecsMap] = useState({});
-  const [recsLoading, setRecsLoading] = useState(false);
-  const [recsStatus, setRecsStatus] = useState("idle");
-
   // ---------------- fetchers ----------------
   const fetchWallet = useCallback(() => {
     if (!uid) return;
@@ -76,6 +72,9 @@ function Watchlist({ userid = 1 }) {
           change_percent: it.change_percent ?? 0,
         }));
 
+        console.log("WATCHLIST RAW:", data);
+        console.log("WATCHLIST NORMALIZED:", normalized);
+
         setTrackedStocks(normalized);
       })
       .catch((err) => {
@@ -93,50 +92,6 @@ function Watchlist({ userid = 1 }) {
     fetchWallet();
     fetchWatchlist();
   }, [uid, fetchWallet, fetchWatchlist]);
-
-  // Separate, independent useEffect for AI recommendations
-  useEffect(() => {
-    if (!uid) {
-      setRecsMap({});
-      setRecsStatus("idle");
-      return;
-    }
-
-    let isMounted = true;
-    setRecsLoading(true);
-    setRecsStatus("loading");
-
-    axios
-      .get(`${API_URL}/analyzer/recommendations/${uid}`, authConfig)
-      .then((res) => {
-        if (!isMounted) return;
-        if (res.data && Array.isArray(res.data.recommendations)) {
-          const map = {};
-          res.data.recommendations.forEach((r) => {
-            map[r.symbol] = r;
-          });
-          setRecsMap(map);
-          setRecsStatus("success");
-        } else {
-          setRecsStatus("error");
-        }
-      })
-      .catch((err) => {
-        if (!isMounted) return;
-        if (err.response?.status === 400 || err.response?.data?.error?.includes("profile")) {
-          setRecsStatus("profile_missing");
-        } else {
-          setRecsStatus("error");
-        }
-      })
-      .finally(() => {
-        if (isMounted) setRecsLoading(false);
-      });
-
-    return () => {
-      isMounted = false;
-    };
-  }, [uid, authConfig]);
 
   // ---------------- autocomplete ----------------
   useEffect(() => {
@@ -375,20 +330,12 @@ function Watchlist({ userid = 1 }) {
           <span>Stock</span>
           <span>Price</span>
           <span>Change</span>
-          <span>AI Rating &amp; Signal</span>
           <span>Action</span>
         </div>
 
         <div className="wl-table-body">
           {trackedStocks.map((stock) => {
             const up = (stock.change || 0) >= 0;
-            const sym = (stock.symbol || "").toUpperCase();
-            const reco = recsMap[sym];
-            const action = (reco?.action || "").toUpperCase();
-            const score = reco?.score;
-            const isBuy = action === "BUY";
-            const isSell = action === "SELL";
-
             return (
               <div
                 key={stock.stock_id || stock.symbol}
@@ -417,6 +364,9 @@ function Watchlist({ userid = 1 }) {
                   </div>
                 </div>
 
+
+
+
                 {/* Price */}
                 <div className="wl-cell price">₹{stock.price}</div>
 
@@ -427,42 +377,6 @@ function Watchlist({ userid = 1 }) {
                   >
                     {stock.change} ({stock.change_percent}%)
                   </span>
-                </div>
-
-                {/* AI Rating & Signal */}
-                <div className="wl-cell">
-                  {recsLoading ? (
-                    <span style={{ fontSize: 12, color: "#94a3b8" }}>⚡ Loading AI...</span>
-                  ) : recsStatus === "profile_missing" ? (
-                    <span style={{ fontSize: 11, color: "#f59e0b" }}>Set up profile in Account Settings</span>
-                  ) : recsStatus === "error" ? (
-                    <span style={{ fontSize: 11, color: "#64748b" }}>Unavailable</span>
-                  ) : reco ? (
-                    <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-                      <span
-                        style={{
-                          display: "inline-block",
-                          padding: "3px 10px",
-                          borderRadius: 12,
-                          fontSize: 12,
-                          fontWeight: 700,
-                          backgroundColor: isBuy ? "rgba(34, 197, 94, 0.15)" : isSell ? "rgba(239, 68, 68, 0.15)" : "rgba(245, 158, 11, 0.15)",
-                          color: isBuy ? "#4ade80" : isSell ? "#f87171" : "#fbbf24",
-                          border: `1px solid ${isBuy ? "rgba(34, 197, 94, 0.3)" : isSell ? "rgba(239, 68, 68, 0.3)" : "rgba(245, 158, 11, 0.3)"}`,
-                          width: "fit-content",
-                        }}
-                      >
-                        AI: {action} ({score}/10)
-                      </span>
-                      {isBuy && reco.suggested_amount > 0 && (
-                        <span style={{ fontSize: 11, color: "#94a3b8" }}>
-                          Suggested: ₹{Number(reco.suggested_amount).toLocaleString("en-IN")}
-                        </span>
-                      )}
-                    </div>
-                  ) : (
-                    <span style={{ fontSize: 11, color: "#64748b" }}>No Signal</span>
-                  )}
                 </div>
 
                 {/* Action */}

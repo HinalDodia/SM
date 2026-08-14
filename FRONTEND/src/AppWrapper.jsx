@@ -18,52 +18,8 @@ import FinancialsPage from './FinancialsPage.jsx';
 import SecFilingsPage from './SecFilingsPage.jsx';
 import ShortInterest from './ShortInterest.jsx';
 import Markets from './Markets.jsx';
-import AnalyzerProfile from './AnalyzerProfile.jsx';
-import AnalyzerRecommendations from './AnalyzerRecommendations.jsx';
-
-import { useContext } from 'react';
-import { UserContext } from './UserContext';
-import { fetchAnalyzerProfile } from './api';
-import OnboardingModal from './OnboardingModal';
-
-import AppTour from './AppTour';
 
 function AppWrapper() {
-  const { user } = useContext(UserContext) || {};
-  const [showOnboarding, setShowOnboarding] = useState(false);
-  const [runTour, setRunTour] = useState(false);
-
-  useEffect(() => {
-    const uid = user?.userid;
-    if (!uid) {
-      setShowOnboarding(false);
-      return;
-    }
-
-    const sessionKey = `profile_checked_${uid}`;
-    if (sessionStorage.getItem(sessionKey)) return;
-
-    async function checkProfile() {
-      try {
-        const data = await fetchAnalyzerProfile(uid);
-        if (data && data.error && data.error.toLowerCase().includes("profile")) {
-          setShowOnboarding(true);
-        } else {
-          sessionStorage.setItem(sessionKey, "true");
-        }
-      } catch (err) {
-        console.error("Profile check error:", err);
-      }
-    }
-    checkProfile();
-  }, [user]);
-
-  const handleProfileSaved = () => {
-    if (user?.userid) {
-      sessionStorage.setItem(`profile_checked_${user.userid}`, "true");
-    }
-    setRunTour(true);
-  };
 
   const [portfolio, setPortfolio] = useState(() => {
     const saved = localStorage.getItem('portfolio');
@@ -105,7 +61,6 @@ function AppWrapper() {
   }, [watchlist]);
 
   return (
-    <>
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/Log" element={<Log />} />
@@ -161,24 +116,7 @@ function AppWrapper() {
       <Route path="/stock-bse-filings/:symbol" element={<SecFilingsPage />} />
       <Route path="/stock-short-interest/:symbol" element={<StockDetailPage tab="shortinterest" />} />
 
-      <Route path="/analyzer/profile" element={<AnalyzerProfile />} />
-      <Route path="/analyzer/recommendations" element={<AnalyzerRecommendations />} />
-
     </Routes>
-
-    <OnboardingModal
-      isOpen={showOnboarding}
-      onClose={() => setShowOnboarding(false)}
-      userId={user?.userid}
-      onProfileSaved={handleProfileSaved}
-    />
-
-    <AppTour
-      run={runTour}
-      userId={user?.userid}
-      onFinish={() => setRunTour(false)}
-    />
-    </>
   );
 }
 

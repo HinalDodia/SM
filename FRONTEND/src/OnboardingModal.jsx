@@ -3,7 +3,7 @@ import { fetchAnalyzerProfile, saveAnalyzerProfile } from "./api";
 import { toast } from "react-toastify";
 import { Sparkles, Shield, Target, TrendingUp, CheckCircle, ArrowRight } from "lucide-react";
 
-export default function OnboardingModal({ isOpen, onClose, userId }) {
+export default function OnboardingModal({ isOpen, onClose, userId, onProfileSaved }) {
   const [step, setStep] = useState(1); // 1: Profile Setup, 2: Guided Tour
   const [formData, setFormData] = useState({
     risk_tolerance: "moderate",
@@ -44,6 +44,7 @@ export default function OnboardingModal({ isOpen, onClose, userId }) {
 
       if (res && !res.error) {
         toast.success("Profile configured!");
+        if (typeof onProfileSaved === "function") onProfileSaved();
         setStep(2); // Proceed to Guided Tour
       } else {
         toast.error(res?.error || "Failed to save profile.");
@@ -195,23 +196,41 @@ export default function OnboardingModal({ isOpen, onClose, userId }) {
                 />
               </div>
 
-              <button
-                type="submit"
-                disabled={submitting}
-                className="btn-primary"
-                style={{
-                  width: "100%",
-                  padding: "12px",
-                  fontSize: 15,
-                  fontWeight: 700,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 8,
-                }}
-              >
-                {submitting ? "Saving..." : <>Save Profile &amp; Take Quick Tour <ArrowRight size={18} /></>}
-              </button>
+              <div style={{ display: "flex", gap: 12 }}>
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="btn-primary"
+                  style={{
+                    flex: 1,
+                    padding: "12px",
+                    fontSize: 15,
+                    fontWeight: 700,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 8,
+                  }}
+                >
+                  {submitting ? "Saving..." : <>Save Profile &amp; Take Tour <ArrowRight size={18} /></>}
+                </button>
+                <button
+                  type="button"
+                  onClick={onClose}
+                  style={{
+                    padding: "12px 18px",
+                    fontSize: 14,
+                    fontWeight: 600,
+                    borderRadius: 8,
+                    backgroundColor: "transparent",
+                    color: "#94a3b8",
+                    border: "1px solid #334155",
+                    cursor: "pointer",
+                  }}
+                >
+                  Skip for now
+                </button>
+              </div>
             </form>
           </div>
         ) : (

@@ -1,0 +1,268 @@
+/* OnboardingModal.css — 3-step onboarding wizard */
+
+.ob-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(6px);
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.ob-modal {
+  background: linear-gradient(145deg, #0d1521, #0b1018);
+  border: 1px solid rgba(84, 197, 255, 0.18);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 520px;
+  padding: 36px 36px 28px;
+  box-shadow: 0 20px 80px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(84, 197, 255, 0.06);
+  animation: ob-pop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes ob-pop {
+  from { transform: scale(0.92); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+/* ── Step progress bar ── */
+.ob-progress {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 28px;
+}
+
+.ob-step-dot {
+  flex: 1;
+  height: 3px;
+  border-radius: 99px;
+  background: rgba(84, 197, 255, 0.15);
+  transition: background 0.35s ease;
+}
+
+.ob-step-dot.active {
+  background: #54c5ff;
+}
+
+/* ── Header ── */
+.ob-header {
+  margin-bottom: 24px;
+}
+
+.ob-eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: #54c5ff;
+  margin-bottom: 6px;
+}
+
+.ob-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #e2e8f0;
+  margin: 0 0 4px;
+  letter-spacing: -0.4px;
+}
+
+.ob-subtitle {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+}
+
+/* ── Form elements ── */
+.ob-field {
+  margin-bottom: 18px;
+}
+
+.ob-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #94a3b8;
+  margin-bottom: 6px;
+  letter-spacing: 0.3px;
+}
+
+.ob-input {
+  width: 100%;
+  background: rgba(148, 163, 184, 0.06);
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  border-radius: 10px;
+  padding: 11px 14px;
+  color: #e2e8f0;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.ob-input:focus {
+  border-color: rgba(84, 197, 255, 0.45);
+}
+
+.ob-input::placeholder {
+  color: #334155;
+}
+
+.ob-textarea {
+  resize: vertical;
+  min-height: 72px;
+}
+
+/* ── Chip pickers ── */
+.ob-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ob-chip {
+  background: rgba(148, 163, 184, 0.06);
+  border: 1.5px solid rgba(148, 163, 184, 0.14);
+  border-radius: 99px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  font-family: inherit;
+}
+
+.ob-chip:hover {
+  border-color: rgba(84, 197, 255, 0.35);
+  color: #cbd5e1;
+}
+
+.ob-chip.selected {
+  background: rgba(84, 197, 255, 0.12);
+  border-color: rgba(84, 197, 255, 0.5);
+  color: #54c5ff;
+}
+
+/* Single-select chip (radio style) */
+.ob-chip.radio.selected {
+  background: rgba(38, 224, 127, 0.1);
+  border-color: rgba(38, 224, 127, 0.45);
+  color: #26e07f;
+}
+
+/* ── Slider ── */
+.ob-slider-wrap {
+  position: relative;
+}
+
+.ob-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 99px;
+  background: rgba(84, 197, 255, 0.15);
+  outline: none;
+  cursor: pointer;
+}
+
+.ob-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #54c5ff;
+  border: 2px solid #0d1521;
+  box-shadow: 0 0 8px rgba(84, 197, 255, 0.5);
+  cursor: pointer;
+}
+
+.ob-slider-val {
+  text-align: right;
+  font-size: 13px;
+  font-weight: 700;
+  color: #54c5ff;
+  margin-top: 4px;
+}
+
+/* ── Footer buttons ── */
+.ob-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 28px;
+  gap: 10px;
+}
+
+.ob-btn-back {
+  background: transparent;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 10px;
+  padding: 10px 20px;
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.18s, color 0.18s;
+}
+
+.ob-btn-back:hover {
+  border-color: rgba(148, 163, 184, 0.35);
+  color: #94a3b8;
+}
+
+.ob-btn-next {
+  flex: 1;
+  background: linear-gradient(135deg, #54c5ff, #2892d4);
+  border: none;
+  border-radius: 10px;
+  padding: 11px 24px;
+  color: #0b0f12;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  font-family: inherit;
+  transition: opacity 0.18s, transform 0.12s;
+  letter-spacing: 0.2px;
+}
+
+.ob-btn-next:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+.ob-btn-next:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.ob-skip {
+  font-size: 11px;
+  color: #334155;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  transition: color 0.15s;
+  padding: 0;
+}
+
+.ob-skip:hover {
+  color: #64748b;
+}
+
+/* ── Error banner ── */
+.ob-error {
+  font-size: 12px;
+  color: #f87171;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-top: 10px;
+}

@@ -7,6 +7,8 @@ import RecommendationModal from "./RecommendationModal";
 import { UserContext } from "./UserContext";
 import LoginPrompt from "./LoginPrompt";
 import { API_URL } from "./config";
+import AnalyzerCard from "./AnalyzerCard";
+
 function useAnimatedNumber(value, duration = 700) {
   const [display, setDisplay] = useState(value);
   const rafRef = useRef(null);
@@ -293,52 +295,69 @@ export default function Portfolio({ userid = 1 }) {
                   return (
                     <div
                       key={`${holding.stockname}-${idx}`}
-                      className="table-row"
-                      style={{ transitionDelay: `${idx * 30}ms` }}
+                      style={{ marginBottom: 16 }}
                     >
-                      <div className="stock-col"
-                        onClick={() => window.open(`/stock-page/${holding.stockname}`, "_blank")}
-                        style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                        <img
-                          src={holding.logo_url || 'https://via.placeholder.com/30?text=Stock'}
-                          alt="logo"
-                          style={{ width: '28px', height: '28px', borderRadius: '4px', objectFit: 'contain' }}
-                          onError={(e) => { e.target.src = 'https://via.placeholder.com/30?text=Stock'; }}
-                        />
-                        <div className="symbol" style={{ color: '#007bff', fontWeight: '600' }}>
-                          {holding.stockname}
+                      {/* ── Holding data row ── */}
+                      <div
+                        className="table-row"
+                        style={{ transitionDelay: `${idx * 30}ms` }}
+                      >
+                        <div className="stock-col"
+                          onClick={() => window.open(`/stock-page/${holding.stockname}`, "_blank")}
+                          style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                          <img
+                            src={holding.logo_url || 'https://via.placeholder.com/30?text=Stock'}
+                            alt="logo"
+                            style={{ width: '28px', height: '28px', borderRadius: '4px', objectFit: 'contain' }}
+                            onError={(e) => { e.target.src = 'https://via.placeholder.com/30?text=Stock'; }}
+                          />
+                          <div className="symbol" style={{ color: '#007bff', fontWeight: '600' }}>
+                            {holding.stockname}
+                          </div>
+                        </div>
+                        <div>{holding.totalquantity}</div>
+                        <div>{formatCurrency(holding.averagebuyprice)}</div>
+                        <div>{formatCurrency(holding.totalinvested)}</div>
+                        <div>{formatCurrency(holding.ltp)}</div>
+                        <div
+                          className={holding.profitorloss >= 0 ? "green" : "red"}
+                        >
+                          {holding.profitorloss >= 0 ? "+" : "-"}
+                          {formatCurrency(Math.abs(holding.profitorloss))}
+                        </div>
+                        <div
+                          className={holding.profitorloss >= 0 ? "green" : "red"}
+                        >
+                          {holding.percentage.toFixed(2)}%
+                        </div>
+                        <div>{formatCurrency(holding.nowvalue)}</div>
+                        <div className="row-actions">
+                          <button
+                            onClick={() => openModal("buy", holding)}
+                            className="btn-primary action-equal"
+                          >
+                            + Buy
+                          </button>
+                          <button
+                            onClick={() => openModal("sell", holding)}
+                            className="btn-danger action-equal"
+                          >
+                            Sell
+                          </button>
                         </div>
                       </div>
-                      <div>{holding.totalquantity}</div>
-                      <div>{formatCurrency(holding.averagebuyprice)}</div>
-                      <div>{formatCurrency(holding.totalinvested)}</div>
-                      <div>{formatCurrency(holding.ltp)}</div>
-                      <div
-                        className={holding.profitorloss >= 0 ? "green" : "red"}
-                      >
-                        {holding.profitorloss >= 0 ? "+" : "-"}
-                        {formatCurrency(Math.abs(holding.profitorloss))}
-                      </div>
-                      <div
-                        className={holding.profitorloss >= 0 ? "green" : "red"}
-                      >
-                        {holding.percentage.toFixed(2)}%
-                      </div>
-                      <div>{formatCurrency(holding.nowvalue)}</div>
-                      <div className="row-actions">
-                        <button
-                          onClick={() => openModal("buy", holding)}
-                          className="btn-primary action-equal"
-                        >
-                          + Buy
-                        </button>
-                        <button
-                          onClick={() => openModal("sell", holding)}
-                          className="btn-danger action-equal"
-                        >
-                          Sell
-                        </button>
-                      </div>
+
+                      {/* ── AnalyzerCard: position-aware, always visible, independent fetch ── */}
+                      {uid && (
+                        <div style={{ marginTop: 10, padding: '0 4px' }}>
+                          <AnalyzerCard
+                            context="portfolio"
+                            symbol={holding.stockname}
+                            userId={uid}
+                            holding={holding}
+                          />
+                        </div>
+                      )}
                     </div>
                   );
                 })}

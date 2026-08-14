@@ -1,0 +1,218 @@
+/* AnalyzerCard.css — styles for the reusable per-stock analyzer card */
+
+.az-card {
+  background: linear-gradient(145deg, rgba(14, 23, 34, 0.97), rgba(8, 15, 22, 0.99));
+  border: 1px solid rgba(84, 197, 255, 0.14);
+  border-radius: 16px;
+  padding: 18px 20px 16px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.az-card:hover {
+  border-color: rgba(84, 197, 255, 0.28);
+  box-shadow: 0 4px 28px rgba(84, 197, 255, 0.07);
+}
+
+/* Ambient top-left glow */
+.az-card::before {
+  content: "";
+  position: absolute;
+  top: -30px;
+  left: -20px;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, rgba(84, 197, 255, 0.07), transparent 70%);
+  pointer-events: none;
+}
+
+/* ── Header row ── */
+.az-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  gap: 8px;
+}
+
+.az-card__label-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.az-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  background: rgba(84, 197, 255, 0.1);
+  border-radius: 7px;
+  flex-shrink: 0;
+}
+
+.az-card__label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+  color: #54c5ff;
+}
+
+.az-card__right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ── Action badge ── */
+.az-badge {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 99px;
+  border: 1.5px solid;
+}
+
+.az-badge--hold {
+  color: #f59e0b;
+  border-color: rgba(245, 158, 11, 0.4);
+  background: rgba(245, 158, 11, 0.1);
+}
+
+.az-badge--buy {
+  color: #26e07f;
+  border-color: rgba(38, 224, 127, 0.4);
+  background: rgba(38, 224, 127, 0.1);
+}
+
+.az-badge--sell {
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.4);
+  background: rgba(239, 68, 68, 0.1);
+}
+
+/* ── Conviction ── */
+.az-conviction {
+  font-size: 11px;
+  font-weight: 600;
+  color: #94a3b8;
+  white-space: nowrap;
+}
+
+.az-conviction span {
+  color: #54c5ff;
+  font-weight: 700;
+}
+
+/* ── Headline ── */
+.az-headline {
+  font-size: 14px;
+  font-weight: 700;
+  color: #e2e8f0;
+  line-height: 1.4;
+  margin-bottom: 10px;
+  letter-spacing: -0.2px;
+}
+
+/* ── Bullets ── */
+.az-bullets {
+  list-style: none;
+  margin: 0 0 12px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.az-bullets li {
+  font-size: 12px;
+  color: #94a3b8;
+  line-height: 1.45;
+  display: flex;
+  gap: 7px;
+  align-items: flex-start;
+}
+
+.az-bullets li::before {
+  content: "›";
+  color: #54c5ff;
+  font-size: 13px;
+  line-height: 1.3;
+  flex-shrink: 0;
+}
+
+/* ── Action plan box ── */
+.az-action-plan {
+  border: 1px solid rgba(84, 197, 255, 0.18);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: rgba(84, 197, 255, 0.04);
+}
+
+.az-action-plan__label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #54c5ff;
+  margin-bottom: 4px;
+}
+
+.az-action-plan__text {
+  font-size: 12px;
+  color: #cbd5e1;
+  line-height: 1.45;
+}
+
+/* ── Loading skeleton ── */
+.az-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.az-skel-line {
+  height: 12px;
+  border-radius: 6px;
+  background: linear-gradient(90deg,
+    rgba(148, 163, 184, 0.06) 25%,
+    rgba(148, 163, 184, 0.13) 50%,
+    rgba(148, 163, 184, 0.06) 75%
+  );
+  background-size: 200% 100%;
+  animation: az-shimmer 1.4s infinite;
+}
+
+.az-skel-line--short  { width: 45%; }
+.az-skel-line--medium { width: 70%; }
+.az-skel-line--full   { width: 100%; }
+
+@keyframes az-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── Error / no-profile state ── */
+.az-notice {
+  font-size: 12px;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0;
+}
+
+.az-notice a {
+  color: #54c5ff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.az-notice a:hover {
+  text-decoration: underline;
+}

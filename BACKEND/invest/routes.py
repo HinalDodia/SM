@@ -3,7 +3,7 @@ from flask_cors import cross_origin
 from flask_caching import Cache
 from bs4 import BeautifulSoup
 from flask import Blueprint, request, jsonify, Response, current_app, g, redirect, session
-from .models import Users, Stock, Transactionhistory
+from .models import db, Users, Stock, Transactionhistory, UserProfile, Recommendation
 from . import watchlist, portfolio as portfolio_module
 from .portfolio import get_dashboard_data, _get_live_price_for_symbol, fetch_ltp_parallel
 from .auth import require_user as auth_required
@@ -23,8 +23,7 @@ import pandas as pd
 import time
 import base64
 import os
-from models import db, UserProfile, Recommendation, Stock
- 
+
 from . import market_data, scoring, explainer
 from Endpoints.stock_common import get_yf_symbol
 from Endpoints.stock_page import stock_page as stock_page_fallback
@@ -46,6 +45,13 @@ routes_bp = Blueprint("routes_bp", __name__)
 # actual scope of the project (data pipeline, dashboards, etc). Raise this
 # when more stocks are added — nothing else needs to change.
 NUM_SUPPORTED_STOCKS = 10
+
+# The 10 NSE symbols covered by the existing data pipeline.
+# Matches the symbols stored in DynamoDB by the EventBridge jobs.
+TRACKED_SYMBOLS = [
+    "RELIANCE", "TCS", "INFY", "HDFCBANK", "ICICIBANK",
+    "SBIN", "WIPRO", "AXISBANK", "TATAMOTORS", "HINDUNILVR",
+]
 
 HF_BASE_URL=os.getenv("HF_SPACE_URL")
 HF_TOKEN      = os.getenv("HF_TOKEN")
@@ -1123,9 +1129,13 @@ def get_profile(userid):
         "capital_available": float(profile.capital_available),
         "max_per_trade_pct": float(profile.max_per_trade_pct),
         "experience_level": profile.experience_level,
+        # § 0 — new fields
+        "display_name": profile.display_name,
+        "goal_text": profile.goal_text,
+        "sectors_of_interest": profile.sectors_of_interest or [],
     })
- 
- 
+
+
 @routes_bp.route("/analyzer/profile", methods=["POST"])
 @auth_required
 @cross_origin(supports_credentials=True)
@@ -1134,92 +1144,230 @@ def upsert_profile():
     body_userid = data.get("userid")
     if body_userid is None or g.current_userid != int(body_userid):
         return jsonify({"error": "Forbidden"}), 403
- 
+
     required = ["risk_tolerance", "investment_goal", "time_horizon", "capital_available"]
     missing = [f for f in required if data.get(f) in (None, "")]
     if missing:
         return jsonify({"error": f"Missing fields: {', '.join(missing)}"}), 400
- 
+
     try:
         capital_available = float(data["capital_available"])
         if capital_available <= 0:
             raise ValueError
     except (TypeError, ValueError):
         return jsonify({"error": "capital_available must be a positive number"}), 400
- 
+
+    # Map UI trading-style labels to the DB enum.
+    # "Intraday" (not in enum) -> short_term; others pass through.
+    time_horizon_raw = data["time_horizon"]
+    time_horizon_map = {
+        "intraday": "short_term",
+        "short_term": "short_term",
+        "medium_term": "medium_term",
+        "long_term": "long_term",
+    }
+    time_horizon = time_horizon_map.get(str(time_horizon_raw).lower(), time_horizon_raw)
+
     profile = UserProfile.query.filter_by(userid=body_userid).first()
     if not profile:
         profile = UserProfile(userid=body_userid)
         db.session.add(profile)
- 
+
     profile.risk_tolerance = data["risk_tolerance"]
     profile.investment_goal = data["investment_goal"]
-    profile.time_horizon = data["time_horizon"]
+    profile.time_horizon = time_horizon
     profile.capital_available = capital_available
     profile.max_per_trade_pct = data.get("max_per_trade_pct", 10.00)
     profile.experience_level = data.get("experience_level", "beginner")
- 
+    # § 0 — new onboarding fields
+    if "display_name" in data:
+        profile.display_name = data["display_name"] or None
+    if "goal_text" in data:
+        profile.goal_text = data["goal_text"] or None
+    if "sectors_of_interest" in data:
+        soi = data["sectors_of_interest"]
+        profile.sectors_of_interest = soi if isinstance(soi, list) else None
+
     db.session.commit()
     return jsonify({"message": "Profile saved"}), 200
- 
- 
-@routes_bp.route("/analyzer/recommendations/<int:userid>", methods=["GET"])
-@auth_required
-@cross_origin(supports_credentials=True)
-def get_recommendations(userid):
-    if g.current_userid != userid:
-        return jsonify({"error": "Forbidden"}), 403
- 
-    profile_row = UserProfile.query.filter_by(userid=userid).first()
-    if not profile_row:
-        return jsonify({"error": "Set up an investment profile first"}), 400
- 
-    profile = {
+
+
+# ── Shared helper — one code path for both bulk and single-symbol ——————————
+
+def _build_profile_dict(profile_row) -> dict:
+    """Flatten a UserProfile ORM row into a plain dict for the scorer/explainer."""
+    return {
         "risk_tolerance": profile_row.risk_tolerance,
         "investment_goal": profile_row.investment_goal,
         "time_horizon": profile_row.time_horizon,
         "capital_available": float(profile_row.capital_available),
         "max_per_trade_pct": float(profile_row.max_per_trade_pct),
         "experience_level": profile_row.experience_level,
+        "display_name": profile_row.display_name,
+        "goal_text": profile_row.goal_text,
+        "sectors_of_interest": profile_row.sectors_of_interest or [],
     }
- 
+
+
+def _lookup_position(userid: int, symbol: str) -> dict | None:
+    """
+    Return position context dict if the user holds shares of `symbol`,
+    else None. Used to pass position-aware context into the explainer.
+    """
+    from .models import Portfolio
+    holding = Portfolio.query.filter_by(
+        userid=userid, stockname=symbol.upper()
+    ).first()
+    if not holding or not holding.totalquantity:
+        return None
+
+    avg = float(holding.averagebuyprice or 0)
+    qty = int(holding.totalquantity or 0)
+
+    # Try to get live price for P&L %
+    try:
+        ltp = _get_live_price_for_symbol(symbol)
+    except Exception:
+        ltp = None
+
+    pnl_pct = None
+    if avg and ltp:
+        pnl_pct = round((ltp - avg) / avg * 100, 2)
+
+    return {
+        "qty": qty,
+        "avg_buy_price": avg,
+        "pnl_pct": pnl_pct,
+        "ltp": ltp,
+    }
+
+
+def _score_and_explain(userid: int, symbol: str, profile: dict) -> dict:
+    """
+    Single code path: score + explain for one symbol.
+    Returns the full response dict (without saving to DB).
+    """
+    market = market_data.get_scoring_inputs(symbol)
+    result = scoring.score_stock(profile, market)
+    amount = scoring.suggested_amount(profile, result.action)
+    position = _lookup_position(userid, symbol)
+
+    try:
+        explained = explainer.explain(
+            profile=profile,
+            symbol=symbol,
+            action=result.action,
+            score=result.score,
+            reasons=result.reasons,
+            conviction=result.conviction,
+            position=position,
+        )
+    except Exception as e:
+        current_app.logger.warning("explainer.explain failed for %s: %s", symbol, e)
+        explained = {
+            "headline": f"Trader, review {symbol}.",
+            "bullets": result.reasons[:3],
+            "action_plan": "Review again after the next market session.",
+        }
+
+    return {
+        "symbol": symbol,
+        "action": result.action,
+        "score": result.score,
+        "conviction": result.conviction,
+        "suggested_amount": amount,
+        "reasons": result.reasons,                # kept for legacy consumers
+        "explanation": explained.get("headline"), # legacy compat
+        "headline": explained.get("headline"),
+        "bullets": explained.get("bullets", []),
+        "action_plan": explained.get("action_plan"),
+    }
+
+
+# ── Bulk endpoint (kept working, now uses structured output) ────────────────
+
+@routes_bp.route("/analyzer/recommendations/<int:userid>", methods=["GET"])
+@auth_required
+@cross_origin(supports_credentials=True)
+def get_recommendations(userid):
+    if g.current_userid != userid:
+        return jsonify({"error": "Forbidden"}), 403
+
+    profile_row = UserProfile.query.filter_by(userid=userid).first()
+    if not profile_row:
+        return jsonify({"error": "Set up an investment profile first"}), 400
+
+    profile = _build_profile_dict(profile_row)
     results = []
+
     for symbol in TRACKED_SYMBOLS:
-        market = market_data.get_scoring_inputs(symbol)
-        result = scoring.score_stock(profile, market)
-        amount = scoring.suggested_amount(profile, result.action)
- 
-        try:
-            explanation = explainer.explain(
-                profile, symbol, result.action, result.score, result.reasons
-            )
-        except RuntimeError as e:
-            # Claude API not configured / failed — still return the
-            # data-grounded recommendation, just without prose explanation.
-            explanation = None
- 
+        rec_data = _score_and_explain(userid, symbol, profile)
+
+        # Persist to recommendations table
         stock_row = Stock.query.filter_by(stock_symbol=symbol).first()
         if stock_row:
             rec = Recommendation(
                 userid=userid,
                 stock_id=stock_row.stock_id,
-                action=result.action,
-                suggested_amount=amount,
-                score=result.score,
-                explanation=explanation,
-                raw_data_snapshot=market,
+                action=rec_data["action"],
+                suggested_amount=rec_data["suggested_amount"],
+                score=rec_data["score"],
+                explanation=rec_data["explanation"],
+                raw_data_snapshot=market_data.get_scoring_inputs(symbol),
+                headline=rec_data["headline"],
+                action_plan=rec_data["action_plan"],
+                conviction_pct=rec_data["conviction"],
             )
             db.session.add(rec)
- 
-        results.append({
-            "symbol": symbol,
-            "action": result.action,
-            "score": result.score,
-            "suggested_amount": amount,
-            "reasons": result.reasons,
-            "explanation": explanation,
-        })
- 
+
+        results.append(rec_data)
+
     db.session.commit()
     return jsonify({"recommendations": results})
- 
+
+
+# ── New single-symbol endpoint ──────────────────────────────────────────
+
+@routes_bp.route("/analyzer/recommendation/<int:userid>/<string:symbol>", methods=["GET"])
+@auth_required
+@cross_origin(supports_credentials=True)
+def get_single_recommendation(userid, symbol):
+    """
+    On-demand, single-stock analyzer read.
+    Looks up the user's holding for that symbol server-side (position context).
+    No mocking — live DynamoDB + Claude call every time (short TTL caching
+    can be added later without changing the contract).
+
+    Response:
+        {symbol, action, score, conviction, headline, bullets, action_plan}
+    """
+    if g.current_userid != userid:
+        return jsonify({"error": "Forbidden"}), 403
+
+    profile_row = UserProfile.query.filter_by(userid=userid).first()
+    if not profile_row:
+        return jsonify({"error": "no_profile"}), 400
+
+    symbol = symbol.upper().strip()
+    profile = _build_profile_dict(profile_row)
+    rec_data = _score_and_explain(userid, symbol, profile)
+
+    # Persist
+    stock_row = Stock.query.filter_by(stock_symbol=symbol).first()
+    if stock_row:
+        rec = Recommendation(
+            userid=userid,
+            stock_id=stock_row.stock_id,
+            action=rec_data["action"],
+            suggested_amount=rec_data["suggested_amount"],
+            score=rec_data["score"],
+            explanation=rec_data["explanation"],
+            raw_data_snapshot=market_data.get_scoring_inputs(symbol),
+            headline=rec_data["headline"],
+            action_plan=rec_data["action_plan"],
+            conviction_pct=rec_data["conviction"],
+        )
+        db.session.add(rec)
+        db.session.commit()
+
+    return jsonify(rec_data)

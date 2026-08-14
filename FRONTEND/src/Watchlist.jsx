@@ -5,6 +5,7 @@ import RecommendationModal from "./RecommendationModal";
 import { UserContext } from "./UserContext";
 import { useNavigate, useLocation } from "react-router-dom";
 import { API_URL } from "./config";
+import AnalyzerCard from "./AnalyzerCard";
 const SearchIcon = () => <span aria-hidden>🔍</span>;
 
 function Watchlist({ userid = 1 }) {
@@ -337,67 +338,70 @@ function Watchlist({ userid = 1 }) {
           {trackedStocks.map((stock) => {
             const up = (stock.change || 0) >= 0;
             return (
-              <div
-                key={stock.stock_id || stock.symbol}
-                className="wl-row"
-              >
-                {/* Stock */}
-                <div className="wl-cell stock">
-                  <img
-                    src={stock.logo_url || "/logo-placeholder.svg"}
-                    alt={stock.symbol}
-                    className="wl-stock-logo"
-                    onError={(e) => (e.currentTarget.src = "/logo-placeholder.svg")}
-                  />
+              <div key={stock.stock_id || stock.symbol} style={{ marginBottom: 12 }}>
+                {/* ── Row header: symbol / price / change / actions ── */}
+                <div className="wl-row">
+                  {/* Stock */}
+                  <div className="wl-cell stock">
+                    <img
+                      src={stock.logo_url || "/logo-placeholder.svg"}
+                      alt={stock.symbol}
+                      className="wl-stock-logo"
+                      onError={(e) => (e.currentTarget.src = "/logo-placeholder.svg")}
+                    />
 
-                  <div className="stock-meta">
-                    {/* ONLY WHITE TEXT — CLICKABLE */}
-                    <div
-                      className="sym"
-                      style={{ cursor: "pointer" }}
-                      onClick={() =>
-                        window.open(`/stock-page/${stock.symbol}`, "_blank", "noopener,noreferrer")
-                      }
-                    >
-                      {stock.symbol}
+                    <div className="stock-meta">
+                      <div
+                        className="sym"
+                        style={{ cursor: "pointer" }}
+                        onClick={() =>
+                          window.open(`/stock-page/${stock.symbol}`, "_blank", "noopener,noreferrer")
+                        }
+                      >
+                        {stock.symbol}
+                      </div>
                     </div>
+                  </div>
+
+                  {/* Price */}
+                  <div className="wl-cell price">₹{stock.price}</div>
+
+                  {/* Change */}
+                  <div className="wl-cell">
+                    <span className={`badge ${up ? "badge-up" : "badge-down"}`}>
+                      {stock.change} ({stock.change_percent}%)
+                    </span>
+                  </div>
+
+                  {/* Action */}
+                  <div className="wl-cell action">
+                    <button className="btn btn-buy" onClick={() => openBuyModal(stock)}>
+                      + Buy
+                    </button>
+                    <button
+                      className="btn btn-cancel"
+                      onClick={() => removeTracked(stock.stock_id)}
+                      style={{ marginLeft: 8 }}
+                    >
+                      Remove
+                    </button>
                   </div>
                 </div>
 
-
-
-
-                {/* Price */}
-                <div className="wl-cell price">₹{stock.price}</div>
-
-                {/* Change */}
-                <div className="wl-cell">
-                  <span
-                    className={`badge ${up ? "badge-up" : "badge-down"}`}
-                  >
-                    {stock.change} ({stock.change_percent}%)
-                  </span>
-                </div>
-
-                {/* Action */}
-                <div className="wl-cell action">
-                  <button
-                    className="btn btn-buy"
-                    onClick={() => openBuyModal(stock)}
-                  >
-                    + Buy
-                  </button>
-                  <button
-                    className="btn btn-cancel"
-                    onClick={() => removeTracked(stock.stock_id)}
-                    style={{ marginLeft: 8 }}
-                  >
-                    Remove
-                  </button>
-                </div>
+                {/* ── AnalyzerCard — independent fetch, never blocks the row list ── */}
+                {uid && (
+                  <div style={{ marginTop: 8 }}>
+                    <AnalyzerCard
+                      context="watchlist"
+                      symbol={stock.symbol}
+                      userId={uid}
+                    />
+                  </div>
+                )}
               </div>
             );
           })}
+
 
           {trackedStocks.length === 0 && (
             <div className="wl-empty">

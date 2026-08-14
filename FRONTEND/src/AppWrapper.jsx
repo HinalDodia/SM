@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Watchlist from './Watchlist';
 import Portfolio from './Portfolio';
@@ -18,8 +18,20 @@ import FinancialsPage from './FinancialsPage.jsx';
 import SecFilingsPage from './SecFilingsPage.jsx';
 import ShortInterest from './ShortInterest.jsx';
 import Markets from './Markets.jsx';
+import OnboardingModal from './OnboardingModal.jsx';
+import { UserContext } from './UserContext.jsx';
 
 function AppWrapper() {
+  const { user } = useContext(UserContext) || {};
+  const uid = user?.userid;
+
+  // Show onboarding modal once per user after login
+  const [showOnboarding, setShowOnboarding] = useState(false);
+  useEffect(() => {
+    if (!uid) return;
+    const done = localStorage.getItem(`onboarding_done_${uid}`);
+    if (!done) setShowOnboarding(true);
+  }, [uid]);
 
   const [portfolio, setPortfolio] = useState(() => {
     const saved = localStorage.getItem('portfolio');
@@ -61,8 +73,15 @@ function AppWrapper() {
   }, [watchlist]);
 
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
+    <>
+      {/* Onboarding modal — shown once per user after first login */}
+      {showOnboarding && (
+        <OnboardingModal onClose={() => setShowOnboarding(false)} />
+      )}
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+
       <Route path="/Log" element={<Log />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/forgot-password" element={<OtpReset />} />
@@ -117,6 +136,7 @@ function AppWrapper() {
       <Route path="/stock-short-interest/:symbol" element={<StockDetailPage tab="shortinterest" />} />
 
     </Routes>
+    </>
   );
 }
 

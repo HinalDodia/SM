@@ -333,3 +333,9 @@
     font-size: 22px;
   }
 }
+
+/* ── Selected card highlight ── */
+.mkt-card--selected {
+  border-color: rgba(84, 197, 255, 0.45) !important;
+  box-shadow: 0 0 0 1px rgba(84, 197, 255, 0.2), 0 4px 24px rgba(84, 197, 255, 0.12);
+}

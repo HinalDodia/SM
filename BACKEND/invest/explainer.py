@@ -1,78 +1,180 @@
 """
 Plain-language explanation layer. Takes the scoring engine's OUTPUT
-(already-decided action/score/reasons) and asks Claude to explain it in
-plain English calibrated to the user's experience level.
+(already-decided action/score/reasons) and asks AWS Bedrock (Amazon Nova)
+to return a structured JSON object — never a raw prose paragraph.
 
-This is the one genuinely new piece of infra for this feature — there is
-no existing Anthropic API usage anywhere else in the codebase yet.
+Return shape:
+    {
+        "headline": "Trader, hold on RELIANCE.",
+        "bullets":  ["...", "...", "..."],
+        "action_plan": "Hold your 12 shares and review after the next quarterly result."
+    }
 
-Setup needed (not yet done anywhere in this repo):
-  pip install anthropic
-  Add ANTHROPIC_API_KEY to .env
-  Add ANTHROPIC_API_KEY to the required-env-vars line in PROJECT_SUMMARY.md
+On parse failure, a minimal well-formed dict is returned so callers
+never receive None or crash.
 """
 
 import os
-from anthropic import Anthropic
+import json
+import logging
+import boto3
 
-_client = None
+log = logging.getLogger(__name__)
 
-
-def _get_client() -> Anthropic:
-    global _client
-    if _client is None:
-        api_key = os.getenv("ANTHROPIC_API_KEY")
-        if not api_key:
-            raise RuntimeError(
-                "ANTHROPIC_API_KEY is missing from environment variables (.env) "
-                "— cannot generate explanations."
-            )
-        _client = Anthropic(api_key=api_key)
-    return _client
+_bedrock_client = None
 
 
-_SYSTEM_PROMPT = """You explain a stock recommendation in plain, jargon-free \
-English for a retail investor. You are given a decision that has ALREADY \
-been made by a separate rules-based system — your only job is to explain \
-WHY, using only the facts provided to you.
-
-Strict rules:
-- Do not introduce any numbers, prices, ratios, or facts that are not in \
-the input you were given. If you don't have a number, don't invent one.
-- Do not change or second-guess the action (buy/sell/hold) — explain it \
-as given, even if you would have picked differently.
-- Calibrate language to the stated experience level: avoid financial \
-jargon for 'beginner', it's fine to use standard terms for 'advanced'.
-- 3-4 sentences. End with exactly one line reminding the user this is \
-not professional financial advice.
-"""
+def _get_client():
+    global _bedrock_client
+    if _bedrock_client is None:
+        region = os.getenv("AWS_REGION", "ap-south-1")
+        _bedrock_client = boto3.client("bedrock-runtime", region_name=region)
+    return _bedrock_client
 
 
-def explain(profile: dict, symbol: str, action: str, score: float, reasons: list[str]) -> str:
+MODEL_ID = os.getenv("BEDROCK_MODEL_ID", "apac.amazon.nova-micro-v1:0")
+
+# ── System prompt ─────────────────────────────────────────────────────────────
+_SYSTEM_PROMPT = (
+    "You are an AI stock analyzer that explains recommendations to retail investors. "
+    "A rules-based system has ALREADY decided the action (buy/sell/hold). Your only "
+    "job is to explain WHY using ONLY the facts provided — never invent numbers.\n\n"
+    "CRITICAL OUTPUT RULE:\n"
+    "Return ONLY valid JSON. No prose before or after. No markdown fences. No "
+    "explanation outside the JSON. The response must start with { and end with }.\n\n"
+    "The JSON must have EXACTLY these three keys:\n"
+    '  "headline"    – one sentence, direct, action-first. Address the user by\n'
+    "                  their name (use the caller-supplied name, or \"Trader\" if none).\n"
+    '  "bullets"     – JSON array of 3 concise strings, each one fact-grounded.\n'
+    "                  If position context is provided (avg_buy_price, pnl_pct, qty),\n"
+    "                  at least one bullet MUST reference the actual position numbers.\n"
+    "                  If no position, do NOT fabricate position data.\n"
+    '  "action_plan" – one sentence: the concrete next step for THIS user.\n\n'
+    "Calibrate language to the experience level (beginner: plain English; "
+    "intermediate: standard terms; advanced: technical terms welcome). "
+    "Do not add financial-advice disclaimers."
+)
+
+
+def _fallback(action: str, symbol: str, reasons: list, name: str) -> dict:
+    """Minimal structured object used when Bedrock fails or is unavailable."""
+    verb = {"buy": "consider buying", "sell": "consider selling", "hold": "hold"}.get(
+        action, "review"
+    )
+    return {
+        "headline": f"{name}, {verb} {symbol} based on current signals.",
+        "bullets": reasons[:3] if reasons else ["No detailed signals available."],
+        "action_plan": f"Review {symbol} again before your next trading session.",
+    }
+
+
+def explain(
+    profile: dict,
+    symbol: str,
+    action: str,
+    score: float,
+    reasons: list,
+    conviction: int = 50,
+    position: dict | None = None,
+) -> dict:
+    """
+    Returns a structured dict with keys: headline, bullets, action_plan.
+    Never raises — always returns a valid dict even if Bedrock is unavailable.
+
+    position (optional): pass when the user holds shares of this stock so
+        the bullets can reference their actual avg price / P&L %.
+        Pass None for Market / Watchlist context (no fabrication).
+    """
+    name = profile.get("display_name") or "Trader"
     experience = profile.get("experience_level", "beginner")
+    symbol = symbol.upper().strip()
+
+    # ── Build user message ────────────────────────────────────────────────────
+    pos_lines = ""
+    if position:
+        pos_lines = (
+            f"\nUser's position in {symbol}:\n"
+            f"  Shares held:      {position.get('qty', '?')}\n"
+            f"  Avg buy price:    ₹{position.get('avg_buy_price', '?')}\n"
+            f"  Current P&L:      {position.get('pnl_pct', '?')}%\n"
+        )
 
     user_message = (
         f"Stock: {symbol}\n"
-        f"Decision (already made, do not change): {action.upper()}\n"
-        f"Score: {score}/10\n"
+        f"Decision (already made, do NOT change): {action.upper()}\n"
+        f"Score: {score}/10  |  Conviction: {conviction}%\n"
         f"Reasons the scoring system used:\n"
-        + "\n".join(f"- {r}" for r in reasons)
-        + f"\n\nUser's experience level: {experience}\n"
-        f"User's stated goal: {profile.get('investment_goal')}\n"
-        f"User's risk tolerance: {profile.get('risk_tolerance')}\n\n"
-        "Explain this recommendation in plain English."
+        + "\n".join(f"  - {r}" for r in reasons)
+        + pos_lines
+        + f"\nUser's name: {name}\n"
+        f"User's experience level: {experience}\n"
+        f"User's stated goal: {profile.get('investment_goal', 'growth')}\n"
+        f"User's risk tolerance: {profile.get('risk_tolerance', 'moderate')}\n"
+        f"User's time horizon: {profile.get('time_horizon', 'medium_term')}\n"
+        f"\nReturn the JSON object now."
     )
 
-    client = _get_client()
-    response = client.messages.create(
-        # claude-sonnet-5 as of writing — check docs.claude.com for the
-        # current recommended model ID before deploying, this changes over time
-        model="claude-sonnet-5",
-        max_tokens=300,
-        system=_SYSTEM_PROMPT,
-        messages=[{"role": "user", "content": user_message}],
-    )
+    try:
+        client = _get_client()
 
-    return "".join(
-        block.text for block in response.content if block.type == "text"
-    ).strip()
+        body = {
+            "messages": [
+                {"role": "user", "content": user_message}
+            ],
+            "system": [{"text": _SYSTEM_PROMPT}],
+            "inferenceConfig": {
+                "maxTokens": 400,
+                "temperature": 0.3,
+            },
+        }
+
+        response = client.invoke_model(
+            modelId=MODEL_ID,
+            body=json.dumps(body),
+            contentType="application/json",
+            accept="application/json",
+        )
+
+        raw_body = response["body"].read().decode("utf-8")
+        resp_json = json.loads(raw_body)
+
+        # Nova Micro response structure: output.message.content[0].text
+        raw = ""
+        try:
+            raw = resp_json["output"]["message"]["content"][0]["text"].strip()
+        except (KeyError, IndexError, TypeError):
+            # Fallback: look for any text field
+            raw = str(resp_json)
+
+        # Strip accidental markdown fences if model adds them despite instructions
+        if raw.startswith("```"):
+            raw = raw.split("```")[1]
+            if raw.startswith("json"):
+                raw = raw[4:]
+            raw = raw.strip()
+        if raw.endswith("```"):
+            raw = raw[: raw.rfind("```")].strip()
+
+        parsed = json.loads(raw)
+
+        # Validate shape — ensure all three keys are present
+        headline = str(parsed.get("headline", "")).strip()
+        bullets = parsed.get("bullets", [])
+        action_plan = str(parsed.get("action_plan", "")).strip()
+
+        if not isinstance(bullets, list):
+            bullets = [str(bullets)]
+
+        if not headline or not action_plan or not bullets:
+            raise ValueError("Missing required keys in model response")
+
+        return {
+            "headline": headline,
+            "bullets": [str(b) for b in bullets],
+            "action_plan": action_plan,
+        }
+
+    except Exception as e:
+        # Any failure (Bedrock unavailable, parse error, etc.) — degrade gracefully
+        log.warning("Bedrock explain call failed for %s: %s", symbol, e)
+        return _fallback(action, symbol, reasons, name)

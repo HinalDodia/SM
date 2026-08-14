@@ -204,3 +204,48 @@ export async function fetchStockChart(symbol, period = "1y", interval = "1d") {
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 }
+
+// ─── Analyzer API ─────────────────────────────────────────────────────────────
+
+/**
+ * Fetch a single-symbol on-demand analyzer recommendation.
+ * Returns { symbol, action, score, conviction, headline, bullets, action_plan }
+ * or { error: "no_profile" } when the user hasn't set up a profile yet.
+ */
+export async function fetchAnalyzerRecommendation(userId, symbol) {
+  const res = await fetch(
+    `${API_BASE_URL}/analyzer/recommendation/${userId}/${symbol}`,
+    { headers: authHeaders() }
+  );
+  // Return the JSON body regardless of HTTP status so callers can inspect
+  // the error field (e.g. "no_profile") without throwing.
+  return res.json();
+}
+
+/**
+ * Fetch the user's saved analyzer profile.
+ * Returns the profile dict or throws on network error / 404.
+ */
+export async function fetchAnalyzerProfile(userId) {
+  const res = await fetch(
+    `${API_BASE_URL}/analyzer/profile/${userId}`,
+    { headers: authHeaders() }
+  );
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
+/**
+ * Create or update the user's analyzer profile.
+ * data must include: userid, risk_tolerance, investment_goal,
+ *   time_horizon, capital_available — plus optional new fields.
+ */
+export async function saveAnalyzerProfile(data) {
+  const res = await fetch(`${API_BASE_URL}/analyzer/profile`, {
+    method: "POST",
+    headers: authHeaders(),
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}

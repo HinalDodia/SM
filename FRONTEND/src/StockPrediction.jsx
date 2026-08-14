@@ -8,6 +8,7 @@ import { API_URL } from "./config";
 import { Line, Bar } from "react-chartjs-2";
 import { motion, AnimatePresence } from "framer-motion";
 import { UserContext } from "./UserContext";
+import AnalyzerCard from "./AnalyzerCard";
 import {
   BarChart3, TrendingUp, TrendingDown, Minus, Search, Loader2,
   IndianRupee, Target, BookmarkPlus, CheckCircle2, Newspaper,
@@ -730,9 +731,26 @@ export default function StockPrediction() {
       <AnimatePresence>
         {hasResult && meta && (
           <>
+            {/* ── Analyzer Card — independent fetch, never blocks charts ── */}
+            {user?.userid && (
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.35 }}
+                style={{ maxWidth: 600, margin: "0 auto 20px" }}
+              >
+                <AnalyzerCard
+                  context="predict"
+                  symbol={meta.sym}
+                  userId={user.userid}
+                />
+              </motion.div>
+            )}
+
             {/* ── Row 1: Stat pills ── */}
             <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.42 }}
               style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(175px,1fr))", gap: 11, marginBottom: 18 }}>
+
               <StatPill label="Current Price" value={`₹${meta.current_price?.toLocaleString("en-IN")}`} sub="Last close" accent="#54C5FF" icon={<IndianRupee size={10} />} />
               <StatPill label="Predicted Price" value={`₹${meta.predicted_price?.toLocaleString("en-IN")}`} sub="LSTM next-day" accent="#7C8CFF" icon={<Target size={10} />} />
               <StatPill label="Change" value={`${meta.changeAmt >= 0 ? "+" : ""}${meta.changeAmt}`} sub={`${meta.changePct >= 0 ? "+" : ""}${meta.changePct}% vs prev`} accent={vc} icon={<VI size={10} />} />

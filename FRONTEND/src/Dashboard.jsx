@@ -3,7 +3,7 @@ import { UserContext } from "./UserContext";
 import { API_URL } from "./config";
 import axios from "axios";
 import { saveAs } from "file-saver";
-import { handleLogout } from "./Log.jsx"; // Fix for Line 86
+import { handleLogout } from "./Log.jsx";
 import {
   ResponsiveContainer,
   AreaChart,
@@ -17,13 +17,14 @@ import {
   Cell,
   Sector,
 } from "recharts";
-
 import { motion } from "framer-motion";
 import { FiPieChart, FiActivity, FiDownload } from "react-icons/fi";
 import { BsWallet2 } from "react-icons/bs";
 import { MdInsights } from "react-icons/md";
 import "./Dashboard.css";
 import LoginPrompt from "./LoginPrompt";
+import AnalyzerCard from "./AnalyzerCard";
+import { useNavigate } from "react-router-dom";
 
 // --- Global Helpers & Constants ---
 const fmtCurrency = (n) =>
@@ -93,6 +94,7 @@ export default function Dashboard() {
   const stored = JSON.parse(localStorage.getItem("user"));
   const activeUser = user || stored;
   const uid = activeUser?.userid || null;
+  const navigate = useNavigate();
 
   // ----------- STATE -----------
   // These must be defined here to fix the "not defined" errors
@@ -272,6 +274,49 @@ export default function Dashboard() {
           </ChartCard>
         </div>
       </div>
+
+      {/* ── Analyzer Spotlight ──
+           Rule: first holding alphabetically (predictable, documented).
+           Each AnalyzerCard fetches independently — never blocks the rest of the page. */}
+      {portfolio.length > 0 && (() => {
+        const spotlightSymbol = [...portfolio]
+          .sort((a, b) => (a.stockname || "").localeCompare(b.stockname || ""))[0]?.stockname;
+        if (!spotlightSymbol) return null;
+        return (
+          <div className="chart-card" style={{ marginBottom: 18 }}>
+            <div className="card__head">
+              <h3>Today’s Analyzer Spotlight</h3>
+              <span className="tag">AI read</span>
+            </div>
+            <div className="card__body" style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "flex-start" }}>
+              <div style={{ flex: "1 1 320px", minWidth: 0 }}>
+                <AnalyzerCard
+                  context="dashboard"
+                  symbol={spotlightSymbol}
+                  userId={uid}
+                  holding={portfolio.find(p => p.stockname === spotlightSymbol)}
+                />
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 10, paddingTop: 4 }}>
+                <button
+                  className="export-btn"
+                  onClick={() => navigate("/markets")}
+                  style={{ minWidth: 140 }}
+                >
+                  Explore Market
+                </button>
+                <button
+                  className="export-btn"
+                  onClick={() => navigate("/learnings")}
+                  style={{ minWidth: 140 }}
+                >
+                  Earn XP
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
 
       {/* Lower row */}
       <div className="grid grid--3">

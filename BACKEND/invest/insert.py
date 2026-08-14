@@ -38,7 +38,10 @@ Environment variables
     NEWSAPI_KEY     : NewsAPI key
 """
 
-from options_service import OptionsService
+try:
+    from options_service import OptionsService  # standalone script usage
+except ImportError:
+    from .options_service import OptionsService  # package usage
 import os
 import re 
 import csv

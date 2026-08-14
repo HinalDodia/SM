@@ -1,6 +1,6 @@
 """
 Deterministic rules-based scoring engine. No API calls, no DB access —
-pure function of (user profile, market data) -> (action, score, reasons).
+pure function of (user profile, market data) -> (action, score, reasons, conviction).
 This is intentionally the only component allowed to decide buy/sell/hold;
 the Claude explainer (explainer.py) only explains this output, never
 overrides it.
@@ -14,7 +14,32 @@ class ScoreResult:
     action: str          # "buy" | "sell" | "hold"
     score: float
     reasons: list[str]   # short, factual reasons — fed to the explainer
+    conviction: int      # 0-100: how much data backed this read
 
+
+# ── Conviction helper ─────────────────────────────────────────────────────────
+
+def _conviction(market: dict, distance_from_neutral: float) -> int:
+    """
+    0-100 measure of how much data backed the read — separate from the
+    buy/sell/hold score itself.
+
+    More fundamental factors present  → higher conviction.
+    Stronger signal (away from 5.0)   → higher conviction.
+    A hold near neutral score reads lower than a clear buy/sell.
+
+    Range kept in 30-95 to avoid false certainty (100) or uselessness (0).
+    """
+    factors_present = sum(
+        1 for k in ("pe_ratio", "debt_to_equity", "revenue_growth", "volatility_6mo")
+        if market.get(k) is not None
+    )
+    base = 35 + (factors_present * 10)           # more data → more conviction
+    base += min(20, distance_from_neutral * 8)    # stronger signal → more conviction
+    return max(30, min(95, round(base)))
+
+
+# ── Main scorer ───────────────────────────────────────────────────────────────
 
 def score_stock(profile: dict, market: dict) -> ScoreResult:
     """
@@ -65,7 +90,10 @@ def score_stock(profile: dict, market: dict) -> ScoreResult:
     if not reasons:
         reasons.append("No strong signals in either direction based on available data")
 
-    return ScoreResult(action=action, score=score, reasons=reasons)
+    distance = abs(score - 5.0)
+    conviction = _conviction(market, distance)
+
+    return ScoreResult(action=action, score=score, reasons=reasons, conviction=conviction)
 
 
 def suggested_amount(profile: dict, action: str) -> float:

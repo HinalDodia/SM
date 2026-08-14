@@ -47,6 +47,8 @@ export default function Portfolio({ userid = 1 }) {
   const [showReco, setShowReco] = useState(false);
   // Note: Do NOT early-return before hooks; render login prompt conditionally instead.
 
+  const [recsMap, setRecsMap] = useState({});
+
   // ✅ Correct backend endpoints
   const PORTFOLIO_ENDPOINT = uid ? `${API_URL}/portfolio/${uid}` : null;
   const WALLET_ENDPOINT = uid ? `${API_URL}/get_wallet/${uid}` : null;
@@ -55,7 +57,7 @@ export default function Portfolio({ userid = 1 }) {
     return {
       headers: {
         "X-User-Id": String(uid),
-        "Authorization": `Bearer ${token}`, // Added this
+        "Authorization": `Bearer ${token}`,
         "Content-Type": "application/json"
       }
     };
@@ -64,13 +66,21 @@ export default function Portfolio({ userid = 1 }) {
   const fetchPortfolioAndWallet = useCallback(async () => {
     if (!uid || !PORTFOLIO_ENDPOINT || !WALLET_ENDPOINT) return;
     try {
-      const [portfolioRes, walletRes] = await Promise.all([
+      const [portfolioRes, walletRes, recsRes] = await Promise.all([
         axios.get(PORTFOLIO_ENDPOINT, authConfig),
         axios.get(WALLET_ENDPOINT, authConfig),
+        axios.get(`${API_URL}/analyzer/recommendations/${uid}`, authConfig).catch(() => ({ data: {} })),
       ]);
       setPortfolio(portfolioRes.data || []);
       if (walletRes.data.money !== undefined) {
         setWallet(parseFloat(walletRes.data.money));
+      }
+      if (recsRes.data && Array.isArray(recsRes.data.recommendations)) {
+        const map = {};
+        recsRes.data.recommendations.forEach((r) => {
+          map[r.symbol] = r;
+        });
+        setRecsMap(map);
       }
     } catch (err) {
       console.error("Error fetching portfolio/wallet:", err);
@@ -280,6 +290,7 @@ export default function Portfolio({ userid = 1 }) {
                   <div>Profit or Loss</div>
                   <div>Percentage</div>
                   <div>Now Value</div>
+                  <div>AI Advice</div>
                   <div>Action</div>
                 </div>
 
@@ -290,6 +301,13 @@ export default function Portfolio({ userid = 1 }) {
                 )}
 
                 {filteredPortfolio.map((holding, idx) => {
+                  const sym = (holding.stockname || "").toUpperCase();
+                  const reco = recsMap[sym];
+                  const rawAction = (reco?.action || "").toUpperCase();
+                  const isBuy = rawAction === "BUY";
+                  const isSell = rawAction === "SELL";
+                  const displayAction = isBuy ? "BUY MORE" : isSell ? "SELL" : "HOLD";
+
                   return (
                     <div
                       key={`${holding.stockname}-${idx}`}
@@ -325,6 +343,26 @@ export default function Portfolio({ userid = 1 }) {
                         {holding.percentage.toFixed(2)}%
                       </div>
                       <div>{formatCurrency(holding.nowvalue)}</div>
+                      <div>
+                        {reco ? (
+                          <span
+                            style={{
+                              display: "inline-block",
+                              padding: "3px 10px",
+                              borderRadius: 12,
+                              fontSize: 12,
+                              fontWeight: 700,
+                              backgroundColor: isBuy ? "rgba(34, 197, 94, 0.15)" : isSell ? "rgba(239, 68, 68, 0.15)" : "rgba(245, 158, 11, 0.15)",
+                              color: isBuy ? "#4ade80" : isSell ? "#f87171" : "#fbbf24",
+                              border: `1px solid ${isBuy ? "rgba(34, 197, 94, 0.3)" : isSell ? "rgba(239, 68, 68, 0.3)" : "rgba(245, 158, 11, 0.3)"}`,
+                            }}
+                          >
+                            {displayAction}
+                          </span>
+                        ) : (
+                          <span style={{ fontSize: 12, color: "#64748b" }}>Analyzing...</span>
+                        )}
+                      </div>
                       <div className="row-actions">
                         <button
                           onClick={() => openModal("buy", holding)}

@@ -320,7 +320,7 @@ insert.py (run daily / on-demand)
 cd BACKEND
 python -m venv venv && venv\Scripts\activate
 pip install -r invest/requirements.txt
-# Ensure .env is populated (SECRET_KEY, DB_HOST, DB_USER, DB_PASSWORD, AWS_*, HF_SPACE_URL, GNEWS_API_KEY, NEWSAPI_KEY)
+# Ensure .env is populated (SECRET_KEY, DB_HOST, DB_USER, DB_PASSWORD, AWS_*, HF_SPACE_URL, GNEWS_API_KEY, NEWSAPI_KEY, ANTHROPIC_API_KEY)
 python run.py          # Flask on http://localhost:5000
 ```
 

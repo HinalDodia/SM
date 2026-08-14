@@ -85,3 +85,4 @@ Werkzeug==3.1.8
 yfinance==1.4.1
 mangum
 asgiref
+anthropic>=0.18.0

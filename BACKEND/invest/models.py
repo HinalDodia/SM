@@ -123,3 +123,31 @@ class UserMilestones(db.Model):
     milestone_id = db.Column(db.Integer, db.ForeignKey("milestones.milestone_id"))
     achieved_on = db.Column(db.DateTime, default=datetime.utcnow)
 
+
+class UserProfile(db.Model):
+    __tablename__ = 'user_profiles'
+    profile_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    userid = db.Column(db.Integer, db.ForeignKey('users.userid', ondelete='CASCADE'), nullable=False, unique=True)
+    risk_tolerance = db.Column(db.Enum('low', 'moderate', 'high'), nullable=False, default='moderate')
+    investment_goal = db.Column(db.Enum('growth', 'income', 'preservation', 'short_term_trading'), nullable=False)
+    time_horizon = db.Column(db.Enum('short_term', 'medium_term', 'long_term'), nullable=False)
+    capital_available = db.Column(db.Numeric(12, 2), nullable=False)
+    max_per_trade_pct = db.Column(db.Numeric(5, 2), default=10.00)
+    experience_level = db.Column(db.Enum('beginner', 'intermediate', 'advanced'), default='beginner')
+    created_at = db.Column(db.TIMESTAMP, server_default=db.func.now())
+    updated_at = db.Column(db.TIMESTAMP, server_default=db.func.now(), onupdate=db.func.now())
+ 
+ 
+class Recommendation(db.Model):
+    __tablename__ = 'recommendations'
+    rec_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    userid = db.Column(db.Integer, db.ForeignKey('users.userid'), nullable=False)
+    stock_id = db.Column(db.Integer, db.ForeignKey('stock.stock_id'), nullable=False)
+    action = db.Column(db.Enum('buy', 'sell', 'hold'), nullable=False)
+    suggested_amount = db.Column(db.Numeric(12, 2))
+    score = db.Column(db.Numeric(4, 2))
+    explanation = db.Column(db.Text)
+    raw_data_snapshot = db.Column(db.JSON)
+    created_at = db.Column(db.TIMESTAMP, server_default=db.func.now())
+ 
+

@@ -18,6 +18,8 @@ import FinancialsPage from './FinancialsPage.jsx';
 import SecFilingsPage from './SecFilingsPage.jsx';
 import ShortInterest from './ShortInterest.jsx';
 import Markets from './Markets.jsx';
+import AnalyzerProfile from './AnalyzerProfile.jsx';
+import AnalyzerRecommendations from './AnalyzerRecommendations.jsx';
 
 function AppWrapper() {
 
@@ -115,6 +117,9 @@ function AppWrapper() {
       <Route path="/stock-options/:symbol" element={<StockDetailPage tab="options" />} />
       <Route path="/stock-bse-filings/:symbol" element={<SecFilingsPage />} />
       <Route path="/stock-short-interest/:symbol" element={<StockDetailPage tab="shortinterest" />} />
+
+      <Route path="/analyzer/profile" element={<AnalyzerProfile />} />
+      <Route path="/analyzer/recommendations" element={<AnalyzerRecommendations />} />
 
     </Routes>
   );

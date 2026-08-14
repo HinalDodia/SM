@@ -147,6 +147,11 @@ def create_app():
     app.register_blueprint(auth_bp)
 
     print("DEBUG: All blueprints registered!")
+
+    # ---- Ensure all MySQL tables (user_profiles, recommendations, etc.) exist ----
+    with app.app_context():
+        from . import models  # noqa: F401
+        db.create_all()
     #
     #    # ---- CORS on every response ----
     #

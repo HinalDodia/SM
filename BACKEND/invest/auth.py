@@ -31,7 +31,7 @@ def _secret_key() -> str:
 def _issue_jwt(userid: int) -> str:
     """Sign and return a JWT containing the user's ID and a 24-hour expiry."""
     payload = {
-        "sub": userid,
+        "sub": str(userid),
         "exp": datetime.now(timezone.utc) + timedelta(hours=_JWT_TTL_HOURS),
         "iat": datetime.now(timezone.utc),
     }

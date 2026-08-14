@@ -23,6 +23,9 @@ import pandas as pd
 import time
 import base64
 import os
+from .models import db, UserProfile, Recommendation, Stock
+ 
+from . import market_data, scoring, explainer
 from Endpoints.stock_common import get_yf_symbol
 from Endpoints.stock_page import stock_page as stock_page_fallback
 from Endpoints.stock_chart import stock_chart as stock_chart_fallback
@@ -43,6 +46,10 @@ routes_bp = Blueprint("routes_bp", __name__)
 # actual scope of the project (data pipeline, dashboards, etc). Raise this
 # when more stocks are added — nothing else needs to change.
 NUM_SUPPORTED_STOCKS = 10
+TRACKED_SYMBOLS = [
+    "RELIANCE", "TCS", "INFY", "HDFCBANK", "ICICIBANK",
+    "SBIN", "AXISBANK", "KOTAKBANK", "BAJFINANCE", "BAJAJFINSV"
+]
 
 HF_BASE_URL=os.getenv("HF_SPACE_URL")
 HF_TOKEN      = os.getenv("HF_TOKEN")
@@ -1102,3 +1109,121 @@ def stock_short_interest(symbol):
     except Exception as e:
         print(f"[DynamoDB] stock-short-interest read failed for {symbol}: {e}")
     return short_interest_fallback(symbol)
+
+
+@routes_bp.route("/analyzer/profile/<int:userid>", methods=["GET"])
+@auth_required
+@cross_origin(supports_credentials=True)
+def get_profile(userid):
+    if g.current_userid != userid:
+        return jsonify({"error": "Forbidden"}), 403
+    profile = UserProfile.query.filter_by(userid=userid).first()
+    if not profile:
+        return jsonify({"error": "No profile set up yet"}), 404
+    return jsonify({
+        "risk_tolerance": profile.risk_tolerance,
+        "investment_goal": profile.investment_goal,
+        "time_horizon": profile.time_horizon,
+        "capital_available": float(profile.capital_available),
+        "max_per_trade_pct": float(profile.max_per_trade_pct),
+        "experience_level": profile.experience_level,
+    })
+ 
+ 
+@routes_bp.route("/analyzer/profile", methods=["POST"])
+@auth_required
+@cross_origin(supports_credentials=True)
+def upsert_profile():
+    data = request.get_json() or {}
+    body_userid = data.get("userid")
+    if body_userid is None or g.current_userid != int(body_userid):
+        return jsonify({"error": "Forbidden"}), 403
+ 
+    required = ["risk_tolerance", "investment_goal", "time_horizon", "capital_available"]
+    missing = [f for f in required if data.get(f) in (None, "")]
+    if missing:
+        return jsonify({"error": f"Missing fields: {', '.join(missing)}"}), 400
+ 
+    try:
+        capital_available = float(data["capital_available"])
+        if capital_available <= 0:
+            raise ValueError
+    except (TypeError, ValueError):
+        return jsonify({"error": "capital_available must be a positive number"}), 400
+ 
+    profile = UserProfile.query.filter_by(userid=body_userid).first()
+    if not profile:
+        profile = UserProfile(userid=body_userid)
+        db.session.add(profile)
+ 
+    profile.risk_tolerance = data["risk_tolerance"]
+    profile.investment_goal = data["investment_goal"]
+    profile.time_horizon = data["time_horizon"]
+    profile.capital_available = capital_available
+    profile.max_per_trade_pct = data.get("max_per_trade_pct", 10.00)
+    profile.experience_level = data.get("experience_level", "beginner")
+ 
+    db.session.commit()
+    return jsonify({"message": "Profile saved"}), 200
+ 
+ 
+@routes_bp.route("/analyzer/recommendations/<int:userid>", methods=["GET"])
+@auth_required
+@cross_origin(supports_credentials=True)
+def get_analyzer_recommendations(userid):
+    if g.current_userid != userid:
+        return jsonify({"error": "Forbidden"}), 403
+ 
+    profile_row = UserProfile.query.filter_by(userid=userid).first()
+    if not profile_row:
+        return jsonify({"error": "Set up an investment profile first"}), 400
+ 
+    profile = {
+        "risk_tolerance": profile_row.risk_tolerance,
+        "investment_goal": profile_row.investment_goal,
+        "time_horizon": profile_row.time_horizon,
+        "capital_available": float(profile_row.capital_available),
+        "max_per_trade_pct": float(profile_row.max_per_trade_pct),
+        "experience_level": profile_row.experience_level,
+    }
+ 
+    results = []
+    for symbol in TRACKED_SYMBOLS:
+        market = market_data.get_scoring_inputs(symbol)
+        result = scoring.score_stock(profile, market)
+        amount = scoring.suggested_amount(profile, result.action)
+ 
+        try:
+            explanation = explainer.explain(
+                profile, symbol, result.action, result.score, result.reasons
+            )
+        except Exception as e:
+            # Claude API not configured / failed — still return the
+            # data-grounded recommendation, just without prose explanation.
+            explanation = None
+ 
+        stock_row = Stock.query.filter_by(stock_symbol=symbol).first()
+        if stock_row:
+            rec = Recommendation(
+                userid=userid,
+                stock_id=stock_row.stock_id,
+                action=result.action,
+                suggested_amount=amount,
+                score=result.score,
+                explanation=explanation,
+                raw_data_snapshot=market,
+            )
+            db.session.add(rec)
+ 
+        results.append({
+            "symbol": symbol,
+            "action": result.action,
+            "score": result.score,
+            "suggested_amount": amount,
+            "reasons": result.reasons,
+            "explanation": explanation,
+        })
+ 
+    db.session.commit()
+    return jsonify({"recommendations": results})
+ 

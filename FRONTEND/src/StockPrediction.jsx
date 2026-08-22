@@ -8,13 +8,13 @@ import { API_URL } from "./config";
 import { Line, Bar } from "react-chartjs-2";
 import { motion, AnimatePresence } from "framer-motion";
 import { UserContext } from "./UserContext";
-import AnalyzerCard from "./AnalyzerCard";
 import {
   BarChart3, TrendingUp, TrendingDown, Minus, Search, Loader2,
   IndianRupee, Target, BookmarkPlus, CheckCircle2, Newspaper,
   Clock, AlertTriangle, ShieldCheck, Users, Activity, Zap,
   Gauge, Scale, Flame, Layers, SlidersHorizontal, BarChart2
 } from "lucide-react";
+import AnalyzerCard from "./AnalyzerCard";
 
 ChartJS.register(LineElement, BarElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend, Filler, annotationPlugin);
 
@@ -428,6 +428,7 @@ function HistoryTable({ rows }) {
 /* ═══════════════ MAIN COMPONENT ═══════════════ */
 export default function StockPrediction() {
   const { user } = useContext(UserContext);
+  const uid = user?.userid || JSON.parse(localStorage.getItem("user") || "{}")?.userid || null;
 
   /* ── State ── */
   const [symbol, setSymbol] = useState("");
@@ -620,15 +621,18 @@ export default function StockPrediction() {
         week52_high, week52_low, day_open, day_high, day_low, prev_close,
       } = data;
 
-      const confVal = confidence ?? confidence_score;
-      const changeAmt = (predicted_price - current_price).toFixed(2);
-      const calculatedChangePct = current_price ? ((changeAmt / current_price) * 100).toFixed(2) : "0.00";
-      const finalChangePct = change_pct ?? calculatedChangePct;
+      const currNum = Number(current_price) || 0;
+      const predNum = Number(predicted_price) || 0;
+      const confVal = confidence ?? confidence_score ?? 0;
+      const changeAmtNum = predNum - currNum;
+      const changeAmt = changeAmtNum.toFixed(2);
+      const calculatedChangePct = currNum ? ((changeAmtNum / currNum) * 100).toFixed(2) : "0.00";
+      const finalChangePct = change_pct != null ? Number(change_pct).toFixed(2) : calculatedChangePct;
 
       processRawData(data);
 
       const newMeta = {
-        sym, current_price, predicted_price, verdict, trend,
+        sym, current_price: currNum, predicted_price: predNum, verdict: verdict || (changeAmtNum >= 0 ? "Upward" : "Downward"), trend,
         predicted_price_range, week52_high, week52_low, day_open, day_high, day_low, prev_close,
         changeAmt, changePct: finalChangePct, support_resistance, confidence: confVal,
         hist_accuracy: hist_accuracy ?? model_accuracy,
@@ -640,7 +644,7 @@ export default function StockPrediction() {
       /* News */
       let parsedNews = [];
       if (newsRes?.ok) {
-        const nd = await newsRes.json();
+        const nd = await newsRes.json().catch(() => null);
         parsedNews = (nd?.news ?? nd?.headlines ?? nd?.articles ?? (Array.isArray(nd) ? nd : [])).slice(0, 5);
         setNews(parsedNews);
       }
@@ -648,21 +652,24 @@ export default function StockPrediction() {
       /* Competitors */
       let parsedComps = [];
       if (compRes?.ok) {
-        const cd = await compRes.json();
+        const cd = await compRes.json().catch(() => null);
         parsedComps = (cd?.analysis ?? cd?.competitors ?? (Array.isArray(cd) ? cd : [])).slice(0, 5);
         setCompetitors(parsedComps);
       }
 
       /* History entry */
       const now = new Date().toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" });
-      const histEntry = { sym, current_price, predicted_price, change: changeAmt, change_pct: finalChangePct, verdict, confidence: confVal, time: now };
-      const newHistory = [histEntry, ...history.slice(0, 9)];
+      const histEntry = { sym, current_price: currNum, predicted_price: predNum, change: changeAmt, change_pct: finalChangePct, verdict: newMeta.verdict, confidence: confVal, time: now };
+      const newHistory = [histEntry, ...history.filter(h => h.sym !== sym).slice(0, 9)];
       setHistory(newHistory);
 
       setHasResult(true);
       saveCache({ symbol: sym, meta: newMeta, news: parsedNews, competitors: parsedComps, history: newHistory });
 
-    } catch { setError("Failed to fetch prediction. Check network."); }
+    } catch (err) {
+      console.error("Prediction error:", err);
+      setError(err?.message || "Failed to fetch prediction. Check network.");
+    }
     finally { setLoading(false); }
   };
 
@@ -730,27 +737,10 @@ export default function StockPrediction() {
       {/* ── Results ── */}
       <AnimatePresence>
         {hasResult && meta && (
-          <>
-            {/* ── Analyzer Card — independent fetch, never blocks charts ── */}
-            {user?.userid && (
-              <motion.div
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.35 }}
-                style={{ maxWidth: 600, margin: "0 auto 20px" }}
-              >
-                <AnalyzerCard
-                  context="predict"
-                  symbol={meta.sym}
-                  userId={user.userid}
-                />
-              </motion.div>
-            )}
-
+          <motion.div key="predict-results-container" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             {/* ── Row 1: Stat pills ── */}
             <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.42 }}
               style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(175px,1fr))", gap: 11, marginBottom: 18 }}>
-
               <StatPill label="Current Price" value={`₹${meta.current_price?.toLocaleString("en-IN")}`} sub="Last close" accent="#54C5FF" icon={<IndianRupee size={10} />} />
               <StatPill label="Predicted Price" value={`₹${meta.predicted_price?.toLocaleString("en-IN")}`} sub="LSTM next-day" accent="#7C8CFF" icon={<Target size={10} />} />
               <StatPill label="Change" value={`${meta.changeAmt >= 0 ? "+" : ""}${meta.changeAmt}`} sub={`${meta.changePct >= 0 ? "+" : ""}${meta.changePct}% vs prev`} accent={vc} icon={<VI size={10} />} />
@@ -760,6 +750,18 @@ export default function StockPrediction() {
                 <div style={{ fontSize: 11, color: "#94a3b8" }}>{meta.sym}.NS</div>
               </div>
             </motion.div>
+
+            {/* ── Analyzer Card ── */}
+            {uid && meta.sym && (
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.35, delay: 0.08 }}
+                style={{ marginBottom: 18 }}
+              >
+                <AnalyzerCard symbol={meta.sym} userId={uid} context="predict" />
+              </motion.div>
+            )}
 
             {/* ── Row 2: Waterfall Card + AI Signal & Risk Card ── */}
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 18 }}>
@@ -875,7 +877,7 @@ export default function StockPrediction() {
                 </GlassCard>
               </div>
             )}
-          </>
+          </motion.div>
         )}
       </AnimatePresence>
 

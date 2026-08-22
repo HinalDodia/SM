@@ -2,10 +2,10 @@ import React, { useState, useEffect, useCallback, useContext, useMemo } from "re
 import axios from "axios";
 import "./Watchlist.css";
 import RecommendationModal from "./RecommendationModal";
+import AnalyzerCard from "./AnalyzerCard";
 import { UserContext } from "./UserContext";
 import { useNavigate, useLocation } from "react-router-dom";
 import { API_URL } from "./config";
-import AnalyzerCard from "./AnalyzerCard";
 const SearchIcon = () => <span aria-hidden>🔍</span>;
 
 function Watchlist({ userid = 1 }) {
@@ -35,6 +35,7 @@ function Watchlist({ userid = 1 }) {
   const [purchasedStock, setPurchasedStock] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [showErrorModal, setShowErrorModal] = useState(false);
+  const [activeAnalyze, setActiveAnalyze] = useState(null); // symbol or null
 
   // ---------------- fetchers ----------------
   const fetchWallet = useCallback(() => {
@@ -73,8 +74,7 @@ function Watchlist({ userid = 1 }) {
           change_percent: it.change_percent ?? 0,
         }));
 
-        console.log("WATCHLIST RAW:", data);
-        console.log("WATCHLIST NORMALIZED:", normalized);
+
 
         setTrackedStocks(normalized);
       })
@@ -338,70 +338,83 @@ function Watchlist({ userid = 1 }) {
           {trackedStocks.map((stock) => {
             const up = (stock.change || 0) >= 0;
             return (
-              <div key={stock.stock_id || stock.symbol} style={{ marginBottom: 12 }}>
-                {/* ── Row header: symbol / price / change / actions ── */}
-                <div className="wl-row">
-                  {/* Stock */}
-                  <div className="wl-cell stock">
-                    <img
-                      src={stock.logo_url || "/logo-placeholder.svg"}
-                      alt={stock.symbol}
-                      className="wl-stock-logo"
-                      onError={(e) => (e.currentTarget.src = "/logo-placeholder.svg")}
-                    />
+              <React.Fragment key={stock.stock_id || stock.symbol}>
+                <div
+                  className="wl-row"
+                >
+                {/* Stock */}
+                <div className="wl-cell stock">
+                  <img
+                    src={stock.logo_url || "/logo-placeholder.svg"}
+                    alt={stock.symbol}
+                    className="wl-stock-logo"
+                    onError={(e) => (e.currentTarget.src = "/logo-placeholder.svg")}
+                  />
 
-                    <div className="stock-meta">
-                      <div
-                        className="sym"
-                        style={{ cursor: "pointer" }}
-                        onClick={() =>
-                          window.open(`/stock-page/${stock.symbol}`, "_blank", "noopener,noreferrer")
-                        }
-                      >
-                        {stock.symbol}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Price */}
-                  <div className="wl-cell price">₹{stock.price}</div>
-
-                  {/* Change */}
-                  <div className="wl-cell">
-                    <span className={`badge ${up ? "badge-up" : "badge-down"}`}>
-                      {stock.change} ({stock.change_percent}%)
-                    </span>
-                  </div>
-
-                  {/* Action */}
-                  <div className="wl-cell action">
-                    <button className="btn btn-buy" onClick={() => openBuyModal(stock)}>
-                      + Buy
-                    </button>
-                    <button
-                      className="btn btn-cancel"
-                      onClick={() => removeTracked(stock.stock_id)}
-                      style={{ marginLeft: 8 }}
+                  <div className="stock-meta">
+                    {/* ONLY WHITE TEXT — CLICKABLE */}
+                    <div
+                      className="sym"
+                      style={{ cursor: "pointer" }}
+                      onClick={() =>
+                        window.open(`/stock-page/${stock.symbol}`, "_blank", "noopener,noreferrer")
+                      }
                     >
-                      Remove
-                    </button>
+                      {stock.symbol}
+                    </div>
                   </div>
                 </div>
 
-                {/* ── AnalyzerCard — independent fetch, never blocks the row list ── */}
-                {uid && (
-                  <div style={{ marginTop: 8 }}>
-                    <AnalyzerCard
-                      context="watchlist"
-                      symbol={stock.symbol}
-                      userId={uid}
-                    />
-                  </div>
-                )}
+
+
+
+                {/* Price */}
+                <div className="wl-cell price">₹{stock.price}</div>
+
+                {/* Change */}
+                <div className="wl-cell">
+                  <span
+                    className={`badge ${up ? "badge-up" : "badge-down"}`}
+                  >
+                    {stock.change} ({stock.change_percent}%)
+                  </span>
+                </div>
+
+                {/* Action */}
+                <div className="wl-cell action">
+                  <button
+                    className="btn btn-buy"
+                    onClick={() => openBuyModal(stock)}
+                  >
+                    + Buy
+                  </button>
+                  <button
+                    className="btn btn-cancel"
+                    onClick={() => removeTracked(stock.stock_id)}
+                    style={{ marginLeft: 8 }}
+                  >
+                    Remove
+                  </button>
+                  <button
+                    className={`btn ${activeAnalyze === stock.symbol ? "btn-cancel" : "btn-analyze"}`}
+                    onClick={() => setActiveAnalyze(prev => prev === stock.symbol ? null : stock.symbol)}
+                    style={{ marginLeft: 8 }}
+                    title="Get AI analyzer read"
+                  >
+                    🤖 {activeAnalyze === stock.symbol ? "Close" : "Analyze"}
+                  </button>
+                </div>
               </div>
+
+              {/* Inline AnalyzerCard for this row */}
+              {activeAnalyze === stock.symbol && uid && (
+                <div style={{ padding: "12px 0 4px" }}>
+                  <AnalyzerCard symbol={stock.symbol} userId={uid} context="watchlist" />
+                </div>
+              )}
+              </React.Fragment>
             );
           })}
-
 
           {trackedStocks.length === 0 && (
             <div className="wl-empty">

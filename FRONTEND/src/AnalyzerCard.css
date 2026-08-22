@@ -1,218 +1,243 @@
-/* AnalyzerCard.css — styles for the reusable per-stock analyzer card */
+/* ============================================================
+   AnalyzerCard.css
+   Reusable per-stock AI analyzer card — used on Dashboard,
+   Market, Watchlist, Portfolio, and Predict pages.
+   ============================================================ */
 
+/* ── Outer shell ─────────────────────────────────────────────── */
 .az-card {
-  background: linear-gradient(145deg, rgba(14, 23, 34, 0.97), rgba(8, 15, 22, 0.99));
-  border: 1px solid rgba(84, 197, 255, 0.14);
+  position: relative;
+  background: linear-gradient(
+    135deg,
+    rgba(14, 23, 34, 0.96) 0%,
+    rgba(10, 17, 26, 0.98) 100%
+  );
+  border: 1px solid rgba(84, 197, 255, 0.12);
   border-radius: 16px;
   padding: 18px 20px 16px;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
   overflow: hidden;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.az-card:hover {
-  border-color: rgba(84, 197, 255, 0.28);
-  box-shadow: 0 4px 28px rgba(84, 197, 255, 0.07);
-}
-
-/* Ambient top-left glow */
+/* subtle top-left gradient blob */
 .az-card::before {
   content: "";
   position: absolute;
-  top: -30px;
-  left: -20px;
+  top: -24px;
+  left: -24px;
   width: 120px;
   height: 120px;
-  background: radial-gradient(circle, rgba(84, 197, 255, 0.07), transparent 70%);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(84, 197, 255, 0.06) 0%,
+    transparent 70%
+  );
   pointer-events: none;
 }
 
-/* ── Header row ── */
-.az-card__header {
+/* ── Header row ──────────────────────────────────────────────── */
+.az-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
+  gap: 10px;
+}
+
+.az-label-group {
+  display: flex;
+  align-items: center;
   gap: 8px;
 }
 
-.az-card__label-row {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-}
-
-.az-card__icon {
+.az-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(84, 197, 255, 0.12), rgba(84, 197, 255, 0.04));
+  border: 1px solid rgba(84, 197, 255, 0.18);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
-  background: rgba(84, 197, 255, 0.1);
-  border-radius: 7px;
+  font-size: 15px;
   flex-shrink: 0;
 }
 
-.az-card__label {
+.az-label {
   font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 1.1px;
-  text-transform: uppercase;
-  color: #54c5ff;
-}
-
-.az-card__right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-/* ── Action badge ── */
-.az-badge {
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-  padding: 3px 10px;
-  border-radius: 99px;
-  border: 1.5px solid;
-}
-
-.az-badge--hold {
-  color: #f59e0b;
-  border-color: rgba(245, 158, 11, 0.4);
-  background: rgba(245, 158, 11, 0.1);
-}
-
-.az-badge--buy {
-  color: #26e07f;
-  border-color: rgba(38, 224, 127, 0.4);
-  background: rgba(38, 224, 127, 0.1);
-}
-
-.az-badge--sell {
-  color: #ef4444;
-  border-color: rgba(239, 68, 68, 0.4);
-  background: rgba(239, 68, 68, 0.1);
-}
-
-/* ── Conviction ── */
-.az-conviction {
-  font-size: 11px;
-  font-weight: 600;
-  color: #94a3b8;
-  white-space: nowrap;
-}
-
-.az-conviction span {
-  color: #54c5ff;
-  font-weight: 700;
-}
-
-/* ── Headline ── */
-.az-headline {
-  font-size: 14px;
-  font-weight: 700;
-  color: #e2e8f0;
-  line-height: 1.4;
-  margin-bottom: 10px;
-  letter-spacing: -0.2px;
-}
-
-/* ── Bullets ── */
-.az-bullets {
-  list-style: none;
-  margin: 0 0 12px;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.az-bullets li {
-  font-size: 12px;
-  color: #94a3b8;
-  line-height: 1.45;
-  display: flex;
-  gap: 7px;
-  align-items: flex-start;
-}
-
-.az-bullets li::before {
-  content: "›";
-  color: #54c5ff;
-  font-size: 13px;
-  line-height: 1.3;
-  flex-shrink: 0;
-}
-
-/* ── Action plan box ── */
-.az-action-plan {
-  border: 1px solid rgba(84, 197, 255, 0.18);
-  border-radius: 10px;
-  padding: 10px 12px;
-  background: rgba(84, 197, 255, 0.04);
-}
-
-.az-action-plan__label {
-  font-size: 9px;
   font-weight: 700;
   letter-spacing: 1.2px;
   text-transform: uppercase;
-  color: #54c5ff;
-  margin-bottom: 4px;
+  color: rgba(84, 197, 255, 0.7);
 }
 
-.az-action-plan__text {
-  font-size: 12px;
-  color: #cbd5e1;
-  line-height: 1.45;
-}
-
-/* ── Loading skeleton ── */
-.az-skeleton {
+/* conviction badge (right side) */
+.az-conviction {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #9ab8d0;
+  white-space: nowrap;
+}
+
+.az-conviction-arrow {
+  font-size: 14px;
+  color: #54c5ff;
+}
+
+/* ── Action badge ────────────────────────────────────────────── */
+.az-action-row {
+  display: flex;
+  align-items: center;
   gap: 10px;
 }
 
-.az-skel-line {
-  height: 12px;
-  border-radius: 6px;
-  background: linear-gradient(90deg,
-    rgba(148, 163, 184, 0.06) 25%,
-    rgba(148, 163, 184, 0.13) 50%,
-    rgba(148, 163, 184, 0.06) 75%
-  );
-  background-size: 200% 100%;
-  animation: az-shimmer 1.4s infinite;
+.az-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 0.2s ease;
 }
 
-.az-skel-line--short  { width: 45%; }
-.az-skel-line--medium { width: 70%; }
-.az-skel-line--full   { width: 100%; }
+.az-badge:hover { transform: scale(1.04); }
+
+.az-badge--hold {
+  background: rgba(245, 158, 11, 0.12);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.az-badge--buy {
+  background: rgba(32, 208, 122, 0.12);
+  color: #20d07a;
+  border: 1px solid rgba(32, 208, 122, 0.25);
+}
+
+.az-badge--sell {
+  background: rgba(239, 68, 68, 0.10);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.22);
+}
+
+/* ── Headline ─────────────────────────────────────────────────── */
+.az-headline {
+  font-size: 15px;
+  font-weight: 700;
+  color: #e8f4ff;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* ── Bullet list ─────────────────────────────────────────────── */
+.az-bullets {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.az-bullet {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: #97b0c4;
+  line-height: 1.45;
+}
+
+.az-bullet-dot {
+  flex-shrink: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(84, 197, 255, 0.55);
+  margin-top: 6px;
+}
+
+/* ── Action plan box ─────────────────────────────────────────── */
+.az-action-plan {
+  border: 1px solid rgba(84, 197, 255, 0.1);
+  border-left: 3px solid rgba(84, 197, 255, 0.45);
+  border-radius: 0 10px 10px 0;
+  background: rgba(84, 197, 255, 0.03);
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.az-action-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(84, 197, 255, 0.55);
+}
+
+.az-action-text {
+  font-size: 13px;
+  color: #b8d4e8;
+  line-height: 1.4;
+}
+
+/* ── Loading skeleton ────────────────────────────────────────── */
+.az-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
 
 @keyframes az-shimmer {
-  0%   { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
 }
 
-/* ── Error / no-profile state ── */
-.az-notice {
-  font-size: 12px;
-  color: #64748b;
+.az-skel-line {
+  border-radius: 8px;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.03) 25%,
+    rgba(255,255,255,0.07) 50%,
+    rgba(255,255,255,0.03) 75%
+  );
+  background-size: 800px 100%;
+  animation: az-shimmer 1.6s ease-in-out infinite;
+}
+
+.az-skel-line--header { height: 22px; width: 55%; }
+.az-skel-line--title  { height: 18px; width: 80%; }
+.az-skel-line--body   { height: 14px; width: 100%; }
+.az-skel-line--body2  { height: 14px; width: 88%; }
+.az-skel-line--body3  { height: 14px; width: 73%; }
+.az-skel-line--box    { height: 48px; width: 100%; border-radius: 10px; }
+
+/* ── Empty / error states ────────────────────────────────────── */
+.az-empty {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px 0;
+  gap: 10px;
+  padding: 12px 0 4px;
+  color: #6b8099;
+  font-size: 13px;
 }
 
-.az-notice a {
-  color: #54c5ff;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.az-notice a:hover {
-  text-decoration: underline;
+.az-empty-icon {
+  font-size: 18px;
+  flex-shrink: 0;
 }

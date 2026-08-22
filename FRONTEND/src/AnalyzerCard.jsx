@@ -1,192 +1,180 @@
 /**
- * AnalyzerCard — reusable per-stock analyzer card.
+ * AnalyzerCard — reusable per-stock AI analyzer card.
  *
  * Props:
- *   symbol   {string}  — NSE ticker, e.g. "RELIANCE"
- *   userId   {number}  — logged-in user ID
- *   context  {string}  — "dashboard"|"market"|"watchlist"|"portfolio"|"predict"
- *   holding  {object?} — { totalquantity, averagebuyprice, ltp, profitorloss, percentage }
- *                         Pass only from Portfolio context; omit elsewhere.
+ *   symbol   {string}  - Stock ticker, e.g. "RELIANCE"
+ *   userId   {number}  - Authenticated user ID
+ *   context  {string}  - "dashboard" | "market" | "watchlist" | "portfolio" | "predict"
+ *   holding  {object}  - Optional: { qty, avgPrice } — passed for portfolio context only.
+ *                        The backend looks up position data server-side; this prop is
+ *                        not sent to the server but can be used for local display hints.
  *
- * Action buttons are NOT rendered here — each consuming page owns its own buttons.
- * This card fetches independently and never blocks surrounding page content.
+ * Behaviour:
+ *   - Fetches independently — never blocks surrounding page content.
+ *   - Shows an inline skeleton while loading.
+ *   - Shows an inline "Set up your profile" message on 404 (no profile).
+ *   - Shows a compact error note on other failures.
+ *   - Action buttons are NOT rendered here — each page adds its own below/beside.
  */
 
-import React, { useEffect, useState, useCallback, useRef } from "react";
-import { Bot, AlertCircle } from "lucide-react";
+import React, { useEffect, useState, useCallback } from "react";
 import { fetchAnalyzerRecommendation } from "./api";
+import OnboardingModal from "./OnboardingModal";
 import "./AnalyzerCard.css";
 
-// Label text varies by context to match each page's screenshot
-const CONTEXT_LABEL = {
-  dashboard:  "YOUR PERSONAL ANALYZER",
-  market:     "ANALYZER",
-  watchlist:  "ANALYZER",
-  portfolio:  "ANALYZER",
-  predict:    "ANALYZER",
-};
-
-function badgeClass(action) {
-  if (!action) return "az-badge az-badge--hold";
-  return `az-badge az-badge--${action.toLowerCase()}`;
+/* ── Label text by context ───────────────────────────────────── */
+function cardLabel(context, symbol) {
+  if (context === "dashboard") return "YOUR PERSONAL ANALYZER";
+  return `ANALYZER · ${symbol}`;
 }
 
-function SkeletonLoader() {
+/* ── Action badge ────────────────────────────────────────────── */
+const ACTION_META = {
+  buy:  { emoji: "↑", cls: "az-badge--buy",  text: "BUY"  },
+  sell: { emoji: "↓", cls: "az-badge--sell", text: "SELL" },
+  hold: { emoji: "→", cls: "az-badge--hold", text: "HOLD" },
+};
+
+function ActionBadge({ action }) {
+  const meta = ACTION_META[action] || ACTION_META.hold;
   return (
-    <div className="az-skeleton" aria-label="Loading analyzer…">
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <div className="az-skel-line az-skel-line--short" style={{ height: 14 }} />
-        <div className="az-skel-line" style={{ width: 50, height: 18 }} />
-      </div>
-      <div className="az-skel-line az-skel-line--medium" style={{ height: 13 }} />
-      <div className="az-skel-line az-skel-line--full"   style={{ height: 11 }} />
-      <div className="az-skel-line az-skel-line--full"   style={{ height: 11 }} />
-      <div className="az-skel-line" style={{ width: "80%", height: 11 }} />
-      <div className="az-skel-line az-skel-line--full"   style={{ height: 36, borderRadius: 10 }} />
+    <span className={`az-badge ${meta.cls}`}>
+      <span>{meta.emoji}</span>
+      {meta.text}
+    </span>
+  );
+}
+
+/* ── Loading skeleton ────────────────────────────────────────── */
+function Skeleton() {
+  return (
+    <div className="az-skeleton">
+      <div className="az-skel-line az-skel-line--header" />
+      <div className="az-skel-line az-skel-line--title"  />
+      <div className="az-skel-line az-skel-line--body"   />
+      <div className="az-skel-line az-skel-line--body2"  />
+      <div className="az-skel-line az-skel-line--body3"  />
+      <div className="az-skel-line az-skel-line--box"    />
     </div>
   );
 }
 
+/* ── Main component ──────────────────────────────────────────── */
 export default function AnalyzerCard({ symbol, userId, context = "market", holding }) {
-  const [rec, setRec]       = useState(null);
-  const [loading, setLoad]  = useState(false);
-  const [error, setError]   = useState(null);
-
-  // Keep track of latest fetch to avoid stale-closure race
-  const fetchKey = useRef(0);
+  const [data,    setData]    = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error,   setError]   = useState(null);   // { code, message }
+  const [showOnboarding, setShowOnboarding] = useState(false);
 
   const load = useCallback(async () => {
     if (!symbol || !userId) return;
-
-    const key = ++fetchKey.current;
-    setLoad(true);
+    setLoading(true);
     setError(null);
-    setRec(null);
-
+    setData(null);
     try {
-      const data = await fetchAnalyzerRecommendation(userId, symbol);
-      if (fetchKey.current !== key) return; // stale — another fetch started
-
-      if (data?.error === "no_profile") {
-        setError("no_profile");
-      } else if (data?.error) {
-        setError("fetch_failed");
-      } else {
-        setRec(data);
-      }
-    } catch {
-      if (fetchKey.current !== key) return;
-      setError("fetch_failed");
+      const rec = await fetchAnalyzerRecommendation(userId, symbol);
+      setData(rec);
+    } catch (err) {
+      setError({ code: err.code || "error", message: err.message || "Failed to load." });
     } finally {
-      if (fetchKey.current === key) setLoad(false);
+      setLoading(false);
     }
   }, [symbol, userId]);
 
   useEffect(() => { load(); }, [load]);
 
-  const label = (context === "dashboard")
-    ? CONTEXT_LABEL.dashboard
-    : `${CONTEXT_LABEL[context] || "ANALYZER"} · ${symbol || ""}`;
-
-  // ── Loading ──────────────────────────────────────────────────────────────
-  if (loading) {
-    return (
-      <div className="az-card">
-        <div className="az-card__header">
-          <div className="az-card__label-row">
-            <div className="az-card__icon">
-              <Bot size={14} color="#54c5ff" />
-            </div>
-            <span className="az-card__label">{label}</span>
-          </div>
-        </div>
-        <SkeletonLoader />
-      </div>
-    );
-  }
-
-  // ── Error states ─────────────────────────────────────────────────────────
-  if (error === "no_profile") {
-    return (
-      <div className="az-card">
-        <div className="az-card__header">
-          <div className="az-card__label-row">
-            <div className="az-card__icon">
-              <Bot size={14} color="#54c5ff" />
-            </div>
-            <span className="az-card__label">{label}</span>
-          </div>
-        </div>
-        <p className="az-notice">
-          <AlertCircle size={13} />
-          Set up your profile to get a personal read on {symbol}.
-        </p>
-      </div>
-    );
-  }
-
-  if (error || !rec) {
-    // Soft fail — don't show a broken UI element, just nothing or a minimal hint
-    if (!symbol || !userId) return null;
-    return (
-      <div className="az-card">
-        <div className="az-card__header">
-          <div className="az-card__label-row">
-            <div className="az-card__icon">
-              <Bot size={14} color="#54c5ff" />
-            </div>
-            <span className="az-card__label">{label}</span>
-          </div>
-        </div>
-        <p className="az-notice">
-          <AlertCircle size={13} />
-          Analyzer unavailable right now. Try again shortly.
-        </p>
-      </div>
-    );
-  }
-
-  // ── Data ─────────────────────────────────────────────────────────────────
-  const action    = rec.action  || "hold";
-  const conv      = rec.conviction ?? 0;
-  const headline  = rec.headline  || "";
-  const bullets   = Array.isArray(rec.bullets) ? rec.bullets : [];
-  const actionPlan = rec.action_plan || "";
-
   return (
-    <div className="az-card" data-testid={`az-card-${symbol}`}>
-      {/* Header */}
-      <div className="az-card__header">
-        <div className="az-card__label-row">
-          <div className="az-card__icon">
-            <Bot size={14} color="#54c5ff" />
+    <div className="az-card">
+      {/* ── Header ── */}
+      <div className="az-header">
+        <div className="az-label-group">
+          <div className="az-icon" role="img" aria-label="AI Analyzer">🤖</div>
+          <span className="az-label">{cardLabel(context, symbol)}</span>
+        </div>
+
+        {data && (
+          <div className="az-conviction">
+            <span className="az-conviction-arrow">↗</span>
+            {data.conviction}% conviction
           </div>
-          <span className="az-card__label">{label}</span>
-        </div>
-        <div className="az-card__right">
-          <span className={badgeClass(action)}>{action.toUpperCase()}</span>
-          <span className="az-conviction">↗ <span>{conv}%</span> conviction</span>
-        </div>
+        )}
       </div>
 
-      {/* Headline */}
-      {headline && <p className="az-headline">{headline}</p>}
+      {/* ── Body ── */}
+      {loading && <Skeleton />}
 
-      {/* Bullets */}
-      {bullets.length > 0 && (
-        <ul className="az-bullets">
-          {bullets.map((b, i) => (
-            <li key={i}>{b}</li>
-          ))}
-        </ul>
+      {!loading && error && error.code === "no_profile" && (
+        <div className="az-empty">
+          <span className="az-empty-icon">🔧</span>
+          <span>Set up your profile to get a personal read&nbsp;</span>
+          <button
+            onClick={() => setShowOnboarding(true)}
+            style={{
+              background: "rgba(84,197,255,0.1)",
+              border: "1px solid rgba(84,197,255,0.25)",
+              borderRadius: 6,
+              color: "#54c5ff",
+              fontSize: 12,
+              fontWeight: 700,
+              padding: "4px 10px",
+              cursor: "pointer",
+              fontFamily: "inherit",
+            }}
+          >
+            Set Up →
+          </button>
+        </div>
       )}
 
-      {/* Action plan */}
-      {actionPlan && (
-        <div className="az-action-plan">
-          <div className="az-action-plan__label">Action plan</div>
-          <div className="az-action-plan__text">{actionPlan}</div>
+      {!loading && error && error.code !== "no_profile" && (
+        <div className="az-empty">
+          <span className="az-empty-icon">⚠️</span>
+          {error.message}
         </div>
+      )}
+
+      {!loading && data && (
+        <>
+          {/* Action badge */}
+          <div className="az-action-row">
+            <ActionBadge action={data.action} />
+          </div>
+
+          {/* Headline */}
+          <p className="az-headline">{data.headline}</p>
+
+          {/* Bullets */}
+          {data.bullets && data.bullets.length > 0 && (
+            <ul className="az-bullets">
+              {data.bullets.map((b, i) => (
+                <li key={i} className="az-bullet">
+                  <span className="az-bullet-dot" />
+                  {b}
+                </li>
+              ))}
+            </ul>
+          )}
+
+          {/* Action plan */}
+          {data.action_plan && (
+            <div className="az-action-plan">
+              <span className="az-action-label">Action plan:</span>
+              <span className="az-action-text">{data.action_plan}</span>
+            </div>
+          )}
+        </>
+      )}
+
+      {/* Onboarding modal — launched from the no-profile nudge */}
+      {showOnboarding && userId && (
+        <OnboardingModal
+          userId={userId}
+          onClose={() => setShowOnboarding(false)}
+          onSaved={() => {
+            setShowOnboarding(false);
+            load();   // re-fetch now that profile exists
+          }}
+        />
       )}
     </div>
   );

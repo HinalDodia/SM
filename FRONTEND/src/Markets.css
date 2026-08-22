@@ -334,8 +334,25 @@
   }
 }
 
-/* ── Selected card highlight ── */
-.mkt-card--selected {
-  border-color: rgba(84, 197, 255, 0.45) !important;
-  box-shadow: 0 0 0 1px rgba(84, 197, 255, 0.2), 0 4px 24px rgba(84, 197, 255, 0.12);
+/* ── Analyze toggle button (inside StockCard) ── */
+.mkt-analyze-btn {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 7px 0;
+  background: rgba(84, 197, 255, 0.07);
+  border: 1px solid rgba(84, 197, 255, 0.18);
+  border-radius: 8px;
+  color: rgba(84, 197, 255, 0.7);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  letter-spacing: 0.3px;
+}
+.mkt-analyze-btn:hover,
+.mkt-analyze-btn.active {
+  background: rgba(84, 197, 255, 0.14);
+  border-color: rgba(84, 197, 255, 0.35);
+  color: #54c5ff;
 }

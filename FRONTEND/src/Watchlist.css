@@ -444,3 +444,21 @@ body{margin:0;background:#0b0f12;;color:var(--white);font-family:Inter,system-ui
      });
    });
 */
+
+/* ── Analyze button ── */
+.btn-analyze {
+  background: rgba(84, 197, 255, 0.08);
+  border: 1px solid rgba(84, 197, 255, 0.22);
+  color: rgba(84, 197, 255, 0.8);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.btn-analyze:hover {
+  background: rgba(84, 197, 255, 0.15);
+  border-color: rgba(84, 197, 255, 0.4);
+  color: #54c5ff;
+}

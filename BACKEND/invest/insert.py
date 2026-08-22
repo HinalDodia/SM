@@ -38,10 +38,7 @@ Environment variables
     NEWSAPI_KEY     : NewsAPI key
 """
 
-try:
-    from options_service import OptionsService  # standalone script usage
-except ImportError:
-    from .options_service import OptionsService  # package usage
+
 import os
 import re 
 import csv
@@ -63,6 +60,10 @@ import pandas as pd
 import yfinance as yf
 yf.set_tz_cache_location("/tmp")
 import feedparser
+try:
+    from .options_service import OptionsService
+except ImportError:
+    from options_service import OptionsService
 from boto3.dynamodb.conditions import Key
 from bs4 import BeautifulSoup
 import hashlib

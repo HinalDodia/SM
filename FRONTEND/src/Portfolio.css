@@ -214,3 +214,22 @@ button:focus, a:focus, input:focus{outline:3px solid rgba(46,166,255,0.12); outl
   font-weight: 700;
   color: #eab308; /* A nice, rich yellow */
 }
+
+/* ── Analyze button (Portfolio row) ── */
+.btn-analyze-port {
+  background: rgba(84, 197, 255, 0.08);
+  border: 1px solid rgba(84, 197, 255, 0.22);
+  color: rgba(84, 197, 255, 0.85);
+  border-radius: 8px;
+  padding: 6px 11px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+.btn-analyze-port:hover {
+  background: rgba(84, 197, 255, 0.16);
+  border-color: rgba(84, 197, 255, 0.4);
+  color: #54c5ff;
+}

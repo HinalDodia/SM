@@ -31,7 +31,7 @@ def _secret_key() -> str:
 def _issue_jwt(userid: int) -> str:
     """Sign and return a JWT containing the user's ID and a 24-hour expiry."""
     payload = {
-        "sub": userid,
+        "sub": str(userid),   # PyJWT >= 2.x requires sub to be a string
         "exp": datetime.now(timezone.utc) + timedelta(hours=_JWT_TTL_HOURS),
         "iat": datetime.now(timezone.utc),
     }
@@ -130,7 +130,7 @@ def require_user(f):
         if not user_id:
             return jsonify({"status": "fail", "message": "invalid token payload"}), 401
 
-        user = Users.query.get(int(user_id))
+        user = Users.query.get(int(user_id))  # sub is stored as string, cast to int
         if not user:
             return jsonify({"status": "fail", "message": "user not found"}), 401
 

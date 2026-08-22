@@ -12,28 +12,10 @@ db = SQLAlchemy()
 def create_app():
     app = Flask(__name__)
 
-    # ---- Logging setup — make INFO/DEBUG visible in terminal ----
+    # ---- Logging setup — silence verbose DynamoDB/boto3/urllib3 noise ----
     import logging
-    import sys
-    _fmt = logging.Formatter(
-        "[%(asctime)s] %(levelname)s in %(module)s: %(message)s",
-        datefmt="%H:%M:%S"
-    )
-    _handler = logging.StreamHandler(sys.stdout)
-    _handler.setLevel(logging.DEBUG)
-    _handler.setFormatter(_fmt)
-
-    # Apply to app.logger
-    app.logger.setLevel(logging.DEBUG)
-    if not app.logger.handlers:
-        app.logger.addHandler(_handler)
-    app.logger.propagate = False  # prevent duplicate output
-
-    # Apply to root logger so print-less libs also show
-    _root = logging.getLogger()
-    _root.setLevel(logging.DEBUG)
-    if not any(isinstance(h, logging.StreamHandler) for h in _root.handlers):
-        _root.addHandler(_handler)
+    for logger_name in ("botocore", "boto3", "urllib3", "werkzeug", "s3transfer"):
+        logging.getLogger(logger_name).setLevel(logging.WARNING)
 
     # ---- Load .env first so all env vars are available for CORS config etc. ----
     _here = os.path.dirname(os.path.abspath(__file__))
@@ -137,16 +119,9 @@ def create_app():
     from .dashboard import dashboard_bp
     from .auth import auth_bp
 
-    print("DEBUG: Registering routes_bp...")
     app.register_blueprint(routes_bp)
-
-    print("DEBUG: Registering dashboard_bp...")
     app.register_blueprint(dashboard_bp)
-
-    print("DEBUG: Registering auth_bp...")
     app.register_blueprint(auth_bp)
-
-    print("DEBUG: All blueprints registered!")
     #
     #    # ---- CORS on every response ----
     #

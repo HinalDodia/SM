@@ -12,12 +12,22 @@ from .insert import get_dynamo, TABLES  # adjust import path to wherever
                                           # to this new module
 
 
+def _to_float(v):
+    """Safe Decimal→float conversion; returns None if v is None/falsy."""
+    if v is None:
+        return None
+    try:
+        return float(v)
+    except (TypeError, ValueError):
+        return None
+
+
 def _get_latest_price(symbol: str) -> float | None:
     table = get_dynamo().Table(TABLES["stock-page"])
     item = table.get_item(
         Key={"SYMBOL#<sym>": f"SYMBOL#{symbol}", "SNAPSHOT#<date>": "LATEST"}
     ).get("Item", {})
-    return item.get("data", {}).get("current_price")
+    return _to_float(item.get("data", {}).get("current_price"))
 
 
 def _get_ratios(symbol: str) -> dict:
@@ -41,9 +51,9 @@ def _get_ratios(symbol: str) -> dict:
         revenue_growth = income_statement[0].get("revenue_growth")
 
     return {
-        "pe_ratio": ratios.get("pe_ratio"),
-        "debt_to_equity": ratios.get("debt_to_equity"),
-        "revenue_growth": revenue_growth,
+        "pe_ratio":      _to_float(ratios.get("pe_ratio")),
+        "debt_to_equity":_to_float(ratios.get("debt_to_equity")),
+        "revenue_growth":_to_float(revenue_growth),
     }
 
 

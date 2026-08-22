@@ -134,10 +134,12 @@ class UserProfile(db.Model):
     capital_available = db.Column(db.Numeric(12, 2), nullable=False)
     max_per_trade_pct = db.Column(db.Numeric(5, 2), default=10.00)
     experience_level = db.Column(db.Enum('beginner', 'intermediate', 'advanced'), default='beginner')
-    # § 0 — new onboarding fields (additive, all nullable)
-    display_name = db.Column(db.String(50), nullable=True)           # "What should I call you?"
-    goal_text = db.Column(db.String(255), nullable=True)             # free-text goal sentence
-    sectors_of_interest = db.Column(db.JSON, nullable=True)          # ["Energy", "IT", ...]
+    # ── Analyzer Everywhere additions (migration 001) ──────────────────────────
+    display_name = db.Column(db.String(50), nullable=True)       # "What should I call you?"
+    goal_text = db.Column(db.String(255), nullable=True)         # free-text goal; additive to investment_goal enum
+    sectors_of_interest = db.Column(db.JSON, nullable=True)      # e.g. ["Energy","IT","Banking"]
+    # Note: onboarding "Trading style" maps to the existing time_horizon column — no new column needed.
+    # ──────────────────────────────────────────────────────────────────────────
     created_at = db.Column(db.TIMESTAMP, server_default=db.func.now())
     updated_at = db.Column(db.TIMESTAMP, server_default=db.func.now(), onupdate=db.func.now())
  
@@ -150,12 +152,13 @@ class Recommendation(db.Model):
     action = db.Column(db.Enum('buy', 'sell', 'hold'), nullable=False)
     suggested_amount = db.Column(db.Numeric(12, 2))
     score = db.Column(db.Numeric(4, 2))
-    explanation = db.Column(db.Text)          # legacy — kept as fallback
+    explanation = db.Column(db.Text)          # legacy fallback plain-text explanation
     raw_data_snapshot = db.Column(db.JSON)
-    # § 0 — new structured output fields (additive, all nullable)
-    headline = db.Column(db.String(255), nullable=True)    # "Trader, hold on RELIANCE."
-    action_plan = db.Column(db.String(500), nullable=True) # concrete next step
-    conviction_pct = db.Column(db.Integer, nullable=True)  # 0-100
+    # ── Analyzer Everywhere additions (migration 001) ──────────────────────────
+    headline = db.Column(db.String(255), nullable=True)          # e.g. "Trader, hold on RELIANCE."
+    action_plan = db.Column(db.String(500), nullable=True)       # concise next-step plan from Claude
+    conviction_pct = db.Column(db.Integer, nullable=True)        # 0-100 data-quality conviction score
+    # ──────────────────────────────────────────────────────────────────────────
     created_at = db.Column(db.TIMESTAMP, server_default=db.func.now())
  
 

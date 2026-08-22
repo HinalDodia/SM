@@ -8,7 +8,6 @@ import { UserContext } from "./UserContext";
 import LoginPrompt from "./LoginPrompt";
 import { API_URL } from "./config";
 import AnalyzerCard from "./AnalyzerCard";
-
 function useAnimatedNumber(value, duration = 700) {
   const [display, setDisplay] = useState(value);
   const rafRef = useRef(null);
@@ -47,6 +46,7 @@ export default function Portfolio({ userid = 1 }) {
   const [modalType, setModalType] = useState("");
   const [modalError, setModalError] = useState("");
   const [showReco, setShowReco] = useState(false);
+  const [activeAnalyze, setActiveAnalyze] = useState(null); // stockname or null
   // Note: Do NOT early-return before hooks; render login prompt conditionally instead.
 
   // ✅ Correct backend endpoints
@@ -293,72 +293,78 @@ export default function Portfolio({ userid = 1 }) {
 
                 {filteredPortfolio.map((holding, idx) => {
                   return (
+                    <React.Fragment key={`${holding.stockname}-${idx}`}>
                     <div
-                      key={`${holding.stockname}-${idx}`}
-                      style={{ marginBottom: 16 }}
+                      className="table-row"
+                      style={{ transitionDelay: `${idx * 30}ms` }}
                     >
-                      {/* ── Holding data row ── */}
-                      <div
-                        className="table-row"
-                        style={{ transitionDelay: `${idx * 30}ms` }}
-                      >
-                        <div className="stock-col"
-                          onClick={() => window.open(`/stock-page/${holding.stockname}`, "_blank")}
-                          style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                          <img
-                            src={holding.logo_url || 'https://via.placeholder.com/30?text=Stock'}
-                            alt="logo"
-                            style={{ width: '28px', height: '28px', borderRadius: '4px', objectFit: 'contain' }}
-                            onError={(e) => { e.target.src = 'https://via.placeholder.com/30?text=Stock'; }}
-                          />
-                          <div className="symbol" style={{ color: '#007bff', fontWeight: '600' }}>
-                            {holding.stockname}
-                          </div>
-                        </div>
-                        <div>{holding.totalquantity}</div>
-                        <div>{formatCurrency(holding.averagebuyprice)}</div>
-                        <div>{formatCurrency(holding.totalinvested)}</div>
-                        <div>{formatCurrency(holding.ltp)}</div>
-                        <div
-                          className={holding.profitorloss >= 0 ? "green" : "red"}
-                        >
-                          {holding.profitorloss >= 0 ? "+" : "-"}
-                          {formatCurrency(Math.abs(holding.profitorloss))}
-                        </div>
-                        <div
-                          className={holding.profitorloss >= 0 ? "green" : "red"}
-                        >
-                          {holding.percentage.toFixed(2)}%
-                        </div>
-                        <div>{formatCurrency(holding.nowvalue)}</div>
-                        <div className="row-actions">
-                          <button
-                            onClick={() => openModal("buy", holding)}
-                            className="btn-primary action-equal"
-                          >
-                            + Buy
-                          </button>
-                          <button
-                            onClick={() => openModal("sell", holding)}
-                            className="btn-danger action-equal"
-                          >
-                            Sell
-                          </button>
+                      <div className="stock-col"
+                        onClick={() => window.open(`/stock-page/${holding.stockname}`, "_blank")}
+                        style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <img
+                          src={holding.logo_url || 'https://via.placeholder.com/30?text=Stock'}
+                          alt="logo"
+                          style={{ width: '28px', height: '28px', borderRadius: '4px', objectFit: 'contain' }}
+                          onError={(e) => { e.target.src = 'https://via.placeholder.com/30?text=Stock'; }}
+                        />
+                        <div className="symbol" style={{ color: '#007bff', fontWeight: '600' }}>
+                          {holding.stockname}
                         </div>
                       </div>
-
-                      {/* ── AnalyzerCard: position-aware, always visible, independent fetch ── */}
-                      {uid && (
-                        <div style={{ marginTop: 10, padding: '0 4px' }}>
-                          <AnalyzerCard
-                            context="portfolio"
-                            symbol={holding.stockname}
-                            userId={uid}
-                            holding={holding}
-                          />
-                        </div>
-                      )}
+                      <div>{holding.totalquantity}</div>
+                      <div>{formatCurrency(holding.averagebuyprice)}</div>
+                      <div>{formatCurrency(holding.totalinvested)}</div>
+                      <div>{formatCurrency(holding.ltp)}</div>
+                      <div
+                        className={holding.profitorloss >= 0 ? "green" : "red"}
+                      >
+                        {holding.profitorloss >= 0 ? "+" : "-"}
+                        {formatCurrency(Math.abs(holding.profitorloss))}
+                      </div>
+                      <div
+                        className={holding.profitorloss >= 0 ? "green" : "red"}
+                      >
+                        {holding.percentage.toFixed(2)}%
+                      </div>
+                      <div>{formatCurrency(holding.nowvalue)}</div>
+                      <div className="row-actions">
+                        <button
+                          onClick={() => openModal("buy", holding)}
+                          className="btn-primary action-equal"
+                        >
+                          + Buy
+                        </button>
+                        <button
+                          onClick={() => openModal("sell", holding)}
+                          className="btn-danger action-equal"
+                        >
+                          Sell
+                        </button>
+                        <button
+                          onClick={() => setActiveAnalyze(prev => prev === holding.stockname ? null : holding.stockname)}
+                          className="btn-analyze-port action-equal"
+                          title="Get AI analyzer read for this holding"
+                        >
+                          🤖 {activeAnalyze === holding.stockname ? "Close" : "Analyze"}
+                        </button>
+                      </div>
                     </div>
+
+                    {/* Inline AnalyzerCard for this holding */}
+                    {activeAnalyze === holding.stockname && uid && (
+                      <div style={{ padding: "14px 0 6px", gridColumn: "1 / -1" }}>
+                        <AnalyzerCard
+                          symbol={holding.stockname}
+                          userId={uid}
+                          context="portfolio"
+                          holding={{
+                            qty: holding.totalquantity,
+                            avgPrice: holding.averagebuyprice,
+                          }}
+                        />
+                      </div>
+                    )}
+                    </React.Fragment>
                   );
                 })}
               </div>

@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useCallback, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "./config";
-import { motion, AnimatePresence } from "framer-motion";
-import { TrendingUp, TrendingDown, RefreshCw, BarChart2, Activity, X, ExternalLink } from "lucide-react";
 import { UserContext } from "./UserContext";
-import AnalyzerCard from "./AnalyzerCard";
+import { motion, AnimatePresence } from "framer-motion";
+import { TrendingUp, TrendingDown, RefreshCw, BarChart2, Activity } from "lucide-react";
 import "./Markets.css";
+import AnalyzerCard from "./AnalyzerCard";
 
 /* ─── Tiny inline SVG sparkline ─────────────────────────────────────────── */
 function Sparkline({ data, isPositive, width = 120, height = 44 }) {
@@ -66,20 +66,20 @@ function sectorColor(sector) {
 }
 
 /* ─── Stock Card ─────────────────────────────────────────────────────────── */
-function StockCard({ stock, index, onClick, isSelected }) {
+function StockCard({ stock, index, onClick, onAnalyze, isAnalyzing }) {
   const pos = stock.is_positive;
   const color = pos ? "#22c55e" : "#ef4444";
   const bgGlow = pos ? "rgba(34,197,94,0.06)" : "rgba(239,68,68,0.06)";
 
   return (
     <motion.div
-      className={`mkt-card${isSelected ? " mkt-card--selected" : ""}`}
+      className="mkt-card"
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05, duration: 0.4 }}
       onClick={onClick}
       whileHover={{ scale: 1.015, transition: { duration: 0.15 } }}
-      style={{ "--card-glow": bgGlow, "--card-accent": color, cursor: "pointer" }}
+      style={{ "--card-glow": bgGlow, "--card-accent": color }}
     >
       {/* Header row */}
       <div className="mkt-card__head">
@@ -113,6 +113,15 @@ function StockCard({ stock, index, onClick, isSelected }) {
           <span>{pos ? "+" : ""}{stock.change_pct?.toFixed(2)}%</span>
         </div>
       </div>
+
+      {/* Analyze button — positioned at bottom of card */}
+      <button
+        className={`mkt-analyze-btn ${isAnalyzing ? "active" : ""}`}
+        onClick={(e) => { e.stopPropagation(); onAnalyze(stock.symbol); }}
+        title="Get AI analyzer read for this stock"
+      >
+        🤖 {isAnalyzing ? "Close" : "Analyze"}
+      </button>
     </motion.div>
   );
 }
@@ -128,15 +137,14 @@ const _cache = {
 /* ─── Markets Page ───────────────────────────────────────────────────────── */
 export default function Markets() {
   const { user } = useContext(UserContext) || {};
-  const uid = user?.userid || null;
-
+  const uid = user?.userid || JSON.parse(localStorage.getItem("user") || "{}")?.userid || null;
   const [stocks, setStocks]           = useState(_cache.data || []);
   const [loading, setLoading]         = useState(!_cache.data);
   const [silentRefresh, setSilent]    = useState(false);
   const [error, setError]             = useState(null);
   const [lastUpdated, setLastUpdated] = useState(_cache.fetchedAt ? new Date(_cache.fetchedAt) : null);
   const [filter, setFilter]           = useState("All");
-  const [selectedSymbol, setSelected] = useState(null);   // § 5 — side panel state
+  const [activeAnalyze, setActiveAnalyze] = useState(null);  // symbol or null
   const navigate = useNavigate();
 
   const load = useCallback(async ({ silent = false } = {}) => {
@@ -149,12 +157,14 @@ export default function Markets() {
       if (!res.ok) throw new Error("Failed to fetch market data");
       const data = await res.json();
 
+      // Update module cache
       _cache.data      = data;
       _cache.fetchedAt = Date.now();
 
       setStocks(data);
       setLastUpdated(new Date());
     } catch (err) {
+      // Only surface error if we have no cached data to show
       if (!_cache.data) setError(err.message);
     } finally {
       setLoading(false);
@@ -163,7 +173,11 @@ export default function Markets() {
   }, []);
 
   useEffect(() => {
-    if (_cache.isFresh()) return;
+    if (_cache.isFresh()) {
+      // Data is fresh — nothing to do, already rendered from cache
+      return;
+    }
+    // Data is stale or missing — fetch (silent if we already have something to show)
     load({ silent: !!_cache.data });
   }, [load]);
 
@@ -177,10 +191,6 @@ export default function Markets() {
   const gainers = stocks.filter(s => s.is_positive).length;
   const losers  = stocks.filter(s => !s.is_positive).length;
 
-  const selectedStock = selectedSymbol
-    ? stocks.find(s => s.symbol === selectedSymbol)
-    : null;
-
   return (
     <div className="mkt-page">
       {/* ── Header ── */}
@@ -191,7 +201,7 @@ export default function Markets() {
             Market Overview
           </h1>
           <p className="mkt-subtitle">
-            Live prices &amp; performance — click any stock for an AI read
+            Live prices &amp; performance for all tracked stocks
           </p>
         </div>
 
@@ -209,15 +219,15 @@ export default function Markets() {
         </div>
       </div>
 
-      {/* ── Last updated ── */}
-      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
+      {/* ── Last updated + silent refresh indicator ── */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
         {lastUpdated && (
           <p className="mkt-updated" style={{ margin: 0 }}>
             Last updated: {lastUpdated.toLocaleTimeString()}
           </p>
         )}
         {silentRefresh && (
-          <span style={{ fontSize: 11, color: "#38bdf8", display: "flex", alignItems: "center", gap: 4 }}>
+          <span style={{ fontSize: 11, color: '#38bdf8', display: 'flex', alignItems: 'center', gap: 4 }}>
             <RefreshCw size={11} className="spin" /> Refreshing in background…
           </span>
         )}
@@ -238,7 +248,7 @@ export default function Markets() {
         </div>
       )}
 
-      {/* ── Loading / Error states ── */}
+      {/* ── States ── */}
       {loading && (
         <div className="mkt-loading">
           <div className="mkt-skeleton-grid">
@@ -259,129 +269,43 @@ export default function Markets() {
         </div>
       )}
 
-      {/* ── Main layout: grid + optional side panel ── */}
+      {/* ── Grid ── */}
       {!loading && !error && (
-        <div style={{ display: "flex", gap: 20, alignItems: "flex-start" }}>
+        <AnimatePresence>
+          <div className="mkt-grid">
+            {filtered.map((stock, i) => (
+              <StockCard
+                key={stock.symbol}
+                stock={stock}
+                index={i}
+                onClick={() => navigate(`/stock-page/${stock.symbol}`)}
+                onAnalyze={(sym) => setActiveAnalyze(prev => prev === sym ? null : sym)}
+                isAnalyzing={activeAnalyze === stock.symbol}
+              />
+            ))}
+          </div>
 
-          {/* Stock grid — narrows when panel is open */}
+          {/* ── Analyzer expansion panel ── */}
           <AnimatePresence>
-            <div
-              className="mkt-grid"
-              style={{
-                flex: selectedSymbol ? "1 1 0%" : "1 1 100%",
-                minWidth: 0,
-                transition: "flex 0.3s ease",
-              }}
-            >
-              {filtered.map((stock, i) => (
-                <StockCard
-                  key={stock.symbol}
-                  stock={stock}
-                  index={i}
-                  isSelected={stock.symbol === selectedSymbol}
-                  onClick={() => setSelected(prev =>
-                    prev === stock.symbol ? null : stock.symbol
-                  )}
-                />
-              ))}
-            </div>
-          </AnimatePresence>
-
-          {/* ── Analyzer side panel ── */}
-          <AnimatePresence>
-            {selectedSymbol && (
+            {activeAnalyze && uid && (
               <motion.div
-                key="mkt-panel"
-                initial={{ opacity: 0, x: 30 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 30 }}
+                key={activeAnalyze}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.25 }}
-                style={{
-                  width: 340,
-                  flexShrink: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 12,
-                  position: "sticky",
-                  top: 20,
-                }}
+                style={{ marginTop: 16, maxWidth: 520 }}
               >
-                {/* Panel header */}
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <div>
-                    <div style={{ fontSize: 15, fontWeight: 700, color: "#e2e8f0" }}>
-                      {selectedSymbol}
-                    </div>
-                    {selectedStock && (
-                      <div style={{ fontSize: 12, color: "#64748b" }}>{selectedStock.name}</div>
-                    )}
-                  </div>
-                  <button
-                    onClick={() => setSelected(null)}
-                    style={{
-                      background: "rgba(148,163,184,0.08)",
-                      border: "1px solid rgba(148,163,184,0.15)",
-                      borderRadius: 7,
-                      padding: "4px 8px",
-                      cursor: "pointer",
-                      color: "#94a3b8",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 4,
-                    }}
-                  >
-                    <X size={13} /> Close
-                  </button>
-                </div>
-
-                {/* AnalyzerCard — independent fetch, never blocks the grid */}
-                <AnalyzerCard
-                  context="market"
-                  symbol={selectedSymbol}
-                  userId={uid}
-                />
-
-                {/* Buy + full details actions */}
-                <div style={{ display: "flex", gap: 8 }}>
-                  <button
-                    style={{
-                      flex: 1,
-                      background: "linear-gradient(135deg,#26e07f,#16a34a)",
-                      border: "none",
-                      borderRadius: 10,
-                      padding: "10px 0",
-                      color: "#0a1a0a",
-                      fontWeight: 700,
-                      fontSize: 13,
-                      cursor: "pointer",
-                    }}
-                    onClick={() => navigate(`/stock-page/${selectedSymbol}`)}
-                  >
-                    Buy / Trade
-                  </button>
-                  <button
-                    onClick={() => navigate(`/stock-page/${selectedSymbol}`)}
-                    style={{
-                      background: "rgba(84,197,255,0.08)",
-                      border: "1px solid rgba(84,197,255,0.2)",
-                      borderRadius: 10,
-                      padding: "10px 12px",
-                      color: "#54c5ff",
-                      fontSize: 12,
-                      cursor: "pointer",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 5,
-                      fontWeight: 600,
-                    }}
-                  >
-                    <ExternalLink size={13} /> Details
-                  </button>
-                </div>
+                <AnalyzerCard symbol={activeAnalyze} userId={uid} context="market" />
               </motion.div>
             )}
+            {activeAnalyze && !uid && (
+              <div style={{ marginTop: 12, fontSize: 13, color: "#6b8099" }}>
+                🔒 Sign in to get a personalised analyzer read for {activeAnalyze}.
+              </div>
+            )}
           </AnimatePresence>
-        </div>
+        </AnimatePresence>
       )}
     </div>
   );

@@ -205,47 +205,44 @@ export async function fetchStockChart(symbol, period = "1y", interval = "1d") {
   return res.json();
 }
 
-// ─── Analyzer API ─────────────────────────────────────────────────────────────
+// ─── Analyzer ─────────────────────────────────────────────────────────────────
 
 /**
- * Fetch a single-symbol on-demand analyzer recommendation.
- * Returns { symbol, action, score, conviction, headline, bullets, action_plan }
- * or { error: "no_profile" } when the user hasn't set up a profile yet.
+ * Fetch a single-symbol analyzer recommendation for a user.
+ * Returns {symbol, action, score, conviction, headline, bullets, action_plan, has_position}
+ * or throws on network / auth error.
  */
 export async function fetchAnalyzerRecommendation(userId, symbol) {
   const res = await fetch(
     `${API_BASE_URL}/analyzer/recommendation/${userId}/${symbol}`,
     { headers: authHeaders() }
   );
-  // Return the JSON body regardless of HTTP status so callers can inspect
-  // the error field (e.g. "no_profile") without throwing.
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    const err = new Error(body.message || `HTTP ${res.status}`);
+    err.status = res.status;
+    err.code   = body.error;   // e.g. "no_profile"
+    throw err;
+  }
   return res.json();
 }
 
 /**
- * Fetch the user's saved analyzer profile.
- * Returns the profile dict or throws on network error / 404.
+ * Create or update the user's analyzer investment profile.
+ * Required: userid, risk_tolerance, investment_goal, time_horizon, capital_available
+ * Optional: max_per_trade_pct, experience_level, display_name, goal_text, sectors_of_interest
  */
-export async function fetchAnalyzerProfile(userId) {
-  const res = await fetch(
-    `${API_BASE_URL}/analyzer/profile/${userId}`,
-    { headers: authHeaders() }
-  );
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
-}
-
-/**
- * Create or update the user's analyzer profile.
- * data must include: userid, risk_tolerance, investment_goal,
- *   time_horizon, capital_available — plus optional new fields.
- */
-export async function saveAnalyzerProfile(data) {
+export async function saveAnalyzerProfile(profileData) {
   const res = await fetch(`${API_BASE_URL}/analyzer/profile`, {
-    method: "POST",
+    method:  "POST",
     headers: authHeaders(),
-    body: JSON.stringify(data),
+    body:    JSON.stringify(profileData),
   });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    const err = new Error(body.error || body.message || `HTTP ${res.status}`);
+    err.status = res.status;
+    throw err;
+  }
+  return body;
 }
